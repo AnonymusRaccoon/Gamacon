@@ -1,15 +1,12 @@
 /*
 ** EPITECH PROJECT, 2019
-** Gamacon
+** MUL_my_runner_2019
 ** File description:
 ** renderer
 */
 
 #pragma once
 
-#include <SFML/Graphics.h>
+#include "engine.h"
 
-typedef struct gcRenderer
-{
-    sfRenderWindow *window;
-} gcRenderer;
+void renderer_draw(gc_engine *engine);

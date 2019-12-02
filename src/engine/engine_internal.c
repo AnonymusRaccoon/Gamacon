@@ -8,12 +8,12 @@
 #include <stdbool.h>
 #include "engine.h"
 
- bool engine_is_open(gcEngine *engine)
+ bool engine_is_open(gc_engine *engine)
  {
-     return (sfRenderWindow_isOpen(engine->renderer.window));
+     return (sfRenderWindow_isOpen(engine->window));
  }
 
- int change_scene(gcEngine *engine, gcScene *scene)
+ int change_scene(gc_engine *engine, gc_scene *scene)
  {
      (void)engine;
      (void)scene;

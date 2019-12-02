@@ -8,19 +8,20 @@
 #pragma once
 
 #include "scene.h"
-#include "renderer.h"
 #include <stdbool.h>
 
-typedef struct gcEngine
+typedef struct gc_engine
 {
-    gcRenderer renderer;
-    gcScene *scene;
-    bool (*is_open)(struct gcEngine *engine);
-    int (*game_loop)(struct gcEngine *engine);
-    int (*change_scene)(struct gcEngine *engine, gcScene *scene);
-} gcEngine;
+    gc_scene *scene;
+    bool (*is_open)(struct gc_engine *engine);
+    int (*game_loop)(struct gc_engine *engine);
+    int (*change_scene)(struct gc_engine *engine, gc_scene *scene);
 
-gcEngine *create_engine(char *title);
-bool engine_is_open(gcEngine *engine);
-void handle_events(gcEngine *engine);
-int change_scene(gcEngine *engine, gcScene *scene);
+    sfRenderWindow *window;
+    void (*draw)(struct gc_engine *engine);
+} gc_engine;
+
+gc_engine *engine_create(char *title);
+bool engine_is_open(gc_engine *engine);
+void handle_events(gc_engine *engine);
+int change_scene(gc_engine *engine, gc_scene *scene);

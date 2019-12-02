@@ -9,14 +9,14 @@
 
 #include <stdarg.h>
 
-typedef struct Component
+typedef struct gc_component
 {
     char *name;
     unsigned size;
-    struct Component *dependencies;
+    struct gc_component *dependencies;
     void (*ctr)(void *component, va_list);
     void (*dtr)(void *component);
     char *(*serialize)(void *component);
 // privates:
     char *tostr;
-} Component;
+} gc_component;

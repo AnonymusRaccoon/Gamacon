@@ -10,14 +10,14 @@
 
 void *new_component(void *component, ...)
 {
-    Component *base = (Component *)component;
+    gc_component *base = (gc_component *)component;
     void *new_cmp = malloc(base->size);
     va_list args;
 
-    *(Component *)new_cmp = *base;
-    if (((Component *)new_cmp)->ctr) {
+    *(gc_component *)new_cmp = *base;
+    if (((gc_component *)new_cmp)->ctr) {
         va_start(args, component);
-        ((Component *)new_cmp)->ctr(new_cmp, args);
+        ((gc_component *)new_cmp)->ctr(new_cmp, args);
         va_end(args);
     }
     return (new_cmp);

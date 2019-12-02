@@ -7,12 +7,12 @@
 
 #include "engine.h"
 
-void handle_events(gcEngine *engine)
+void handle_events(gc_engine *engine)
 {
     sfEvent event;
 
-    while (sfRenderWindow_pollEvent(engine->renderer.window, &event)) {
+    while (sfRenderWindow_pollEvent(engine->window, &event)) {
         if (event.type == sfEvtClosed)
-            sfRenderWindow_close(engine->renderer.window);
+            sfRenderWindow_close(engine->window);
     }
 }

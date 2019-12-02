@@ -7,8 +7,8 @@
 
 #pragma once
 
-typedef struct Vector2
+typedef struct vector2
 {
     int x;
     int y;
-} Vector2;
+} vector2;

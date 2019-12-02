@@ -8,6 +8,7 @@
 SRC = src/engine/engine.c \
 	src/engine/engine_internal.c \
 	src/engine/event_handler.c \
+	src/renderer/renderer.c \
 	src/component.c \
 	src/components/movable_component.c
 

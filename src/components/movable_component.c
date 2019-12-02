@@ -20,7 +20,7 @@ static void movable_ctr(void *component, va_list args)
 
 static void movable_dtr(void *component)
 {
-    Component *base = (Component *)component;
+    gc_component *base = (gc_component *)component;
 
     if (base->tostr)
         free(base->tostr);
@@ -33,7 +33,7 @@ static char *movable_serialize(void *component)
     return (NULL);
 }
 
-const Component MovableComponent =  {
+const gc_component MovableComponent =  {
     name: "PositionComponent",
     size: sizeof(MovableComponent),
     dependencies: NULL,

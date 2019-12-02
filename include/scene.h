@@ -10,8 +10,8 @@
 #include "entity.h"
 #include "texture.h"
 
-typedef struct gcScene
+typedef struct gc_scene
 {
-    Entity *entity_list;
-    gcTexture *texture;
-} gcScene;
+    gc_entity *entity_list;
+    gc_texture *texture;
+} gc_scene;

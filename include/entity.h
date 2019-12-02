@@ -11,15 +11,14 @@
 #include "vector2.h"
 #include "tags.h"
 
-typedef struct Entity
+typedef struct gc_entity
 {
     int id;
     char *str;
-    tag tag;
-    Component *components;
+    gc_component *components;
     void (*serialize)();
-    Vector2 position;
 
-    struct Entity *next;
-    struct Entity *prev;
-} Entity;
+    struct gc_entity *next;
+    struct gc_entity *prev;
+} gc_entity;
+

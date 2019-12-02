@@ -11,7 +11,7 @@
 
 struct MovableComponent
 {
-    Component *base;
+    gc_component *base;
     int left_key;
     int right_key;
     int jump_key;

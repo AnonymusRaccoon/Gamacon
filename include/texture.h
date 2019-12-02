@@ -9,8 +9,8 @@
 
 #include <SFML/Graphics.h>
 
-typedef struct gcTexture
+typedef struct gc_texture
 {
     char *name;
     sfTexture *texture;
-} gcTexture;
+} gc_texture;
