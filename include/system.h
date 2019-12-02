@@ -11,6 +11,7 @@
 
 typedef struct gc_system
 {
+    char *name;
     unsigned size;
     void *(check_dependencies)(const gc_entity *entity);
     void *(update_entity)(const gc_entity *entity);

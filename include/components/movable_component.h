@@ -9,7 +9,7 @@
 
 #include "component.h"
 
-struct MovableComponent
+struct movable_component
 {
     gc_component *base;
     int left_key;

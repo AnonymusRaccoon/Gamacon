@@ -6,16 +6,16 @@
 */
 
 #include "component.h"
-#include "Components/movable_component.h"
+#include "components/movable_component.h"
 #include <stdlib.h>
 
 static void movable_ctr(void *component, va_list args)
 {
-    struct MovableComponent *movable = (struct MovableComponent *)component;
+    struct movable_component *cmp = (struct movable_component *)component;
 
-    movable->left_key = va_arg(args, int);
-    movable->right_key = va_arg(args, int);
-    movable->jump_key = va_arg(args, int);
+    cmp->left_key = va_arg(args, int);
+    cmp->right_key = va_arg(args, int);
+    cmp->jump_key = va_arg(args, int);
 }
 
 static void movable_dtr(void *component)
@@ -33,9 +33,9 @@ static char *movable_serialize(void *component)
     return (NULL);
 }
 
-const gc_component MovableComponent =  {
-    name: "PositionComponent",
-    size: sizeof(MovableComponent),
+const gc_component movable_component =  {
+    name: "MovableComponent",
+    size: sizeof(struct movable_component),
     dependencies: NULL,
     ctr: &movable_ctr,
     dtr: &movable_dtr,

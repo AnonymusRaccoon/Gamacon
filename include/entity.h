@@ -15,7 +15,7 @@ typedef struct gc_entity
 {
     int id;
     char *str;
-    gc_component *components;
+    gc_component components;
     void (*serialize)();
 
     struct gc_entity *next;

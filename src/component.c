@@ -11,9 +11,11 @@
 void *new_component(void *component, ...)
 {
     gc_component *base = (gc_component *)component;
-    void *new_cmp = malloc(base->size);
     va_list args;
+    void *new_cmp = malloc(base->size);
 
+    if (!new_cmp)
+        return (NULL);
     *(gc_component *)new_cmp = *base;
     if (((gc_component *)new_cmp)->ctr) {
         va_start(args, component);
