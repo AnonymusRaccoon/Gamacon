@@ -6,11 +6,19 @@
 */
 
 #include "entity.h"
+#include "utility.h"
 #include <stdlib.h>
+#include <unistd.h>
 
-char *entity_serialize(gc_entity *entity)
+char *entity_serialize(gc_entity *entity, int fd)
 {
-    (void)entity;
+    char *id = tostr(entity->id);
+
+    write(fd, id, my_strlen(id));
+    write(fd, ": ", 2);
+    for (gc_component *cmp = entity->components; cmp; cmp = cmp->next)
+        cmp->serialize(cmp);
+    free(id);
     return (NULL);
 }
 
@@ -22,7 +30,5 @@ void destroy(gc_entity *entity)
         next = cmp->next;
         cmp->destroy(cmp);
     }
-    if (entity->tostr)
-        free(entity->tostr);
     free(entity);
 }

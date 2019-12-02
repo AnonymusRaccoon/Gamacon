@@ -16,16 +16,14 @@ typedef struct gc_entity gc_entity;
 struct gc_entity
 {
     int id;
-    char *tostr;
     gc_component *components;
-    char *(*serialize)(gc_entity *entity);
+    char *(*serialize)(gc_entity *entity, int fd);
     void (*destroy)(gc_entity *entity);
 
     gc_entity *next;
     gc_entity *prev;
 };
 
-char *entity_serialize(gc_entity *entity);
-
 gc_entity *entity_create(void);
 gc_entity *entity_add_component(gc_entity *entity, void *component);
+char *entity_serialize(gc_entity *entity, int fd);

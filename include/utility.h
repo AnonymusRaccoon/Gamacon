@@ -10,3 +10,4 @@
 char *my_strdup(const char *src);
 int my_strlen(const char *str);
 int arraylen(const char **array);
+char *tostr(int n);

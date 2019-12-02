@@ -18,7 +18,8 @@ SRC = src/engine/engine.c \
 	src/scene/scene.c \
 	src/utility/my_strdup.c \
 	src/utility/my_strlen.c \
-	src/utility/arraylen.c
+	src/utility/arraylen.c \
+	src/utility/tostr.c
 
 OBJ = $(SRC:%.c=%.o)
 
