@@ -8,12 +8,13 @@
 #include "component.h"
 #include <stdlib.h>
 
-void *new_component(Component *component, ...)
+void *new_component(void *component, ...)
 {
-    void *new_cmp = malloc(component->size);
+    Component *base = (Component *)component;
+    void *new_cmp = malloc(base->size);
     va_list args;
 
-    *(Component *)new_cmp = *component;
+    *(Component *)new_cmp = *base;
     if (((Component *)new_cmp)->ctr) {
         va_start(args, component);
         ((Component *)new_cmp)->ctr(new_cmp, args);
