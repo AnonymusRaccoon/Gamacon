@@ -11,6 +11,7 @@
 
 int game_loop(gcEngine *engine)
 {
+    handle_events(engine);
     (void)engine;
     return (0);
 }

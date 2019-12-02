@@ -5,8 +5,9 @@
 ## Makefile
 ##
 
-SRC = src/engine.c \
-	src/engine_internal.c \
+SRC = src/engine/engine.c \
+	src/engine/engine_internal.c \
+	src/engine/event_handler.c \
 	src/component.c \
 	src/components/movable_component.c
 
@@ -34,5 +35,8 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+dbg: CFLAGS += -g
+dbg: re
 
 .PHONY: all build clean fclean

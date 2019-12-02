@@ -15,11 +15,12 @@ typedef struct gcEngine
 {
     gcRenderer renderer;
     gcScene *scene;
-    bool (*is_open)();
+    bool (*is_open)(struct gcEngine *engine);
     int (*game_loop)(struct gcEngine *engine);
     int (*change_scene)(struct gcEngine *engine, gcScene *scene);
 } gcEngine;
 
 gcEngine *create_engine(char *title);
 bool engine_is_open(gcEngine *engine);
+void handle_events(gcEngine *engine);
 int change_scene(gcEngine *engine, gcScene *scene);
