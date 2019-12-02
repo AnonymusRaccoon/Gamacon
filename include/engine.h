@@ -4,13 +4,14 @@
 ** File description:
 ** engine
 */
+typedef struct gc_engine gc_engine;
 
 #pragma once
 
 #include "scene.h"
 #include <stdbool.h>
 
-typedef struct gc_engine
+ struct gc_engine
 {
     gc_scene *scene;
     bool (*is_open)(struct gc_engine *engine);
@@ -19,7 +20,7 @@ typedef struct gc_engine
 
     sfRenderWindow *window;
     void (*draw)(struct gc_engine *engine);
-} gc_engine;
+};
 
 gc_engine *engine_create(char *title);
 bool engine_is_open(gc_engine *engine);

@@ -2,10 +2,8 @@
 ** EPITECH PROJECT, 2019
 ** MUL_my_runner_2019
 ** File description:
-** utility
+** entity_factory
 */
 
 #pragma once
 
-char *my_strdup(const char *src);
-int my_strlen(const char *str);
