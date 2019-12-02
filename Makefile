@@ -9,8 +9,16 @@ SRC = src/engine/engine.c \
 	src/engine/engine_internal.c \
 	src/engine/event_handler.c \
 	src/renderer/renderer.c \
+	src/renderer/texture_utility.c \
+	src/entity/entity.c \
+	src/entity/entity_factory.c \
 	src/component.c \
-	src/components/movable_component.c
+	src/components/movable_component.c \
+	src/components/position_component.c \
+	src/scene/scene.c \
+	src/utility/my_strdup.c \
+	src/utility/my_strlen.c \
+	src/utility/arraylen.c
 
 OBJ = $(SRC:%.c=%.o)
 

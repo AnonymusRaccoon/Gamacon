@@ -7,46 +7,65 @@
 
 #include "engine.h"
 #include "entity.h"
-#include <stdbool.h>
+#include "renderer.h"
+#include "utility.h"
+#include <stdlib.h>
 
-void scene_add_entity(gc_scene *scene, gc_entity *entity)
+int scene_add_entity(gc_scene *scene, gc_entity *entity)
 {
     gc_entity *list;
 
     if (!scene)
-        return;
-    list = scene->entity_list;
+        return (-1);
+    list = scene->entities;
     if (!list) {
-        scene->entity_list = entity;
+        scene->entities = entity;
     } else {
         while (list->next)
             list = list->next;
         list->next = entity;
         entity->prev = list;
     }
+    return (1);
 }
 
-bool scene_load_textures(gc_scene *scene, char **textures)
+int scene_load_textures(gc_scene *scene, const char **textures)
 {
     gc_texture *texture;
 
+    scene->textures = malloc(sizeof(gc_texture) * (arraylen(textures)));
     for (int i = 0; textures[i]; i++) {
-        texture = renderer_load_texture(textures[i]);
+        texture = texture_create(textures[i]);
         if (!texture)
-            return (NULL);
+            return (-1);
         scene->textures[i] = texture;
     }
+    return (0);
 }
 
-gc_scene *scene_create(char **textures)
+gc_scene *scene_create(const char **textures)
 {
     gc_scene *scene = malloc(sizeof(gc_scene));
 
     if (!scene)
         return (NULL);
-    if (!scene_load_textures(scene, textures))
+    if (scene_load_textures(scene, textures) < 0)
         return (NULL);
-    scene->entity_list = NULL;
+    scene->entities = NULL;
     scene->add_entity = &scene_add_entity;
     return (scene);
+}
+
+void scene_destroy(gc_scene *scene)
+{
+    gc_entity *next = NULL;
+
+    for (gc_entity *entity = scene->entities; entity; entity = next) {
+        next = entity->next;
+        entity->destroy(entity);
+    }
+    for (int i = 0; scene->textures[i]; i++) {
+        scene->textures[i]->destroy(scene->textures[i]);
+    }
+    free(scene);
 }

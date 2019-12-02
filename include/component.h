@@ -17,6 +17,7 @@ typedef struct gc_component
     void (*ctr)(void *component, va_list);
     void (*dtr)(void *component);
     char *(*serialize)(void *component);
+    void (*destroy)(void *component);
 
     struct gc_component *next;
     struct gc_component *prev;

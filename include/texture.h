@@ -5,12 +5,15 @@
 ** texture
 */
 
+typedef struct gc_texture gc_texture;
+
 #pragma once
 
 #include <SFML/Graphics.h>
 
-typedef struct gc_texture
+struct gc_texture
 {
     char *name;
     sfTexture *texture;
-} gc_texture;
+    void (*destroy)(gc_texture *texture);
+};

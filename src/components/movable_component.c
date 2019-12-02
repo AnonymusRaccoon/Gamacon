@@ -33,7 +33,7 @@ static char *movable_serialize(void *component)
     return (NULL);
 }
 
-const gc_component movable_component =  {
+const gc_component movable_component = {
     name: "MovableComponent",
     size: sizeof(struct movable_component),
     dependencies: NULL,

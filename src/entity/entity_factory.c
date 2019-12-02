@@ -7,11 +7,11 @@
 
 #include "entity.h"
 #include "component.h"
-#include <stddef.h>
+#include <stdlib.h>
 
 static unsigned int next_id = 0;
 
-gc_entity *entity_create()
+gc_entity *entity_create(void)
 {
     gc_entity *entity = malloc(sizeof(gc_entity));
 

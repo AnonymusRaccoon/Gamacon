@@ -10,3 +10,4 @@
 #include "engine.h"
 
 void renderer_draw(gc_engine *engine);
+gc_texture *texture_create(const char *path);

@@ -18,10 +18,11 @@ void position_ctr(void *component, va_list args)
 
 char *position_serialize(void *component)
 {
+    (void)component;
     return (NULL);
 }
 
-const gc_component position_component =  {
+const gc_component position_component = {
     name: "PositionComponent",
     size: sizeof(struct position_component),
     dependencies: NULL,

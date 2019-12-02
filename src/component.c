@@ -24,3 +24,11 @@ void *new_component(void *component, ...)
     }
     return (new_cmp);
 }
+
+void destroy(void *component)
+{
+    gc_component *cmp = (gc_component *)component;
+    if (cmp->dtr)
+        cmp->dtr(component);
+    free(cmp);
+}
