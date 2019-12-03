@@ -18,7 +18,7 @@ struct gc_entity
     int id;
     gc_component *components;
     gc_entity *(*add_component)(gc_entity *entity, void *component);
-    gc_component *(*get_component)(const gc_entity *entity, const char *name);
+    void *(*get_component)(const gc_entity *entity, const char *name);
     bool (*has_component)(const gc_entity *entity, const char *name);
     char *(*serialize)(gc_entity *entity, int fd);
     void (*destroy)(gc_entity *entity);

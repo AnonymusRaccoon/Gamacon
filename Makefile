@@ -29,7 +29,7 @@ SRC = src/engine/engine.c \
 	src/deserializer/deserialize_entity.c \
 	src/deserializer/prefab.c \
 	src/system.c \
-	src/system/texture_renderer_system.c
+	src/systems/texture_renderer_system.c
 
 OBJ = $(SRC:%.c=%.o)
 

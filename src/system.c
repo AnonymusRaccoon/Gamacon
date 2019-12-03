@@ -16,11 +16,12 @@ const gc_system *all_systems[] = {
 
 bool system_check_dependencies(const gc_system *sys, const gc_entity *entity)
 {
-    gc_component *cmp = entity->get_component(entity, sys->component_name);
+    void *cmp = entity->get_component(entity, sys->component_name);
+    gc_component *comp = (gc_component *)cmp;
 
     if (!cmp)
         return (false);
-    for (gc_component *dep = cmp->dependencies; dep; dep = cmp->next) {
+    for (gc_component *dep = comp->dependencies; dep; dep = comp->next) {
         if (!entity->has_component(entity, dep->name))
             return (false);
     }
