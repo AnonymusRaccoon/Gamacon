@@ -17,6 +17,7 @@ struct gc_entity
 {
     int id;
     gc_component *components;
+    gc_entity *(*add_component)(gc_entity *entity, void *component);
     char *(*serialize)(gc_entity *entity, int fd);
     void (*destroy)(gc_entity *entity);
 
@@ -25,5 +26,6 @@ struct gc_entity
 };
 
 gc_entity *entity_create(void);
+gc_entity *entity_create_with_id(int id);
 gc_entity *entity_add_component(gc_entity *entity, void *component);
 char *entity_serialize(gc_entity *entity, int fd);

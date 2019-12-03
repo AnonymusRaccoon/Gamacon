@@ -7,6 +7,7 @@
 
 #include "component.h"
 #include "components/movable_component.h"
+#include "utility.h"
 #include <stdlib.h>
 
 static void movable_ctr(void *component, va_list args)
@@ -16,6 +17,15 @@ static void movable_ctr(void *component, va_list args)
     cmp->left_key = va_arg(args, int);
     cmp->right_key = va_arg(args, int);
     cmp->jump_key = va_arg(args, int);
+}
+
+static void movable_fdctr(void *component, char *args)
+{
+    struct movable_component *cmp = (struct movable_component *)component;
+
+    cmp->left_key = parse_int(&args);
+    cmp->right_key = parse_int(&args);
+    cmp->jump_key = parse_int(&args);
 }
 
 static void movable_dtr(void *component)
@@ -38,6 +48,7 @@ const gc_component movable_component = {
     size: sizeof(struct movable_component),
     dependencies: NULL,
     ctr: &movable_ctr,
+    fdctr: &movable_fdctr,
     dtr: &movable_dtr,
     serialize: &movable_serialize,
     tostr: NULL

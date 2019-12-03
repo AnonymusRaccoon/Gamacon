@@ -16,3 +16,5 @@ struct movable_component
     int right_key;
     int jump_key;
 };
+
+const gc_component movable_component;

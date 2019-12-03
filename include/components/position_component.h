@@ -15,3 +15,5 @@ struct position_component
     gc_component *base;
     vector2 position;
 };
+
+const gc_component position_component;

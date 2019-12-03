@@ -15,6 +15,7 @@ typedef struct gc_component
     unsigned size;
     struct gc_component *dependencies;
     void (*ctr)(void *component, va_list);
+    void (*fdctr)(void *component, char *args);
     void (*dtr)(void *component);
     char *(*serialize)(void *component);
     void (*destroy)(void *component);
@@ -24,3 +25,6 @@ typedef struct gc_component
 
     char *tostr;
 } gc_component;
+
+void *new_component(const void *component, ...);
+const gc_component *get_component(char *name);

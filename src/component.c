@@ -6,9 +6,27 @@
 */
 
 #include "component.h"
+#include "components/position_component.h"
+#include "components/movable_component.h"
+#include "utility.h"
 #include <stdlib.h>
 
-void *new_component(void *component, ...)
+const gc_component *all_components[] = {
+    &position_component,
+    &movable_component,
+    NULL
+};
+
+const gc_component *get_component(char *name)
+{
+    for (int i = 0; all_components[i]; i++) {
+        if (!my_strcmp(all_components[i]->name, name))
+            return (all_components[i]);
+    }
+    return (NULL);
+}
+
+void *new_component(const void *component, ...)
 {
     gc_component *base = (gc_component *)component;
     va_list args;

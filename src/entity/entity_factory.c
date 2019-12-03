@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 static unsigned int next_id = 0;
+const gc_entity entity_prefab;
 
 gc_entity *entity_create(void)
 {
@@ -17,12 +18,20 @@ gc_entity *entity_create(void)
 
     if (!entity)
         return (NULL);
+    *entity = entity_prefab;
     entity->id = next_id;
-    entity->components = NULL;
-    entity->serialize = &entity_serialize;
-    entity->next = NULL;
-    entity->prev = NULL;
     next_id++;
+    return (entity);
+}
+
+gc_entity *entity_create_with_id(int id)
+{
+    gc_entity *entity = malloc(sizeof(gc_entity));
+
+    if (!entity)
+        return (NULL);
+    *entity = entity_prefab;
+    entity->id = id;
     return (entity);
 }
 

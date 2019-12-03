@@ -32,3 +32,13 @@ void destroy(gc_entity *entity)
     }
     free(entity);
 }
+
+const gc_entity entity_prefab = {
+    id: 0,
+    components: NULL,
+    add_component: &entity_add_component,
+    serialize: &entity_serialize,
+    destroy: &destroy,
+    next: NULL,
+    prev: NULL
+};

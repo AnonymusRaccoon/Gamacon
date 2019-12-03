@@ -19,7 +19,13 @@ SRC = src/engine/engine.c \
 	src/utility/my_strdup.c \
 	src/utility/my_strlen.c \
 	src/utility/arraylen.c \
-	src/utility/tostr.c
+	src/utility/tostr.c \
+	src/utility/atoi.c \
+	src/utility/my_strchr.c \
+	src/utility/intparser.c \
+	src/utility/my_strcmp.c \
+	src/utility/pow.c \
+	src/deserializer/deserialize_entity.c
 
 OBJ = $(SRC:%.c=%.o)
 
