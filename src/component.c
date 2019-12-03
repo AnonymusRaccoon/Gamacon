@@ -11,16 +11,16 @@
 #include "utility.h"
 #include <stdlib.h>
 
-const gc_component *all_components[] = {
+const void *all_components[] = {
     &position_component,
     &movable_component,
     NULL
 };
 
-const gc_component *get_component(char *name)
+const void *get_component(char *name)
 {
     for (int i = 0; all_components[i]; i++) {
-        if (!my_strcmp(all_components[i]->name, name))
+        if (!my_strcmp(((const gc_component *)all_components[i])->name, name))
             return (all_components[i]);
     }
     return (NULL);
@@ -43,10 +43,10 @@ void *new_component(const void *component, ...)
     return (new_cmp);
 }
 
-void destroy(void *component)
+void component_destroy(void *component)
 {
     gc_component *cmp = (gc_component *)component;
     if (cmp->dtr)
         cmp->dtr(component);
-    free(cmp);
+    free(component);
 }

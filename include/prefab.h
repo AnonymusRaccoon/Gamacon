@@ -9,4 +9,7 @@
 
 #include "entity.h"
 
-gc_entity *deserialize_entity(int fd);
+gc_entity *prefab_load(gc_engine *engine, const char *path);
+
+
+gc_entity *deserialize_entity(gc_engine *engine, int fd);

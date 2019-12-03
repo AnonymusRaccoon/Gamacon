@@ -25,7 +25,11 @@ SRC = src/engine/engine.c \
 	src/utility/intparser.c \
 	src/utility/my_strcmp.c \
 	src/utility/pow.c \
-	src/deserializer/deserialize_entity.c
+	src/utility/read_line.c \
+	src/deserializer/deserialize_entity.c \
+	src/deserializer/prefab.c \
+	src/system.c \
+	src/system/texture_renderer_system.c
 
 OBJ = $(SRC:%.c=%.o)
 

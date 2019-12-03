@@ -10,6 +10,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+gc_component *entity_get_component(const gc_entity *entity, const char *name)
+{
+    for (gc_component *cmp = entity->components; cmp; cmp = cmp->next) {
+        if (!my_strcmp(cmp->name, name))
+            return (cmp);
+    }
+    return (NULL);
+}
+
+bool entity_has_component(const gc_entity *entity, const char *name)
+{
+    for (gc_component *cmp = entity->components; cmp; cmp = cmp->next) {
+        if (!my_strcmp(cmp->name, name))
+            return (true);
+    }
+    return (false);
+}
+
 char *entity_serialize(gc_entity *entity, int fd)
 {
     char *id = tostr(entity->id);
@@ -22,7 +40,7 @@ char *entity_serialize(gc_entity *entity, int fd)
     return (NULL);
 }
 
-void destroy(gc_entity *entity)
+static void destroy(gc_entity *entity)
 {
     gc_component *next = NULL;
 
@@ -37,6 +55,8 @@ const gc_entity entity_prefab = {
     id: 0,
     components: NULL,
     add_component: &entity_add_component,
+    get_component: &entity_get_component,
+    has_component: &entity_has_component,
     serialize: &entity_serialize,
     destroy: &destroy,
     next: NULL,

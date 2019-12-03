@@ -20,27 +20,10 @@ long get_nbr(char **str, int length)
     return (n + get_nbr(str, length - 1));
 }
 
-int parse_int(char **str)
+int parse_end(char **str, int strlen, int start, int mult)
 {
-    int strlen = 0;
-    int start = -1;
-    int mult = 1;
     long nbr;
 
-    for (int i = 0; (*str)[i]; i++) {
-        if ((*str)[i] >= '0' && (*str)[i] <= '9') {
-            start = start == -1 ? 0 : start;
-            strlen++;
-            continue;
-        }
-        if (start == -1 &&
-            ((*str)[i] == ' ' || (*str)[i] == '+' || (*str)[i] == '-')) {
-            start++;
-            mult = (*str)[i] == '-' ? -1 : 1;
-            continue;
-        }
-        break;
-    }
     if (strlen > 12 || strlen == 0)
         return (0);
     *str = *str + start;
@@ -48,4 +31,27 @@ int parse_int(char **str)
     if (nbr > 2147483647 || nbr < -2147483648)
         return (0);
     return (nbr);
+}
+
+int parse_int(char **str)
+{
+    int strlen = 0;
+    int start = -1;
+    int mult = 1;
+
+    for (int i = 0; (*str)[i]; i++) {
+        if ((*str)[i] >= '0' && (*str)[i] <= '9') {
+            start = start == -1 ? 0 : start;
+            strlen++;
+            continue;
+        }
+        if (start == -1 && \
+((*str)[i] == ' ' || (*str)[i] == '+' || (*str)[i] == '-')) {
+            start++;
+            mult = (*str)[i] == '-' ? -1 : 1;
+            continue;
+        }
+        break;
+    }
+    return (parse_end(str, strlen, start, mult));
 }

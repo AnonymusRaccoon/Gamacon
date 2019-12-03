@@ -17,3 +17,5 @@ struct gc_texture
     sfTexture *texture;
     void (*destroy)(gc_texture *texture);
 };
+
+gc_texture *get_texture(gc_engine *engine, char *name);

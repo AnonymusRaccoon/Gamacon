@@ -17,12 +17,13 @@ void position_ctr(void *component, va_list args)
     cmp->position = va_arg(args, vector2);
 }
 
-void position_fdctr(void *component, char *args)
+void position_fdctr(gc_engine *engine, void *component, char *args)
 {
     struct position_component *cmp = (struct position_component *)component;
 
-    cmp->position.x = parse_int(&args);;
-    cmp->position.y = parse_int(&args);;
+    cmp->position.x = parse_int(&args);
+    cmp->position.y = parse_int(&args);
+    (void)engine;
 }
 
 char *position_serialize(void *component)
@@ -31,13 +32,16 @@ char *position_serialize(void *component)
     return (NULL);
 }
 
-const gc_component position_component = {
-    name: "PositionComponent",
-    size: sizeof(struct position_component),
-    dependencies: NULL,
-    ctr: &position_ctr,
-    fdctr: &position_fdctr,
-    dtr: NULL,
-    serialize: &position_serialize,
-    tostr: NULL
+const struct position_component position_component = {
+    base: {
+        name: "PositionComponent",
+        size: sizeof(struct position_component),
+        dependencies: NULL,
+        ctr: &position_ctr,
+        fdctr: &position_fdctr,
+        dtr: NULL,
+        serialize: &position_serialize,
+        destroy: &component_destroy
+    },
+    position: {0, 0}
 };

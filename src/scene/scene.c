@@ -15,7 +15,7 @@ int scene_add_entity(gc_scene *scene, gc_entity *entity)
 {
     gc_entity *list;
 
-    if (!scene)
+    if (!scene || !entity)
         return (-1);
     list = scene->entities;
     if (!list) {

@@ -11,10 +11,10 @@
 
 struct movable_component
 {
-    gc_component *base;
+    gc_component base;
     int left_key;
     int right_key;
     int jump_key;
 };
 
-const gc_component movable_component;
+const struct movable_component movable_component;

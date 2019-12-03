@@ -2,18 +2,18 @@
 ** EPITECH PROJECT, 2019
 ** MUL_my_runner_2019
 ** File description:
-** position_component
+** texture_renderer
 */
 
 #pragma once
 
 #include "component.h"
-#include "vector2.h"
+#include "texture.h"
 
-struct position_component
+struct texture_renderer
 {
     gc_component base;
-    vector2 position;
+    gc_texture *texture;
 };
 
-const struct position_component position_component;
+const struct texture_renderer texture_renderer;

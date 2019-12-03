@@ -5,11 +5,23 @@
 ** renderer_loader
 */
 
+#include "engine.h"
 #include "texture.h"
 #include "utility.h"
 #include <SFML/Graphics.h>
 #include <stdlib.h>
 
+
+gc_texture *get_texture(gc_engine *engine, char *name)
+{
+    gc_texture **textures = engine->scene->textures;
+
+    for (int i = 0; textures[i]; i++) {
+        if (!my_strcmp(textures[i]->name, name))
+            return (textures[i]);
+    }
+    return (NULL);
+}
 
 void texture_destroy(gc_texture *texture)
 {
