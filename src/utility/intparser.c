@@ -28,6 +28,7 @@ int parse_end(char **str, int strlen, int start, int mult)
         return (0);
     *str = *str + start;
     nbr = get_nbr(str, strlen) * mult;
+    *str += 1;
     if (nbr > 2147483647 || nbr < -2147483648)
         return (0);
     return (nbr);

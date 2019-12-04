@@ -17,4 +17,4 @@ struct movable_component
     int jump_key;
 };
 
-const struct movable_component movable_component;
+extern const struct movable_component movable_component;

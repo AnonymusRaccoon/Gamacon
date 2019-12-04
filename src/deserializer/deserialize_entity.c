@@ -18,7 +18,7 @@ gc_component *deserialize_component(gc_engine *engine, int fd)
     gc_component *cmp = NULL;
     char *args;
 
-    if (!component || my_strcmp(component, ""))
+    if (!component || !my_strcmp(component, ""))
         return (NULL);
     args = my_strchr(component, ' ');
     if (!args)

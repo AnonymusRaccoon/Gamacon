@@ -13,7 +13,7 @@
 struct position_component
 {
     gc_component base;
-    vector2 position;
+    gc_vector2 position;
 };
 
-const struct position_component position_component;
+extern const struct position_component position_component;

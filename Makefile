@@ -15,6 +15,7 @@ SRC = src/engine/engine.c \
 	src/component.c \
 	src/components/movable_component.c \
 	src/components/position_component.c \
+	src/components/texture_renderer.c \
 	src/scene/scene.c \
 	src/utility/my_strdup.c \
 	src/utility/my_strlen.c \

@@ -9,6 +9,8 @@ typedef struct gc_engine gc_engine;
 #pragma once
 
 #include "scene.h"
+#include "vector2.h"
+#include "texture.h"
 #include <stdbool.h>
 #include <SFML/Graphics.h>
 
@@ -18,8 +20,10 @@ struct gc_engine
     bool (*is_open)(gc_engine *engine);
     int (*game_loop)(gc_engine *engine);
     int (*change_scene)(gc_engine *engine, gc_scene *scene);
+    void (*draw_texture)(gc_engine *, gc_texture *, gc_vector2);
 
     sfRenderWindow *window;
+    sfSprite *sprite;
     void (*draw)(gc_engine *engine);
 };
 

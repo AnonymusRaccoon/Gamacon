@@ -16,4 +16,4 @@ struct texture_renderer
     gc_texture *texture;
 };
 
-const struct texture_renderer texture_renderer;
+extern const struct texture_renderer texture_renderer;

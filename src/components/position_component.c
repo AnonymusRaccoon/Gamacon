@@ -14,7 +14,7 @@ void position_ctr(void *component, va_list args)
 {
     struct position_component *cmp = (struct position_component *)component;
 
-    cmp->position = va_arg(args, vector2);
+    cmp->position = va_arg(args, gc_vector2);
 }
 
 void position_fdctr(gc_engine *engine, void *component, char *args)

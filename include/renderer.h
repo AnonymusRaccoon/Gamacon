@@ -11,3 +11,4 @@
 
 void renderer_draw(gc_engine *engine);
 gc_texture *texture_create(const char *path);
+void renderer_draw_texture(gc_engine *engine, gc_texture *text, gc_vector2 pos);

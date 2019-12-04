@@ -18,10 +18,10 @@ struct gc_system
     const char *name;
     const char *component_name;
     bool (*check_dependencies)(const gc_system *, const gc_entity *);
-    void (*update_entity)(const gc_entity *entity);
+    void (*update_entity)(gc_engine *engine, gc_entity *entity);
 };
 
-const gc_system *all_systems[2];
+extern const gc_system *all_systems[];
 
 bool system_check_dependencies(const gc_system *sys, const gc_entity *entity);
 void system_destroy(void *system);

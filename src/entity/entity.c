@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-gc_component *entity_get_component(const gc_entity *entity, const char *name)
+void *entity_get_component(const gc_entity *entity, const char *name)
 {
     for (gc_component *cmp = entity->components; cmp; cmp = cmp->next) {
         if (!my_strcmp(cmp->name, name))
