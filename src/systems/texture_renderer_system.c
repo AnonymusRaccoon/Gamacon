@@ -20,7 +20,7 @@ void tex_rend_update_entity(gc_engine *engine, gc_entity *entity)
     struct texture_renderer *text = (\
 struct texture_renderer *)entity->get_component(entity, "TextureRenderer");
 
-    engine->draw_texture(engine, text->texture, pos->position);
+    engine->draw_texture(engine, text->texture, pos->position, text->scale);
 }
 
 const gc_system texture_renderer_system = {

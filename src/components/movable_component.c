@@ -23,9 +23,9 @@ static void movable_fdctr(gc_engine *engine, void *component, char *args)
 {
     struct movable_component *cmp = (struct movable_component *)component;
 
-    cmp->left_key = parse_int(&args);
-    cmp->right_key = parse_int(&args);
-    cmp->jump_key = parse_int(&args);
+    cmp->left_key = parse_arg_int(&args);
+    cmp->right_key = parse_arg_int(&args);
+    cmp->jump_key = parse_arg_int(&args);
     (void)engine;
 }
 

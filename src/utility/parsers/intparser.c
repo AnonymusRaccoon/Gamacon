@@ -34,7 +34,7 @@ int parse_end(char **str, int strlen, int start, int mult)
     return (nbr);
 }
 
-int parse_int(char **str)
+int parse_arg_int(char **str)
 {
     int strlen = 0;
     int start = -1;

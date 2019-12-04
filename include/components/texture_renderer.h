@@ -9,11 +9,13 @@
 
 #include "component.h"
 #include "texture.h"
+#include "vector2.h"
 
 struct texture_renderer
 {
     gc_component base;
     gc_texture *texture;
+    gc_vector2 scale;
 };
 
 extern const struct texture_renderer texture_renderer;

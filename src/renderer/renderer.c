@@ -9,12 +9,14 @@
 #include <SFML/Graphics.h>
 
 
-void renderer_draw_texture(gc_engine *engine, gc_texture *text, gc_vector2 pos)
+void renderer_draw_texture(gc_engine *engine, gc_texture *text, \
+gc_vector2 pos, gc_vector2 scale)
 {
     if (!text)
         return;
     sfSprite_setTexture(engine->sprite, text->texture, true);
     sfSprite_setPosition(engine->sprite, (sfVector2f){pos.x, pos.y});
+    sfSprite_setScale(engine->sprite, (sfVector2f){scale.x, scale.y});
     sfRenderWindow_drawSprite(engine->window, engine->sprite, NULL);
 }
 

@@ -32,14 +32,16 @@ int scene_add_entity(gc_scene *scene, gc_entity *entity)
 int scene_load_textures(gc_scene *scene, const char **textures)
 {
     gc_texture *texture;
+    int len = arraylen(textures) + 1;
 
-    scene->textures = malloc(sizeof(gc_texture) * (arraylen(textures)));
+    scene->textures = malloc(sizeof(gc_texture) * len);
     for (int i = 0; textures[i]; i++) {
         texture = texture_create(textures[i]);
         if (!texture)
             return (-1);
         scene->textures[i] = texture;
     }
+    scene->textures[len - 1] = NULL;
     return (0);
 }
 
@@ -49,7 +51,8 @@ gc_scene *scene_create(const char **textures)
 
     if (!scene)
         return (NULL);
-    if (scene_load_textures(scene, textures) < 0)
+    scene->textures = NULL;
+    if (textures && scene_load_textures(scene, textures) < 0)
         return (NULL);
     scene->entities = NULL;
     scene->add_entity = &scene_add_entity;

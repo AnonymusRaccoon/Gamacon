@@ -21,8 +21,8 @@ void position_fdctr(gc_engine *engine, void *component, char *args)
 {
     struct position_component *cmp = (struct position_component *)component;
 
-    cmp->position.x = parse_int(&args);
-    cmp->position.y = parse_int(&args);
+    cmp->position.x = parse_arg_int(&args);
+    cmp->position.y = parse_arg_int(&args);
     (void)engine;
 }
 
