@@ -14,6 +14,7 @@ struct position_component
 {
     gc_component base;
     gc_vector2 position;
+    gc_vector2 size;
 };
 
 extern const struct position_component position_component;

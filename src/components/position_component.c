@@ -15,6 +15,7 @@ void position_ctr(void *component, va_list args)
     struct position_component *cmp = (struct position_component *)component;
 
     cmp->position = va_arg(args, gc_vector2);
+    cmp->size = va_arg(args, gc_vector2);
 }
 
 void position_fdctr(gc_engine *engine, void *component, char *args)
@@ -23,6 +24,8 @@ void position_fdctr(gc_engine *engine, void *component, char *args)
 
     cmp->position.x = parse_arg_int(&args);
     cmp->position.y = parse_arg_int(&args);
+    cmp->size.x = parse_arg_float(&args);
+    cmp->size.y = parse_arg_float(&args);
     (void)engine;
 }
 
@@ -43,5 +46,6 @@ const struct position_component position_component = {
         serialize: &position_serialize,
         destroy: &component_destroy
     },
-    position: {0, 0}
+    position: {0, 0},
+    size: {0, 0}
 };

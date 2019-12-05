@@ -45,20 +45,6 @@ int scene_load_textures(gc_scene *scene, const char **textures)
     return (0);
 }
 
-gc_scene *scene_create(const char **textures)
-{
-    gc_scene *scene = malloc(sizeof(gc_scene));
-
-    if (!scene)
-        return (NULL);
-    scene->textures = NULL;
-    if (textures && scene_load_textures(scene, textures) < 0)
-        return (NULL);
-    scene->entities = NULL;
-    scene->add_entity = &scene_add_entity;
-    return (scene);
-}
-
 void scene_destroy(gc_scene *scene)
 {
     gc_entity *next = NULL;
@@ -71,4 +57,19 @@ void scene_destroy(gc_scene *scene)
         scene->textures[i]->destroy(scene->textures[i]);
     }
     free(scene);
+}
+
+gc_scene *scene_create(const char **textures)
+{
+    gc_scene *scene = malloc(sizeof(gc_scene));
+
+    if (!scene)
+        return (NULL);
+    scene->textures = NULL;
+    if (textures && scene_load_textures(scene, textures) < 0)
+        return (NULL);
+    scene->entities = NULL;
+    scene->add_entity = &scene_add_entity;
+    scene->destroy = &scene_destroy;
+    return (scene);
 }

@@ -9,4 +9,4 @@
 
 #include "system.h"
 
-const gc_system texture_renderer_system;
+extern const gc_system texture_renderer_system;

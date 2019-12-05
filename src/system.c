@@ -9,11 +9,6 @@
 #include "utility.h"
 #include <stdlib.h>
 
-const gc_system *all_systems[] = {
-    &texture_renderer_system,
-    NULL
-};
-
 bool system_check_dependencies(const gc_system *sys, const gc_entity *entity)
 {
     void *cmp = entity->get_component(entity, sys->component_name);
@@ -28,16 +23,16 @@ bool system_check_dependencies(const gc_system *sys, const gc_entity *entity)
     return (true);
 }
 
-const void *get_system(char *name)
+const void *get_system(gc_engine *engine, char *name)
 {
-    for (int i = 0; all_systems[i]; i++) {
-        if (!my_strcmp(((const gc_system *)all_systems[i])->name, name))
-            return (all_systems[i]);
+    for (gc_list *sys = engine->systems; sys; sys = sys->next) {
+        if (!my_strcmp(((const gc_system *)sys->data)->name, name))
+            return (sys);
     }
     return (NULL);
 }
 
-void system_destroy(void *component)
+void system_destroy(void *system)
 {
-    free(component);
+    free(system);
 }

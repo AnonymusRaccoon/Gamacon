@@ -19,9 +19,8 @@ struct gc_system
     const char *component_name;
     bool (*check_dependencies)(const gc_system *, const gc_entity *);
     void (*update_entity)(gc_engine *engine, gc_entity *entity);
+    void (*destroy)(void *system);
 };
-
-extern const gc_system *all_systems[];
 
 bool system_check_dependencies(const gc_system *sys, const gc_entity *entity);
 void system_destroy(void *system);

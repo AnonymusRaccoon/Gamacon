@@ -10,13 +10,16 @@
 
 
 void renderer_draw_texture(gc_engine *engine, gc_texture *text, \
-gc_vector2 pos, gc_vector2 scale)
+gc_vector2 pos, gc_vector2 size)
 {
+    sfVector2u t;
+
     if (!text)
         return;
+    t = sfTexture_getSize(text->texture);
     sfSprite_setTexture(engine->sprite, text->texture, true);
     sfSprite_setPosition(engine->sprite, (sfVector2f){pos.x, pos.y});
-    sfSprite_setScale(engine->sprite, (sfVector2f){scale.x, scale.y});
+    sfSprite_setScale(engine->sprite, (sfVector2f){size.x / t.x, size.y / t.y});
     sfRenderWindow_drawSprite(engine->window, engine->sprite, NULL);
 }
 

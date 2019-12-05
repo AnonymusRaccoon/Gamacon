@@ -12,15 +12,15 @@
 #include "utility.h"
 #include <stdlib.h>
 
-const void *all_components[] = {
-    &position_component,
-    &movable_component,
-    &texture_renderer,
-    NULL
-};
-
 const void *get_component(char *name)
 {
+    static const void *all_components[] = {
+        &position_component,
+        &movable_component,
+        &texture_renderer,
+        NULL
+    };
+
     for (int i = 0; all_components[i]; i++) {
         if (!my_strcmp(((const gc_component *)all_components[i])->name, name))
             return (all_components[i]);
