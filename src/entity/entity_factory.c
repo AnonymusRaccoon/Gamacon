@@ -35,6 +35,21 @@ gc_entity *entity_create_with_id(int id)
     return (entity);
 }
 
+gc_entity *entity_add(gc_entity *list, gc_entity *entity)
+{
+    gc_entity *list_const = list;
+
+    if (!list) {
+        return (entity);
+    } else {
+        while (list->next)
+            list = list->next;
+        list->next = entity;
+        entity->prev = list;
+        return (list_const);
+    }
+}
+
 gc_entity *entity_add_component(gc_entity *entity, void *component)
 {
     gc_component *components = entity->components;

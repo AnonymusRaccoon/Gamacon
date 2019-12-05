@@ -33,7 +33,7 @@ struct gc_engine
     void (*draw)(gc_engine *engine);
 };
 
-gc_engine *engine_create(char *title);
+gc_engine *engine_create(char *title, unsigned framerate);
 bool engine_is_open(gc_engine *engine);
 void handle_events(gc_engine *engine);
 int change_scene(gc_engine *engine, gc_scene *scene);

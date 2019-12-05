@@ -29,5 +29,6 @@ struct gc_entity
 
 gc_entity *entity_create(void);
 gc_entity *entity_create_with_id(int id);
+gc_entity *entity_add(gc_entity *list, gc_entity *entity);
 gc_entity *entity_add_component(gc_entity *entity, void *component);
 char *entity_serialize(gc_entity *entity, int fd);

@@ -46,18 +46,29 @@ void engine_destroy(gc_engine *engine)
     free(engine);
 }
 
-gc_engine *engine_create(char *title)
+int engine_create_sfdata(gc_engine *engine, char *title, unsigned framerate)
 {
-    gc_engine *engine = malloc(sizeof(gc_engine));
     sfVideoMode mode = {800, 600, 32};
     sfWindowStyle style = sfDefaultStyle;
 
-    if (!engine)
-        return (NULL);
     engine->window = sfRenderWindow_create(mode, title, style, NULL);
     engine->sprite = sfSprite_create();
     if (!engine->window || !engine->sprite)
+        return (-1);
+    sfRenderWindow_setFramerateLimit(engine->window, framerate);
+    return (0);
+}
+
+gc_engine *engine_create(char *title, unsigned framerate)
+{
+    gc_engine *engine = malloc(sizeof(gc_engine));
+
+    if (!engine)
         return (NULL);
+    if (engine_create_sfdata(engine, title, framerate) < 0) {
+        free(engine);
+        return (NULL);
+    }
     engine->is_open = &engine_is_open;
     engine->game_loop = &game_loop;
     engine->change_scene = &change_scene;

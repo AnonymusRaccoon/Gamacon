@@ -13,20 +13,10 @@
 
 int scene_add_entity(gc_scene *scene, gc_entity *entity)
 {
-    gc_entity *list;
-
     if (!scene || !entity)
         return (-1);
-    list = scene->entities;
-    if (!list) {
-        scene->entities = entity;
-    } else {
-        while (list->next)
-            list = list->next;
-        list->next = entity;
-        entity->prev = list;
-    }
-    return (1);
+    scene->entities = entity_add(scene->entities, entity);
+    return (0);
 }
 
 int scene_load_textures(gc_scene *scene, const char **textures)
