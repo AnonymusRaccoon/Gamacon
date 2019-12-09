@@ -24,9 +24,6 @@ SRC = src/engine/engine.c \
 	src/utility/tostr.c \
 	src/utility/atoi.c \
 	src/utility/my_strchr.c \
-	src/utility/parsers/intparser.c \
-	src/utility/parsers/floatparser.c \
-	src/utility/parsers/stringparser.c \
 	src/utility/my_strcmp.c \
 	src/utility/pow.c \
 	src/utility/read_line.c \
