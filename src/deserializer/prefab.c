@@ -21,8 +21,7 @@ gc_entity *prefab_load(gc_engine *engine, const char *path)
 
     if (!n)
         return (NULL);
-    n = xml_getnode(n, "gc_scene");
-    for (node *ent_n = n->child; n; n = n->next)
+    for (node *ent_n = n->child; ent_n; ent_n = ent_n->next)
         entity = entity_add(entity, deserialize_entity(engine, ent_n));
     xml_destroy(n);
     return (entity);

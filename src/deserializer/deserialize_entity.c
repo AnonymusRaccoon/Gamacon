@@ -38,7 +38,7 @@ gc_entity *deserialize_entity(gc_engine *engine, node *n)
         entity = entity_create();
     if (!entity)
         return (NULL);
-    for (node *cmp_n = n->child; n; n = n->next) {
+    for (node *cmp_n = n->child; cmp_n; cmp_n = cmp_n->next) {
         cmp = deserialize_component(engine, cmp_n);
         entity->add_component(entity, cmp);
     }

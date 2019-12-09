@@ -9,6 +9,7 @@
 #include "components/transform_component.h"
 #include "components/movable_component.h"
 #include "components/texture_renderer.h"
+#include "components/parallax_component.h"
 #include "utility.h"
 #include <stdlib.h>
 
@@ -18,6 +19,7 @@ const void *get_component(char *name)
         &transform_component,
         &movable_component,
         &texture_renderer,
+        &parallax_component,
         NULL
     };
 

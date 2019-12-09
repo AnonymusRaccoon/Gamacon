@@ -54,6 +54,8 @@ gc_entity *entity_add_component(gc_entity *entity, void *component)
 {
     gc_component *components = entity->components;
 
+    if (!component)
+        return (NULL);
     if (!components)
         entity->components = component;
     else {
