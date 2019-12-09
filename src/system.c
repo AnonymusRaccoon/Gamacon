@@ -14,10 +14,10 @@ bool system_check_dependencies(const gc_system *sys, const gc_entity *entity)
     void *cmp = entity->get_component(entity, sys->component_name);
     gc_component *comp = (gc_component *)cmp;
 
-    if (!cmp)
+    if (!comp)
         return (false);
-    for (gc_component *dep = comp->dependencies; dep; dep = comp->next) {
-        if (!entity->has_component(entity, dep->name))
+    for (int i = 0; comp->dependencies[i]; i++) {
+        if (!entity->has_component(entity, comp->dependencies[i]))
             return (false);
     }
     return (true);

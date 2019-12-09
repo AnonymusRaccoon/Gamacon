@@ -10,22 +10,24 @@
 #include "renderer.h"
 #include <stdlib.h>
 #include <SFML/Graphics.h>
+#include <SFML/System.h>
 
-void update_entity(gc_engine *engine, gc_entity *entity)
+void update_entity(gc_engine *engine, gc_entity *entity, float dtime)
 {
     for (gc_list *sys = engine->systems; sys; sys = sys->next) {
         if (((gc_system *)sys->data)->check_dependencies(sys->data, entity))
-            ((gc_system *)sys->data)->update_entity(engine, entity);
+            ((gc_system *)sys->data)->update_entity(engine, entity, dtime);
     }
 }
 
 int game_loop(gc_engine *engine)
 {
     gc_entity *entities = engine->scene->entities;
+    float dtime = sfTime_asSeconds(sfClock_restart(engine->clock));
 
     handle_events(engine);
     for (gc_entity *entity = entities; entity; entity = entity->next)
-        update_entity(engine, entity);
+        update_entity(engine, entity, dtime);
     engine->draw(engine);
     return (0);
 }
@@ -43,6 +45,7 @@ void engine_destroy(gc_engine *engine)
     }
     sfSprite_destroy(engine->sprite);
     sfRenderWindow_destroy(engine->window);
+    sfClock_destroy(engine->clock);
     free(engine);
 }
 
@@ -53,7 +56,8 @@ int engine_create_sfdata(gc_engine *engine, char *title, unsigned framerate)
 
     engine->window = sfRenderWindow_create(mode, title, style, NULL);
     engine->sprite = sfSprite_create();
-    if (!engine->window || !engine->sprite)
+    engine->clock = sfClock_create();
+    if (!engine->window || !engine->sprite || !engine->clock)
         return (-1);
     sfRenderWindow_setFramerateLimit(engine->window, framerate);
     return (0);

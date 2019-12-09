@@ -5,6 +5,7 @@
 ** prefab
 */
 
+#include "xml.h"
 #include "engine.h"
 #include "entity.h"
 #include "prefab.h"
@@ -16,15 +17,13 @@
 gc_entity *prefab_load(gc_engine *engine, const char *path)
 {
     gc_entity *entity = NULL;
-    int fd = open(path, O_RDONLY);
-    char *object_type = NULL;
+    node *n = xml_parse(path);
 
-    if (fd == -1)
+    if (!n)
         return (NULL);
-    while ((object_type = read_line(fd))) {
-        if (!my_strcmp(object_type, "Entity"))
-            entity = entity_add(entity, deserialize_entity(engine, fd));
-    }
-    close(fd);
+    n = xml_getnode(n, "gc_scene");
+    for (node *ent_n = n->child; n; n = n->next)
+        entity = entity_add(entity, deserialize_entity(engine, ent_n));
+    xml_destroy(n);
     return (entity);
 }

@@ -8,11 +8,13 @@ typedef struct gc_engine gc_engine;
 
 #pragma once
 
+#include "xml.h"
 #include "scene.h"
 #include "vector2.h"
 #include "texture.h"
 #include "system.h"
 #include "list.h"
+#include "sprite.h"
 #include <stdbool.h>
 #include <SFML/Graphics.h>
 
@@ -22,7 +24,7 @@ struct gc_engine
     bool (*is_open)(gc_engine *engine);
     int (*game_loop)(gc_engine *engine);
     int (*change_scene)(gc_engine *engine, gc_scene *scene);
-    void (*draw_texture)(gc_engine *, gc_texture *, gc_vector2, gc_vector2);
+    void (*draw_texture)(gc_engine *, gc_sprite *);
     void (*destroy)(gc_engine *engine);
 
     gc_list *systems;
@@ -30,6 +32,7 @@ struct gc_engine
 
     sfRenderWindow *window;
     sfSprite *sprite;
+    sfClock *clock;
     void (*draw)(gc_engine *engine);
 };
 

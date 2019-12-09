@@ -5,6 +5,7 @@
 ** movable_component
 */
 
+#include "xml.h"
 #include "component.h"
 #include "components/movable_component.h"
 #include "utility.h"
@@ -19,13 +20,13 @@ static void movable_ctr(void *component, va_list args)
     cmp->jump_key = va_arg(args, int);
 }
 
-static void movable_fdctr(gc_engine *engine, void *component, char *args)
+static void movable_fdctr(gc_engine *engine, void *component, node *n)
 {
     struct movable_component *cmp = (struct movable_component *)component;
 
-    cmp->left_key = parse_arg_int(&args);
-    cmp->right_key = parse_arg_int(&args);
-    cmp->jump_key = parse_arg_int(&args);
+    cmp->left_key = xml_getproperty(n, "left")[0];
+    cmp->right_key = xml_getproperty(n, "right")[0];
+    cmp->jump_key = xml_getproperty(n, "jump")[0];
     (void)engine;
 }
 
@@ -44,7 +45,7 @@ const struct movable_component movable_component = {
     base: {
         name: "MovableComponent",
         size: sizeof(struct movable_component),
-        dependencies: NULL,
+        dependencies: (char *[]){NULL},
         ctr: &movable_ctr,
         fdctr: &movable_fdctr,
         dtr: &movable_dtr,

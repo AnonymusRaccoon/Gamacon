@@ -10,18 +10,23 @@
 #include "texture.h"
 #include "vector2.h"
 #include "systems/texture_renderer_system.h"
-#include "components/position_component.h"
+#include "components/transform_component.h"
 #include "components/texture_renderer.h"
 #include <stddef.h>
 
-void tex_rend_update_entity(gc_engine *engine, gc_entity *entity)
+void tex_rend_update_entity(gc_engine *engine, gc_entity *entity, float dtime)
 {
-    struct position_component *pos = \
-(struct position_component *)entity->get_component(entity, "PositionComponent");
+    struct transform_component *pos = \
+(struct transform_component *)entity->get_component(entity, "TransformComponent");
     struct texture_renderer *text = (\
 struct texture_renderer *)entity->get_component(entity, "TextureRenderer");
 
-    engine->draw_texture(engine, text->texture, pos->position, pos->size);
+    if (!text->sprite)
+        return;
+    text->sprite->pos = pos->position;
+    text->sprite->size = pos->size;
+    engine->draw_texture(engine, text->sprite);
+    (void)dtime;
 }
 
 void tex_rend_destroy(void *system)

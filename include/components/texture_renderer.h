@@ -8,13 +8,13 @@
 #pragma once
 
 #include "component.h"
-#include "texture.h"
+#include "sprite.h"
 #include "vector2.h"
 
 struct texture_renderer
 {
     gc_component base;
-    gc_texture *texture;
+    gc_sprite *sprite;
 };
 
 extern const struct texture_renderer texture_renderer;

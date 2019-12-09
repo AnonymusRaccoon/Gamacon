@@ -6,7 +6,7 @@
 */
 
 #include "component.h"
-#include "components/position_component.h"
+#include "components/transform_component.h"
 #include "components/movable_component.h"
 #include "components/texture_renderer.h"
 #include "utility.h"
@@ -15,7 +15,7 @@
 const void *get_component(char *name)
 {
     static const void *all_components[] = {
-        &position_component,
+        &transform_component,
         &movable_component,
         &texture_renderer,
         NULL

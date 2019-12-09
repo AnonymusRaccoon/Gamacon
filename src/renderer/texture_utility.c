@@ -16,7 +16,7 @@ gc_texture *get_texture(gc_engine *engine, char *name)
 {
     gc_texture **textures;
 
-    if (!engine->scene)
+    if (!engine->scene || !name)
         return (NULL);
     textures = engine->scene->textures;
     for (int i = 0; textures[i]; i++) {

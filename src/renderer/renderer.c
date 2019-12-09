@@ -6,20 +6,27 @@
 */
 
 #include "engine.h"
+#include "sprite.h"
 #include <SFML/Graphics.h>
 
-
-void renderer_draw_texture(gc_engine *engine, gc_texture *text, \
-gc_vector2 pos, gc_vector2 size)
+void renderer_draw_texture(gc_engine *engine, gc_sprite *sprite)
 {
+    sfVector2f pos = (sfVector2f){sprite->pos.x, sprite->pos.y};
+    sfVector2f scale;
     sfVector2u t;
+    sfIntRect rect = {
+        (int)sprite->rect.left, (int)sprite->rect.top,
+        (int)sprite->rect.width, (int)sprite->rect.height
+    };
 
-    if (!text)
+    if (!sprite->texture)
         return;
-    t = sfTexture_getSize(text->texture);
-    sfSprite_setTexture(engine->sprite, text->texture, true);
-    sfSprite_setPosition(engine->sprite, (sfVector2f){pos.x, pos.y});
-    sfSprite_setScale(engine->sprite, (sfVector2f){size.x / t.x, size.y / t.y});
+    t = sfTexture_getSize(sprite->texture->texture);
+    scale = (sfVector2f){sprite->size.x / t.x, sprite->size.y / t.y};
+    sfSprite_setTexture(engine->sprite, sprite->texture->texture, true);
+    sfSprite_setPosition(engine->sprite, pos);
+    sfSprite_setScale(engine->sprite, scale);
+    // sfSprite_setTextureRect(engine->sprite, rect);
     sfRenderWindow_drawSprite(engine->window, engine->sprite, NULL);
 }
 
