@@ -9,7 +9,7 @@ typedef struct gc_list gc_list;
 
 #pragma once
 
-struct gc_list 
+struct gc_list
 {
     void *data;
     gc_list *next;

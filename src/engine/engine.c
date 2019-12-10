@@ -16,7 +16,7 @@ void update_system(gc_engine *engine, gc_system *sys, float dtime)
 {
     gc_scene *scene = engine->scene;
     gc_list *entities;
-    
+
     if (!scene)
         return;
     entities = scene->get_entity_by_cmp(scene, sys->component_name);

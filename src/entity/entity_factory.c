@@ -42,7 +42,7 @@ int entity_add(gc_scene *scene, gc_entity *e)
     scene->entities = list_add(scene->entities, e);
     if (!scene->entities)
         return (-1);
-    for (gc_component *cmp = e->components; cmp; cmp =  cmp->next) {
+    for (gc_component *cmp = e->components; cmp; cmp = cmp->next) {
         name = cmp->name;
         scene->entities_by_cmp = tupple_add(scene->entities_by_cmp, name, e);
         if (!scene->entities_by_cmp)

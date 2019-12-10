@@ -16,10 +16,10 @@
 
 void tex_rend_update_entity(gc_engine *engine, gc_entity *entity, float dtime)
 {
-    struct transform_component *pos = \
-(struct transform_component *)entity->get_component(entity, "TransformComponent");
-    struct texture_renderer *text = (\
-struct texture_renderer *)entity->get_component(entity, "TextureRenderer");
+    struct transform_component *pos = (struct transform_component *)\
+entity->get_component(entity, "TransformComponent");
+    struct texture_renderer *text = (struct texture_renderer *)\
+entity->get_component(entity, "TextureRenderer");
 
     if (!text->sprite)
         return;

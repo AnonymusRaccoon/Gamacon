@@ -10,13 +10,13 @@
 #include "utility.h"
 #include <stdlib.h>
 
-static int tupple_add_existing(gc_tupple *l, const char *name, gc_entity *ent)
+static int tupple_add_existing(gc_tupple *li, const char *name, gc_entity *ent)
 {
-    while (l && my_strcmp(l->name, name))
-        l = l->next;
-    if (!l)
+    while (li && my_strcmp(li->name, name))
+        li = li->next;
+    if (!li)
         return (-1);
-    l->entities = list_add(l->entities, ent);
+    li->entities = list_add(li->entities, ent);
     return (0);
 }
 
