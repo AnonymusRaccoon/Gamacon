@@ -26,7 +26,7 @@ void renderer_draw_texture(gc_engine *engine, gc_sprite *sprite)
     sfSprite_setTexture(engine->sprite, sprite->texture->texture, true);
     sfSprite_setPosition(engine->sprite, pos);
     sfSprite_setScale(engine->sprite, scale);
-    // sfSprite_setTextureRect(engine->sprite, rect);
+    sfSprite_setTextureRect(engine->sprite, rect);
     sfRenderWindow_drawSprite(engine->window, engine->sprite, NULL);
 }
 

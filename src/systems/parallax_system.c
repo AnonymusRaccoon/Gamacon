@@ -24,6 +24,7 @@ void parallax_update_entity(gc_engine *engine, gc_entity *entity, float dtime)
     if (!text->sprite)
         return;
     text->sprite->rect.left += parallax->speed * dtime;
+    (void)engine;
 }
 
 void parallax_destroy(void *system)
@@ -31,7 +32,7 @@ void parallax_destroy(void *system)
     (void)system;
 }
 
-const gc_system texture_renderer_system = {
+const gc_system parallax_system = {
     name: "ParallaxSystem",
     component_name: "ParallaxComponent",
     check_dependencies: &system_check_dependencies,

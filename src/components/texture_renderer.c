@@ -43,7 +43,7 @@ static void texture_rend_fdctr(gc_engine *engine, void *component, node *n)
     cmp->sprite->rect.width = xml_getfloatprop(rect, "width");
     cmp->sprite->rect.top = xml_getfloatprop(rect, "top");
     cmp->sprite->rect.left = xml_getfloatprop(rect, "left");
-    if (cmp->sprite && cmp->sprite->rect.height < 0) {
+    if (cmp->sprite->texture && cmp->sprite->rect.height < 0) {
         size = sfTexture_getSize(cmp->sprite->texture->texture);
         cmp->sprite->rect.height = (float)size.y;
         cmp->sprite->rect.width = (float)size.x;

@@ -80,8 +80,7 @@ gc_engine *engine_create(char *title, unsigned framerate)
     engine->draw_texture = &renderer_draw_texture;
     engine->destroy = &engine_destroy;
     engine->scene = NULL;
-    engine->systems = NULL;
-    engine->add_system = &engine_add_system;
     engine_add_buildin_systems(engine);
+    engine_add_buildin_components(engine);
     return (engine);
 }

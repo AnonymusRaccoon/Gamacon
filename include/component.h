@@ -28,5 +28,4 @@ struct gc_component
 };
 
 void *new_component(const void *component, ...);
-const void *get_component(char *name);
 void component_destroy(void *component);

@@ -41,6 +41,9 @@ gc_texture *texture_create(const char *path)
         return (NULL);
     texture->texture = sfTexture_createFromFile(path, NULL);
     texture->name = my_strdup(path);
+    if (!texture->texture || !texture->name)
+        return (NULL);
+    sfTexture_setRepeated(texture->texture, sfTrue);
     texture->destroy = &texture_destroy;
     return (texture);
 }

@@ -14,11 +14,9 @@
 
 gc_component *deserialize_component(gc_engine *engine, node *n)
 {
-    const gc_component *model;
+    const void *model = engine->get_component(engine, n->name);
     gc_component *cmp = NULL;
 
-
-    model = get_component(n->name);
     if (!model)
         return (NULL);
     cmp = new_component(model, 0, 0, 0, 0, 0, 0, 0);

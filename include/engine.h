@@ -29,6 +29,10 @@ struct gc_engine
 
     gc_list *systems;
     void (*add_system)(gc_engine *engine, const gc_system *system);
+    const gc_system *(*get_system)(gc_engine *engine, const char *name);
+    gc_list *components;
+    void (*add_component)(gc_engine *engine, const void *component);
+    const void *(*get_component)(gc_engine *engine, const char *name);
 
     sfRenderWindow *window;
     sfSprite *sprite;
@@ -42,4 +46,9 @@ void handle_events(gc_engine *engine);
 int change_scene(gc_engine *engine, gc_scene *scene);
 
 void engine_add_buildin_systems(gc_engine *engine);
+const gc_system *engine_get_system(gc_engine *engine, const char *name);
 void engine_add_system(gc_engine *engine, const gc_system *system);
+
+void engine_add_buildin_components(gc_engine *engine);
+const void *engine_get_component(gc_engine *engine, const char *name);
+void engine_add_component(gc_engine *engine, const void *component);

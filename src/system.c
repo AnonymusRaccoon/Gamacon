@@ -23,11 +23,11 @@ bool system_check_dependencies(const gc_system *sys, const gc_entity *entity)
     return (true);
 }
 
-const void *get_system(gc_engine *engine, char *name)
+const gc_system *engine_get_system(gc_engine *engine, const char *name)
 {
     for (gc_list *sys = engine->systems; sys; sys = sys->next) {
         if (!my_strcmp(((const gc_system *)sys->data)->name, name))
-            return (sys);
+            return (sys->data);
     }
     return (NULL);
 }

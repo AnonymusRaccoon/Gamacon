@@ -13,19 +13,11 @@
 #include "utility.h"
 #include <stdlib.h>
 
-const void *get_component(char *name)
+const void *engine_get_component(gc_engine *engine, const char *name)
 {
-    static const void *all_components[] = {
-        &transform_component,
-        &movable_component,
-        &texture_renderer,
-        &parallax_component,
-        NULL
-    };
-
-    for (int i = 0; all_components[i]; i++) {
-        if (!my_strcmp(((const gc_component *)all_components[i])->name, name))
-            return (all_components[i]);
+    for (gc_list *cmp = engine->components; cmp; cmp = cmp->next) {
+        if (!my_strcmp(((const gc_component *)cmp->data)->name, name))
+            return (cmp->data);
     }
     return (NULL);
 }
