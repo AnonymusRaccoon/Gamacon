@@ -12,22 +12,27 @@
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 
-void update_entity(gc_engine *engine, gc_entity *entity, float dtime)
+void update_system(gc_engine *engine, gc_system *sys, float dtime)
 {
-    for (gc_list *sys = engine->systems; sys; sys = sys->next) {
-        if (((gc_system *)sys->data)->check_dependencies(sys->data, entity))
-            ((gc_system *)sys->data)->update_entity(engine, entity, dtime);
+    gc_scene *scene = engine->scene;
+    gc_list *entities;
+    
+    if (!scene)
+        return;
+    entities = scene->get_entity_by_cmp(scene, sys->component_name);
+    for (gc_list *entity = entities; entity; entity = entity->next) {
+        if (sys->check_dependencies(sys, entity->data))
+            sys->update_entity(engine, entity->data, dtime);
     }
 }
 
 int game_loop(gc_engine *engine)
 {
-    gc_entity *entities = engine->scene->entities;
     float dtime = sfTime_asSeconds(sfClock_restart(engine->clock));
 
     handle_events(engine);
-    for (gc_entity *entity = entities; entity; entity = entity->next)
-        update_entity(engine, entity, dtime);
+    for (gc_list *sys = engine->systems; sys; sys = sys->next)
+        update_system(engine, sys->data, dtime);
     engine->draw(engine);
     return (0);
 }

@@ -10,6 +10,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+gc_entity *entity_get(gc_scene *scene, int id)
+{
+    for (gc_list *ent = scene->entities; ent; ent = ent->next) {
+        if (((gc_entity *)ent->data)->id == id)
+            return (ent->data);
+    }
+    return (NULL);
+}
+
 void *entity_get_component(const gc_entity *entity, const char *name)
 {
     for (gc_component *cmp = entity->components; cmp; cmp = cmp->next) {
@@ -58,7 +67,5 @@ const gc_entity entity_prefab = {
     get_component: &entity_get_component,
     has_component: &entity_has_component,
     serialize: &entity_serialize,
-    destroy: &destroy,
-    next: NULL,
-    prev: NULL
+    destroy: &destroy
 };

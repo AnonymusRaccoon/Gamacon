@@ -15,23 +15,7 @@
 
 void engine_add_component(gc_engine *engine, const void *component)
 {
-    gc_list *components = engine->components;
-
-    if (!components) {
-        engine->components = malloc(sizeof(gc_list));
-        if (!engine->components)
-            return;
-        engine->components->data = (void *)component;
-        engine->components->next = NULL;
-    } else {
-        while (components->next)
-            components = components->next;
-        components->next = malloc(sizeof(gc_list));
-        if (!components->next)
-            return;
-        components->next->data = (void *)component;
-        components->next->next = NULL;
-    }
+    engine->components = list_add(engine->components, (void *)component);
 }
 
 void engine_add_buildin_components(gc_engine *engine)

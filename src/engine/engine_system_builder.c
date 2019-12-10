@@ -13,23 +13,7 @@
 
 void engine_add_system(gc_engine *engine, const gc_system *system)
 {
-    gc_list *systems = engine->systems;
-
-    if (!systems) {
-        engine->systems = malloc(sizeof(gc_list));
-        if (!engine->systems)
-            return;
-        engine->systems->data = (void *)system;
-        engine->systems->next = NULL;
-    } else {
-        while (systems->next)
-            systems = systems->next;
-        systems->next = malloc(sizeof(gc_list));
-        if (!systems->next)
-            return;
-        systems->next->data = (void *)system;
-        systems->next->next = NULL;
-    }
+    engine->systems = list_add(engine->systems, (void *)system);
 }
 
 void engine_add_buildin_systems(gc_engine *engine)

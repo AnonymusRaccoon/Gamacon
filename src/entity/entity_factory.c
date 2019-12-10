@@ -35,19 +35,20 @@ gc_entity *entity_create_with_id(int id)
     return (entity);
 }
 
-gc_entity *entity_add(gc_entity *list, gc_entity *entity)
+int entity_add(gc_scene *scene, gc_entity *e)
 {
-    gc_entity *list_const = list;
+    char *name;
 
-    if (!list) {
-        return (entity);
-    } else {
-        while (list->next)
-            list = list->next;
-        list->next = entity;
-        entity->prev = list;
-        return (list_const);
+    scene->entities = list_add(scene->entities, e);
+    if (!scene->entities)
+        return (-1);
+    for (gc_component *cmp = e->components; cmp; cmp =  cmp->next) {
+        name = cmp->name;
+        scene->entities_by_cmp = tupple_add(scene->entities_by_cmp, name, e);
+        if (!scene->entities_by_cmp)
+            return (-1);
     }
+    return (0);
 }
 
 gc_entity *entity_add_component(gc_entity *entity, void *component)

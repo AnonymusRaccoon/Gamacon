@@ -14,15 +14,22 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-gc_entity *prefab_load(gc_engine *engine, const char *path)
+int prefab_load(gc_engine *engine, const char *path)
 {
-    gc_entity *entity = NULL;
-    node *n = xml_parse(path);
+    node *n;
+    gc_entity *entity;
 
+    if (!engine || !engine->scene)
+        return (-1);
+    n = xml_parse(path);
     if (!n)
-        return (NULL);
-    for (node *ent_n = n->child; ent_n; ent_n = ent_n->next)
-        entity = entity_add(entity, deserialize_entity(engine, ent_n));
+        return (-1);
+    for (node *ent_n = n->child; ent_n; ent_n = ent_n->next) {
+        entity = deserialize_entity(engine, ent_n);
+        if (!entity)
+            return (-1);
+        engine->scene->add_entity(engine->scene, entity);
+    }
     xml_destroy(n);
-    return (entity);
+    return (0);
 }

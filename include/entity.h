@@ -22,13 +22,11 @@ struct gc_entity
     bool (*has_component)(const gc_entity *entity, const char *name);
     char *(*serialize)(gc_entity *entity, int fd);
     void (*destroy)(gc_entity *entity);
-
-    gc_entity *next;
-    gc_entity *prev;
 };
 
 gc_entity *entity_create(void);
 gc_entity *entity_create_with_id(int id);
-gc_entity *entity_add(gc_entity *list, gc_entity *entity);
+gc_entity *entity_get(gc_scene *scene, int id);
+int entity_add(gc_scene *scene, gc_entity *entity);
 gc_entity *entity_add_component(gc_entity *entity, void *component);
 char *entity_serialize(gc_entity *entity, int fd);

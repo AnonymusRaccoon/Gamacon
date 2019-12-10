@@ -27,6 +27,8 @@ SRC = src/engine/engine.c \
 	src/utility/my_strcmp.c \
 	src/utility/pow.c \
 	src/utility/read_line.c \
+	src/utility/list.c \
+	src/utility/tupple.c \
 	src/deserializer/deserialize_entity.c \
 	src/deserializer/prefab.c \
 	src/system.c \

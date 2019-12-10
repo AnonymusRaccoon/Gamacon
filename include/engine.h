@@ -30,6 +30,7 @@ struct gc_engine
     gc_list *systems;
     void (*add_system)(gc_engine *engine, const gc_system *system);
     const gc_system *(*get_system)(gc_engine *engine, const char *name);
+
     gc_list *components;
     void (*add_component)(gc_engine *engine, const void *component);
     const void *(*get_component)(gc_engine *engine, const char *name);

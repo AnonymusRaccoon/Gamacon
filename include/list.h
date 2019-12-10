@@ -14,3 +14,5 @@ struct gc_list
     void *data;
     gc_list *next;
 };
+
+gc_list *list_add(gc_list *list, void *obj);
