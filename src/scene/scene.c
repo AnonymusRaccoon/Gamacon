@@ -7,8 +7,8 @@
 
 #include "engine.h"
 #include "entity.h"
-#include "renderer.h"
 #include "utility.h"
+#include "texture.h"
 #include <stdlib.h>
 
 gc_list *get_entity_by_cmp(gc_scene *scene, const char *cmp_name)

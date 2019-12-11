@@ -7,15 +7,14 @@
 
 SRC = src/engine/engine.c \
 	src/engine/engine_internal.c \
-	src/engine/event_handler.c \
-	src/renderer/renderer.c \
+	src/renderer/sfml_functions.c \
 	src/renderer/texture_utility.c \
 	src/entity/entity.c \
 	src/entity/entity_factory.c \
 	src/component.c \
 	src/components/movable_component.c \
 	src/components/transform_component.c \
-	src/components/texture_renderer.c \
+	src/components/renderer.c \
 	src/components/parallax_component.c \
 	src/scene/scene.c \
 	src/utility/my_strdup.c \
@@ -32,7 +31,7 @@ SRC = src/engine/engine.c \
 	src/deserializer/deserialize_entity.c \
 	src/deserializer/prefab.c \
 	src/system.c \
-	src/systems/texture_renderer_system.c \
+	src/systems/sfml_renderer_system.c \
 	src/systems/parallax_system.c \
 	src/engine/engine_system_builder.c \
 	src/engine/engine_component_builder.c

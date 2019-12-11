@@ -8,7 +8,7 @@
 #include "component.h"
 #include "components/transform_component.h"
 #include "components/movable_component.h"
-#include "components/texture_renderer.h"
+#include "components/renderer.h"
 #include "components/parallax_component.h"
 #include "utility.h"
 #include <stdlib.h>

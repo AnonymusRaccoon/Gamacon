@@ -10,7 +10,18 @@
 
 bool engine_is_open(gc_engine *engine)
 {
-    return (sfRenderWindow_isOpen(engine->window));
+    (void)engine;
+    return (false);
+}
+
+void handle_events(gc_engine *engine)
+{
+    (void)engine;
+}
+
+void engine_draw(gc_engine *engine)
+{
+    (void)engine;
 }
 
 int change_scene(gc_engine *engine, gc_scene *scene)

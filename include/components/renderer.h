@@ -11,10 +11,15 @@
 #include "sprite.h"
 #include "vector2.h"
 
-struct texture_renderer
+enum GC_TEXTURETYPE {
+    GC_TEXTUREREND
+};
+
+struct renderer
 {
     gc_component base;
     gc_sprite *sprite;
+    enum GC_TEXTURETYPE type;
 };
 
-extern const struct texture_renderer texture_renderer;
+extern const struct renderer renderer_component;

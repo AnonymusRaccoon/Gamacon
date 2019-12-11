@@ -39,7 +39,7 @@ const struct parallax_component parallax_component = {
     base: {
         name: "ParallaxComponent",
         size: sizeof(struct parallax_component),
-        dependencies: (char *[]){"TransformComponent", "TextureRenderer", NULL},
+        dependencies: (char *[]){"TransformComponent", "Renderer", NULL},
         ctr: &parallax_ctr,
         fdctr: &parallax_fdctr,
         dtr: &parallax_dtr,

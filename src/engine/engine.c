@@ -7,7 +7,6 @@
 
 #include "engine.h"
 #include "system.h"
-#include "renderer.h"
 #include <stdlib.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
@@ -22,15 +21,13 @@ void update_system(gc_engine *engine, gc_system *sys, float dtime)
     entities = scene->get_entity_by_cmp(scene, sys->component_name);
     for (gc_list *entity = entities; entity; entity = entity->next) {
         if (sys->check_dependencies(sys, entity->data))
-            sys->update_entity(engine, entity->data, dtime);
+            sys->update_entity(sys, entity->data, dtime);
     }
 }
 
-int game_loop(gc_engine *engine)
+int game_loop(gc_engine *engine, float dtime)
 {
-    float dtime = sfTime_asSeconds(sfClock_restart(engine->clock));
-
-    handle_events(engine);
+    engine->handle_events(engine);
     for (gc_list *sys = engine->systems; sys; sys = sys->next)
         update_system(engine, sys->data, dtime);
     engine->draw(engine);
@@ -48,43 +45,22 @@ void engine_destroy(gc_engine *engine)
         ((gc_system *)system->data)->destroy(system->data);
         free(system);
     }
-    sfSprite_destroy(engine->sprite);
-    sfRenderWindow_destroy(engine->window);
-    sfClock_destroy(engine->clock);
     free(engine);
 }
 
-int engine_create_sfdata(gc_engine *engine, char *title, unsigned framerate)
-{
-    sfVideoMode mode = {800, 600, 32};
-    sfWindowStyle style = sfDefaultStyle;
-
-    engine->window = sfRenderWindow_create(mode, title, style, NULL);
-    engine->sprite = sfSprite_create();
-    engine->clock = sfClock_create();
-    if (!engine->window || !engine->sprite || !engine->clock)
-        return (-1);
-    sfRenderWindow_setFramerateLimit(engine->window, framerate);
-    return (0);
-}
-
-gc_engine *engine_create(char *title, unsigned framerate)
+gc_engine *engine_create()
 {
     gc_engine *engine = malloc(sizeof(gc_engine));
 
     if (!engine)
         return (NULL);
-    if (engine_create_sfdata(engine, title, framerate) < 0) {
-        free(engine);
-        return (NULL);
-    }
-    engine->is_open = &engine_is_open;
-    engine->game_loop = &game_loop;
-    engine->change_scene = &change_scene;
-    engine->draw = &renderer_draw;
-    engine->draw_texture = &renderer_draw_texture;
-    engine->destroy = &engine_destroy;
     engine->scene = NULL;
+    engine->is_open = &engine_is_open;
+    engine->handle_events = &handle_events;
+    engine->game_loop = &game_loop;
+    engine->draw = &engine_draw;
+    engine->change_scene = &change_scene;
+    engine->destroy = &engine_destroy;
     engine_add_buildin_systems(engine);
     engine_add_buildin_components(engine);
     return (engine);

@@ -8,13 +8,14 @@
 #include "engine.h"
 #include "xml.h"
 #include "utility.h"
+#include "sprite.h"
 #include "components/transform_component.h"
-#include "components/texture_renderer.h"
+#include "components/renderer.h"
 #include <stdlib.h>
 
-static void texture_rend_ctr(void *component, va_list args)
+static void rend_ctr(void *component, va_list args)
 {
-    struct texture_renderer *cmp = (struct texture_renderer *)component;
+    struct renderer *cmp = (struct renderer *)component;
     sfVector2u size;
 
     cmp->sprite = malloc(sizeof(gc_sprite));
@@ -29,9 +30,9 @@ static void texture_rend_ctr(void *component, va_list args)
     }
 }
 
-static void texture_rend_fdctr(gc_engine *engine, void *component, node *n)
+static void rend_fdctr(gc_engine *engine, void *component, node *n)
 {
-    struct texture_renderer *cmp = (struct texture_renderer *)component;
+    struct renderer *cmp = (struct renderer *)component;
     node *rect = xml_getnode(n, "Rect");
     sfVector2u size;
 
@@ -48,31 +49,33 @@ static void texture_rend_fdctr(gc_engine *engine, void *component, node *n)
         cmp->sprite->rect.height = (float)size.y;
         cmp->sprite->rect.width = (float)size.x;
     }
+    cmp->type = GC_TEXTUREREND;
 }
 
-static void texture_rend_dtr(void *component)
+static void rend_dtr(void *component)
 {
     (void)component;
 }
 
-static char *texture_rend_serialize(void *component)
+static char *rend_serialize(void *component)
 {
     (void)component;
     return (NULL);
 }
 
-const struct texture_renderer texture_renderer = {
+const struct renderer renderer_component = {
     base: {
-        name: "TextureRenderer",
-        size: sizeof(struct texture_renderer),
+        name: "Renderer",
+        size: sizeof(struct renderer),
         dependencies: (char *[]){"TransformComponent", NULL},
-        ctr: &texture_rend_ctr,
-        fdctr: &texture_rend_fdctr,
-        dtr: &texture_rend_dtr,
-        serialize: &texture_rend_serialize,
+        ctr: &rend_ctr,
+        fdctr: &rend_fdctr,
+        dtr: &rend_dtr,
+        serialize: &rend_serialize,
         destroy: &component_destroy,
         next: NULL,
         prev: NULL
     },
     sprite: NULL,
+    type: GC_TEXTUREREND
 };

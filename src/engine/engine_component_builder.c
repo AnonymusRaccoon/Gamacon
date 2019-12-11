@@ -9,7 +9,7 @@
 #include "system.h"
 #include "components/movable_component.h"
 #include "components/parallax_component.h"
-#include "components/texture_renderer.h"
+#include "components/renderer.h"
 #include "components/transform_component.h"
 #include <stdlib.h>
 
@@ -25,6 +25,6 @@ void engine_add_buildin_components(gc_engine *engine)
     engine->get_component = &engine_get_component;
     engine->add_component(engine, &transform_component);
     engine->add_component(engine, &movable_component);
-    engine->add_component(engine, &texture_renderer);
+    engine->add_component(engine, &renderer_component);
     engine->add_component(engine, &parallax_component);
 }
