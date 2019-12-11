@@ -32,6 +32,7 @@ SRC = src/engine/engine.c \
 	src/deserializer/prefab.c \
 	src/system.c \
 	src/systems/sfml_renderer_system.c \
+	src/systems/movable_system.c \
 	src/systems/parallax_system.c \
 	src/engine/engine_system_builder.c \
 	src/engine/engine_component_builder.c

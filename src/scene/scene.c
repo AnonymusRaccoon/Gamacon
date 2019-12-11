@@ -67,3 +67,11 @@ gc_scene *scene_create(const char **textures)
     scene->destroy = &scene_destroy;
     return (scene);
 }
+
+int change_scene(gc_engine *engine, gc_scene *scene)
+{
+    if (engine->scene)
+        engine->scene->destroy(engine->scene);
+    engine->scene = scene;
+    return (0);
+}

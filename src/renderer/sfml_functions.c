@@ -17,6 +17,19 @@ engine->get_system(engine, "SfmlRendererSystem");
     return (sfRenderWindow_isOpen(renderer->window));
 }
 
+bool sfml_has_focus(gc_engine *engine)
+{
+    sfml_renderer_system *renderer = (sfml_renderer_system *)\
+engine->get_system(engine, "SfmlRendererSystem");
+
+    return (sfRenderWindow_hasFocus(renderer->window));
+}
+
+bool sfml_is_keypressed(int key)
+{
+    return (sfKeyboard_isKeyPressed(key));
+}
+
 void sfml_handle_events(gc_engine *engine)
 {
     sfml_renderer_system *renderer = (sfml_renderer_system *)\

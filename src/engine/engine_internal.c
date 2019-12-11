@@ -14,6 +14,12 @@ bool engine_is_open(gc_engine *engine)
     return (false);
 }
 
+bool engine_has_focus(gc_engine *engine)
+{
+    (void)engine;
+    return (true);
+}
+
 void handle_events(gc_engine *engine)
 {
     (void)engine;
@@ -24,10 +30,8 @@ void engine_draw(gc_engine *engine)
     (void)engine;
 }
 
-int change_scene(gc_engine *engine, gc_scene *scene)
+bool engine_is_keypressed(int key)
 {
-    if (engine->scene)
-        engine->scene->destroy(engine->scene);
-    engine->scene = scene;
-    return (0);
+    (void)key;
+    return (false);
 }

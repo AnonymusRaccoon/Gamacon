@@ -35,7 +35,8 @@ void renderer_draw_texture(sfml_renderer_system *renderer, gc_sprite *sprite)
     sfRenderWindow_drawSprite(renderer->window, renderer->sprite, NULL);
 }
 
-void sfml_update_entity(void *system, gc_entity *entity, float dtime)
+void sfml_update_entity(gc_engine *engine, void *system,\
+gc_entity *entity, float dtime)
 {
     struct transform_component *pos = (struct transform_component *)\
 entity->get_component(entity, "TransformComponent");
@@ -49,6 +50,7 @@ entity->get_component(entity, "Renderer");
     if (text->type == GC_TEXTUREREND)
         renderer_draw_texture((sfml_renderer_system *)system, text->sprite);
     (void)dtime;
+    (void)engine;
 }
 
 void sfml_destroy(void *system)
@@ -87,6 +89,8 @@ const char *title, int framerate)
         return (NULL);
     sfRenderWindow_setFramerateLimit(renderer->window, framerate);
     engine->is_open = &sfml_is_open;
+    engine->has_focus = &sfml_has_focus;
+    engine->is_keypressed = &sfml_is_keypressed;
     engine->handle_events = &sfml_handle_events;
     engine->draw = &sfml_draw;
     return ((gc_system *)renderer);

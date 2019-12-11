@@ -17,7 +17,7 @@ struct gc_system
     const char *name;
     const char *component_name;
     bool (*check_dependencies)(const gc_system *, const gc_entity *);
-    void (*update_entity)(void *system, gc_entity *entity, float dtime);
+    void (*update_entity)(gc_engine *, void *system, gc_entity *, float dtime);
     void (*destroy)(void *system);
 };
 

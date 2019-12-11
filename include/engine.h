@@ -20,6 +20,8 @@ struct gc_engine
 {
     gc_scene *scene;
     bool (*is_open)(gc_engine *engine);
+    bool (*has_focus)(gc_engine *engine);
+    bool (*is_keypressed)(int key);
     void (*handle_events)(gc_engine *engine);
     int (*game_loop)(gc_engine *engine, float dtime);
     void (*draw)(gc_engine *engine);
@@ -37,6 +39,8 @@ struct gc_engine
 
 gc_engine *engine_create();
 bool engine_is_open(gc_engine *engine);
+bool engine_has_focus(gc_engine *engine);
+bool engine_is_keypressed(int key);
 void handle_events(gc_engine *engine);
 void engine_draw(gc_engine *engine);
 int change_scene(gc_engine *engine, gc_scene *scene);

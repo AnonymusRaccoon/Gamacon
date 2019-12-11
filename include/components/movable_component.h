@@ -15,6 +15,7 @@ struct movable_component
     int left_key;
     int right_key;
     int jump_key;
+    int speed;
 };
 
 extern const struct movable_component movable_component;

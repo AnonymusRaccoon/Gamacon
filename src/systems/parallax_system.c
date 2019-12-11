@@ -13,7 +13,8 @@
 #include "components/renderer.h"
 #include <stddef.h>
 
-void parallax_update_entity(void *system, gc_entity *entity, float dtime)
+void parallax_update_entity(gc_engine *engine, void *system, \
+gc_entity *entity, float dtime)
 {
     struct renderer *text = \
 (struct renderer *)entity->get_component(entity, "Renderer");
@@ -24,6 +25,7 @@ void parallax_update_entity(void *system, gc_entity *entity, float dtime)
         return;
     text->sprite->rect.left += parallax->speed * dtime;
     (void)system;
+    (void)engine;
 }
 
 void parallax_destroy(void *system)
