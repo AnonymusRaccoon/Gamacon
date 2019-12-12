@@ -16,6 +16,7 @@ SRC = src/engine/engine.c \
 	src/components/transform_component.c \
 	src/components/renderer.c \
 	src/components/parallax_component.c \
+	src/components/collision_component.c \
 	src/scene/scene.c \
 	src/utility/my_strdup.c \
 	src/utility/my_strlen.c \
