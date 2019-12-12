@@ -11,6 +11,7 @@
 #include "components/parallax_component.h"
 #include "components/renderer.h"
 #include "components/transform_component.h"
+#include "components/controllable_component.h"
 #include <stdlib.h>
 
 void engine_add_component(gc_engine *engine, const void *component)
@@ -27,4 +28,5 @@ void engine_add_buildin_components(gc_engine *engine)
     engine->add_component(engine, &movable_component);
     engine->add_component(engine, &renderer_component);
     engine->add_component(engine, &parallax_component);
+    engine->add_component(engine, &controllable_component);
 }

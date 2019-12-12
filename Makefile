@@ -16,7 +16,7 @@ SRC = src/engine/engine.c \
 	src/components/transform_component.c \
 	src/components/renderer.c \
 	src/components/parallax_component.c \
-	src/components/collision_component.c \
+	src/components/controllable_component.c \
 	src/scene/scene.c \
 	src/utility/my_strdup.c \
 	src/utility/my_strlen.c \
@@ -35,6 +35,7 @@ SRC = src/engine/engine.c \
 	src/systems/sfml_renderer_system.c \
 	src/systems/movable_system.c \
 	src/systems/parallax_system.c \
+	src/systems/controllable_system.c \
 	src/engine/engine_system_builder.c \
 	src/engine/engine_component_builder.c
 

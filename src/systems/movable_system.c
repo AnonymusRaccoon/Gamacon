@@ -22,10 +22,11 @@ entity->get_component(entity, "MovableComponent");
     struct transform_component *pos = (struct transform_component *)\
 entity->get_component(entity, "TransformComponent");
 
-    if (engine->is_keypressed(mov->left_key))
+    if (mov->moving_left)
         pos->position.x -= mov->speed * dtime;
-    if (engine->is_keypressed(mov->right_key))
+    if (mov->moving_right)
         pos->position.x += mov->speed * dtime;
+    (void)engine;
     (void)system;
 }
 

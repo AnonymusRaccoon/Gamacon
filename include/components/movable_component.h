@@ -8,13 +8,13 @@
 #pragma once
 
 #include "component.h"
+#include <stdbool.h>
 
 struct movable_component
 {
     gc_component base;
-    int left_key;
-    int right_key;
-    int jump_key;
+    bool moving_left;
+    bool moving_right;
     int speed;
 };
 

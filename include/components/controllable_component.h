@@ -9,10 +9,12 @@
 
 #include "component.h"
 
-struct collision_component
+struct controllable_component
 {
     gc_component base;
-    int layer;
+    int left_key;
+    int right_key;
+    int jump_key;
 };
 
-extern const struct collision_component collision_component;
+extern const struct controllable_component controllable_component;
