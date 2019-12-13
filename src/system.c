@@ -32,7 +32,28 @@ const gc_system *engine_get_system(gc_engine *engine, const char *name)
     return (NULL);
 }
 
+void *new_system(const void *system, ...)
+{
+    gc_system *base = (gc_system *)system;
+    va_list args;
+    void *new_sys = malloc(base->size);
+
+    if (!new_sys)
+        return (NULL);
+    *(gc_system *)new_sys = *base;
+    if (((gc_system *)new_sys)->ctr) {
+        va_start(args, system);
+        ((gc_system *)new_sys)->ctr(new_sys, args);
+        va_end(args);
+    }
+    return (new_sys);
+}
+
 void system_destroy(void *system)
 {
+    gc_system *sys = (gc_system *)system;
+
+    if (sys->dtr)
+        sys->dtr(system);
     free(system);
 }

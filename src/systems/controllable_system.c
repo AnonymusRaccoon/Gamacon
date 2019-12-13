@@ -36,6 +36,9 @@ void controllable_destroy(void *system)
 const gc_system controllable_system = {
     name: "ControllableSystem",
     component_name: "ControllableComponent",
+    size: sizeof(gc_system),
+    ctr: NULL,
+    dtr: NULL,
     check_dependencies: &system_check_dependencies,
     update_entity: &controllable_update_entity,
     destroy: &controllable_destroy

@@ -24,13 +24,13 @@ void engine_add_buildin_systems(gc_engine *engine)
     engine->add_system = &engine_add_system;
     engine->get_system = &engine_get_system;
     engine->add_system(engine, &parallax_system);
-    engine->add_system(engine, &movable_system);
+    engine->add_system(engine, new_system(&movable_system));
     engine->add_system(engine, &controllable_system);
 }
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate)
 {
-    gc_system *renderer = gc_new_sfml_renderer(engine, title, framerate);
+    gc_system *renderer = new_system(&sfml_renderer ,engine, title, framerate);
 
     if (!renderer)
         return (-1);

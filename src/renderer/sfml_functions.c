@@ -11,7 +11,7 @@
 
 bool sfml_is_open(gc_engine *engine)
 {
-    sfml_renderer_system *renderer = (sfml_renderer_system *)\
+    struct sfml_renderer_system *renderer = (struct sfml_renderer_system *)\
 engine->get_system(engine, "SfmlRendererSystem");
 
     return (sfRenderWindow_isOpen(renderer->window));
@@ -19,7 +19,7 @@ engine->get_system(engine, "SfmlRendererSystem");
 
 bool sfml_has_focus(gc_engine *engine)
 {
-    sfml_renderer_system *renderer = (sfml_renderer_system *)\
+    struct sfml_renderer_system *renderer = (struct sfml_renderer_system *)\
 engine->get_system(engine, "SfmlRendererSystem");
 
     return (sfRenderWindow_hasFocus(renderer->window));
@@ -32,7 +32,7 @@ bool sfml_is_keypressed(int key)
 
 void sfml_handle_events(gc_engine *engine)
 {
-    sfml_renderer_system *renderer = (sfml_renderer_system *)\
+    struct sfml_renderer_system *renderer = (struct sfml_renderer_system *)\
 engine->get_system(engine, "SfmlRendererSystem");
     sfEvent event;
 
@@ -44,7 +44,7 @@ engine->get_system(engine, "SfmlRendererSystem");
 
 void sfml_draw(gc_engine *engine)
 {
-    sfml_renderer_system *renderer = (sfml_renderer_system *)\
+    struct sfml_renderer_system *renderer = (struct sfml_renderer_system *)\
 engine->get_system(engine, "SfmlRendererSystem");
 
     sfRenderWindow_display(renderer->window);

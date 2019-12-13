@@ -19,3 +19,5 @@ int parse_arg_int(char **str);
 float parse_arg_float(char **str);
 char *parse_arg_str(char **str);
 int my_pow(int nb, int p);
+
+#define MIN(x, y) ((x) < (y) ? (x) : (y))

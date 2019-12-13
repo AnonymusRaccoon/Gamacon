@@ -10,7 +10,6 @@
 #include "system.h"
 #include <SFML/Graphics.h>
 
-typedef struct sfml_renderer_system sfml_renderer_system;
 struct sfml_renderer_system
 {
     gc_system system;
@@ -25,3 +24,5 @@ bool sfml_has_focus(gc_engine *engine);
 bool sfml_is_keypressed(int key);
 void sfml_handle_events(gc_engine *engine);
 void sfml_draw(gc_engine *engine);
+
+extern const struct sfml_renderer_system sfml_renderer;

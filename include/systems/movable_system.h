@@ -8,5 +8,13 @@
 #pragma once
 
 #include "system.h"
+#include "quadtree.h"
 
-extern const gc_system movable_system;
+typedef struct gc_movable_system
+{
+    gc_system base;
+    quadtree *tree;
+
+} gc_movable_system;
+
+extern const gc_movable_system movable_system;

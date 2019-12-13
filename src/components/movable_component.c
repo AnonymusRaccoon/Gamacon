@@ -23,6 +23,8 @@ static void movable_fdctr(gc_engine *engine, void *component, node *n)
     struct movable_component *cmp = (struct movable_component *)component;
 
     cmp->speed = xml_getintprop(n, "speed");
+    cmp->moving_left = false;
+    cmp->moving_right = false;
     (void)engine;
 }
 
@@ -48,5 +50,7 @@ const struct movable_component movable_component = {
         serialize: &movable_serialize,
         destroy: &component_destroy
     },
+    moving_left: false,
+    moving_right: false,
     speed: 10
 };

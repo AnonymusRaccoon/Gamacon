@@ -36,6 +36,9 @@ void parallax_destroy(void *system)
 const gc_system parallax_system = {
     name: "ParallaxSystem",
     component_name: "ParallaxComponent",
+    size: sizeof(gc_system),
+    ctr: NULL,
+    dtr: NULL,
     check_dependencies: &system_check_dependencies,
     update_entity: &parallax_update_entity,
     destroy: &parallax_destroy
