@@ -16,7 +16,7 @@
 #include "systems/movable_system.h"
 #include <stddef.h>
 
-void movable_update_entity(gc_engine *engine, void *system,\
+void movable_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
     struct movable_component *mov = (struct movable_component *)\

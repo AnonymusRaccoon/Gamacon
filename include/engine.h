@@ -37,7 +37,7 @@ struct gc_engine
     const void *(*get_component)(gc_engine *engine, const char *name);
 };
 
-gc_engine *engine_create();
+gc_engine *engine_create(void);
 bool engine_is_open(gc_engine *engine);
 bool engine_has_focus(gc_engine *engine);
 bool engine_is_keypressed(int key);

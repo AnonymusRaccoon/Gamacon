@@ -48,8 +48,8 @@ const struct controllable_component controllable_component = {
         name: "ControllableComponent",
         size: sizeof(struct controllable_component),
         dependencies: (char *[]){
-            "MovableComponent", 
-            "TransformComponent", 
+            "MovableComponent",
+            "TransformComponent",
             NULL
         },
         ctr: &controllable_ctr,

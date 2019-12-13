@@ -30,7 +30,7 @@ void engine_add_buildin_systems(gc_engine *engine)
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate)
 {
-    gc_system *renderer = new_system(&sfml_renderer ,engine, title, framerate);
+    gc_system *renderer = new_system(&sfml_renderer, engine, title, framerate);
 
     if (!renderer)
         return (-1);

@@ -50,7 +50,7 @@ void engine_destroy(gc_engine *engine)
     free(engine);
 }
 
-gc_engine *engine_create()
+gc_engine *engine_create(void)
 {
     gc_engine *engine = malloc(sizeof(gc_engine));
 

@@ -14,7 +14,7 @@
 #include "components/renderer.h"
 #include <stddef.h>
 
-void controllable_update_entity(gc_engine *engine, void *system,\
+void controllable_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
     struct controllable_component *con = (struct controllable_component *)\

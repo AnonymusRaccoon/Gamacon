@@ -36,7 +36,7 @@ gc_sprite *sprite)
     sfRenderWindow_drawSprite(renderer->window, renderer->sprite, NULL);
 }
 
-void sfml_update_entity(gc_engine *engine, void *system,\
+void sfml_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
     struct transform_component *pos = (struct transform_component *)\
