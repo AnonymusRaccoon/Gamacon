@@ -1,3 +1,4 @@
 *.o
 libgamacon.a
-*.gc*
+*.gcda
+*.gcno

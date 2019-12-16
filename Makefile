@@ -29,10 +29,15 @@ SRC = src/engine/engine.c \
 	src/systems/movable_system.c \
 	src/systems/parallax_system.c \
 	src/systems/controllable_system.c \
+	src/systems/gravity_system.c \
 	src/engine/engine_system_builder.c \
 	src/engine/engine_component_builder.c
 
 OBJ = $(SRC:%.c=%.o)
+
+GCDA = *.gcda
+
+GCNO = *.gcno
 
 TESTS = tests/deserializations.c \
 	tests/game_loop.c
@@ -65,7 +70,8 @@ tests_run:
 
 clean:
 	$(RM) $(OBJ)
-	$(RM) *.gc*
+	$(RM) $(GCDA)
+	$(RM) $(GCNO)
 
 fclean: clean
 	$(RM) $(NAME)

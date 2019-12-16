@@ -10,23 +10,24 @@
 #include "system.h"
 #include "texture.h"
 #include "vector2.h"
+#include "utility.h"
 #include "components/movable_component.h"
-#include "components/controllable_component.h"
+#include "components/gravity_component.h"
 #include "components/renderer.h"
 #include <stddef.h>
 
 void gravity_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    struct gravity_component *con = (struct gravity_component *)\
+    struct gravity_component *grav = (struct gravity_component *)\
 entity->get_component(entity, "GravityComponent");
     struct movable_component *mov = (struct movable_component *)\
 entity->get_component(entity, "MovableComponent");
 
-    mov->moving_left = engine->is_keypressed(con->left_key);
-    mov->moving_right = engine->is_keypressed(con->right_key);
+    mov->speed_y = MAX(mov->speed_y - grav->gravity_speed, -grav->max_speed);
     (void)system;
     (void)dtime;
+    (void)engine;
 }
 
 void gravity_destroy(void *system)
@@ -41,6 +42,6 @@ const gc_system gravity_system = {
     ctr: NULL,
     dtr: NULL,
     check_dependencies: &system_check_dependencies,
-    update_entity: &gravoty_update_entity,
+    update_entity: &gravity_update_entity,
     destroy: &gravity_destroy
 };

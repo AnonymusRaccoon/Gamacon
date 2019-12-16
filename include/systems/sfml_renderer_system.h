@@ -15,6 +15,7 @@ struct sfml_renderer_system
     gc_system system;
     sfRenderWindow *window;
     sfSprite *sprite;
+    sfView *view;
 };
 
 gc_system *gc_new_sfml_renderer(gc_engine *engine, \

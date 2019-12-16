@@ -17,7 +17,7 @@
 void renderer_draw_texture(struct sfml_renderer_system *renderer, \
 gc_sprite *sprite)
 {
-    sfVector2f pos = (sfVector2f){sprite->pos.x, sprite->pos.y};
+    sfVector2f pos = (sfVector2f){sprite->pos.x, -sprite->pos.y};
     sfVector2f scale;
     sfVector2u t;
     sfIntRect rect = {
@@ -59,16 +59,19 @@ void sfmlrend_ctr(void *rend, va_list list)
 {
     struct sfml_renderer_system *renderer = (struct sfml_renderer_system *)rend;
     sfVideoMode mode = {800, 600, 32};
-    sfWindowStyle style = sfDefaultStyle;
     gc_engine *engine = va_arg(list, gc_engine *);
     const char *title = va_arg(list, const char *);
     int framerate = va_arg(list, int);
 
-    renderer->window = sfRenderWindow_create(mode, title, style, NULL);
+    renderer->window = sfRenderWindow_create(mode, title, sfDefaultStyle, NULL);
     renderer->sprite = sfSprite_create();
-    if (!renderer->window || !renderer->sprite)
+    renderer->view = sfView_create();
+    if (!renderer->window || !renderer->sprite || !renderer->view)
         return;
     sfRenderWindow_setFramerateLimit(renderer->window, framerate);
+    sfView_setSize(renderer->view, (sfVector2f){800, 600});
+    sfView_setCenter(renderer->view, (sfVector2f){400, -300});
+    sfRenderWindow_setView(renderer->window, renderer->view);
     engine->is_open = &sfml_is_open;
     engine->has_focus = &sfml_has_focus;
     engine->is_keypressed = &sfml_is_keypressed;
@@ -97,5 +100,6 @@ const struct sfml_renderer_system sfml_renderer = {
         destroy: &system_destroy
     },
     window: NULL,
-    sprite: NULL
+    sprite: NULL,
+    view: NULL
 };

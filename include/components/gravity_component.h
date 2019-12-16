@@ -13,6 +13,7 @@ struct gravity_component
 {
     gc_component base;
     int gravity_speed;
+    int max_speed;
 };
 
 extern const struct gravity_component gravity_component;
