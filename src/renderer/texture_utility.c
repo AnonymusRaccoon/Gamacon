@@ -19,6 +19,8 @@ gc_texture *get_texture(gc_engine *engine, char *name)
     if (!engine->scene || !name)
         return (NULL);
     textures = engine->scene->textures;
+    if (!textures)
+        return (NULL);
     for (int i = 0; textures[i]; i++) {
         if (!my_strcmp(textures[i]->name, name))
             return (textures[i]);

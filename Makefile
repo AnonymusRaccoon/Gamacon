@@ -18,15 +18,7 @@ SRC = src/engine/engine.c \
 	src/components/parallax_component.c \
 	src/components/controllable_component.c \
 	src/scene/scene.c \
-	src/utility/my_strdup.c \
-	src/utility/my_strlen.c \
 	src/utility/arraylen.c \
-	src/utility/tostr.c \
-	src/utility/atoi.c \
-	src/utility/my_strchr.c \
-	src/utility/my_strcmp.c \
-	src/utility/pow.c \
-	src/utility/read_line.c \
 	src/utility/list.c \
 	src/utility/tupple.c \
 	src/deserializer/deserialize_entity.c \
@@ -41,11 +33,21 @@ SRC = src/engine/engine.c \
 
 OBJ = $(SRC:%.c=%.o)
 
+TESTS = tests/deserializations.c \
+	tests/game_loop.c
+
 INCLUDE = -I ./include
 
 CFLAGS = $(INCLUDE) -Wall -Wshadow -Wextra
 
+LDFLAGS = -L ../my -L ../xmlparser -L ../quadtree\
+-lxmlparser -lquadtree -lmy -lcsfml-system -lcsfml-graphics -lcsfml-window
+
+COVERAGE = --coverage -lcriterion
+
 NAME = libgamacon.a
+
+UT = ./ut
 
 CC = gcc
 
@@ -56,11 +58,17 @@ all: build
 build: $(OBJ)
 	$(AR) $(NAME) $(OBJ)
 
+tests_run:
+	$(CC) -o $(UT) $(SRC) $(TESTS) $(COVERAGE) $(CFLAGS) $(LDFLAGS)
+	$(UT)
+
 clean:
 	$(RM) $(OBJ)
+	$(RM) *.gc*
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(UT)
 
 re: fclean all
 
