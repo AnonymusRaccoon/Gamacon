@@ -39,7 +39,7 @@ struct quadtree
 {
     qt_intrect rect;
     int capacity;
-    void **objects;
+    void *objects;
 };
 
 quadtree *qt_create(qt_intrect rect, int capacity);

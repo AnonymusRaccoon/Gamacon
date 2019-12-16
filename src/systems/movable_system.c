@@ -44,7 +44,7 @@ void movable_ctr(void *system, va_list args)
 {
     gc_movable_system *mov = (gc_movable_system *)system;
 
-    mov->tree = qt_create((qt_intrect){0, 0, 100, 100}, 3);
+    mov->tree = qt_create((qt_intrect){0, 0, 1000, 1000}, 3);
     (void)args;
 }
 
