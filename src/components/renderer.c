@@ -36,7 +36,6 @@ static void rend_fdctr(gc_engine *engine, void *component, node *n)
     node *rect = xml_getnode(n, "Rect");
     sfVector2u size;
 
-    cmp->sprite = malloc(sizeof(gc_sprite));
     if (!cmp->sprite)
         return;
     cmp->sprite->texture = get_texture(engine, xml_getproperty(n, "src"));
@@ -54,7 +53,9 @@ static void rend_fdctr(gc_engine *engine, void *component, node *n)
 
 static void rend_dtr(void *component)
 {
-    (void)component;
+    struct renderer *cmp = (struct renderer *)component;
+
+    free(cmp->sprite);
 }
 
 static char *rend_serialize(void *component)

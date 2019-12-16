@@ -30,10 +30,14 @@ entity->get_component(entity, "TransformComponent");
     };
     qt_collision i = collision_get_info(sys->tree, obj.id);
 
-    if (mov->moving_left)
-        pos->position.x -= MIN(mov->speed * dtime, i.distance_left);
-    if (mov->moving_right)
-        pos->position.x += MIN(mov->speed * dtime, i.distance_right);
+    if (mov->speed_x < 0)
+        pos->position.x -= MIN(mov->speed_x * -dtime, i.distance_left);
+    else
+        pos->position.x += MIN(mov->speed_x * dtime, i.distance_right);
+    if (mov->speed_y < 0)
+        pos->position.y -= MIN(mov->speed_y * -dtime, i.distance_down);
+    else
+        pos->position.y += MIN(mov->speed_y * dtime, i.distance_top);
     obj.rect.x = pos->position.x;
     qt_update(sys->tree, obj);
     (void)engine;
@@ -50,7 +54,9 @@ void movable_ctr(void *system, va_list args)
 
 void movable_dtr(void *system)
 {
-    //SHOULD DESTROY THE QUADTREE HERE
+    gc_movable_system *mov = (gc_movable_system *)system;
+
+    qt_destroy(mov->tree);
     (void)system;
 }
 

@@ -15,6 +15,7 @@ struct controllable_component
     int left_key;
     int right_key;
     int jump_key;
+    int speed;
 };
 
 extern const struct controllable_component controllable_component;

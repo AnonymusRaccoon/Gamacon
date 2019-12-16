@@ -39,13 +39,24 @@ int scene_load_textures(gc_scene *scene, const char **textures)
 void scene_destroy(gc_scene *scene)
 {
     gc_list *next = NULL;
+    gc_tupple *tup = scene->entities_by_cmp;
 
     for (gc_list *entity = scene->entities; entity; entity = next) {
         next = entity->next;
         ((gc_entity *)entity->data)->destroy(entity->data);
+        free(entity);
     }
-    for (int i = 0; scene->textures[i]; i++) {
+    for (int i = 0; scene->textures[i]; i++)
         scene->textures[i]->destroy(scene->textures[i]);
+    free(scene->textures);
+    for (gc_tupple *tupple = tup; tupple; tupple = tup) {
+        tup = tupple->next;
+        for (gc_list *li = tupple->entities; li; li = next) {
+            next = li->next;
+            free(li);
+        }
+        free(tupple->name);
+        free(tupple);
     }
     free(scene);
 }

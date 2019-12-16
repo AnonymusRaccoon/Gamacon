@@ -13,9 +13,8 @@
 struct movable_component
 {
     gc_component base;
-    bool moving_left;
-    bool moving_right;
-    int speed;
+    int speed_x;
+    int speed_y;
 };
 
 extern const struct movable_component movable_component;

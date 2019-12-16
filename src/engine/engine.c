@@ -47,6 +47,10 @@ void engine_destroy(gc_engine *engine)
         ((gc_system *)system->data)->destroy(system->data);
         free(system);
     }
+    for (gc_list *cmp = engine->components; cmp; cmp = next) {
+        next = cmp->next;
+        free(cmp);
+    }
     free(engine);
 }
 

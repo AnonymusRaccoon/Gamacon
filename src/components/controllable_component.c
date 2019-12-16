@@ -19,6 +19,7 @@ component;
     cmp->left_key = va_arg(args, int);
     cmp->right_key = va_arg(args, int);
     cmp->jump_key = va_arg(args, int);
+    cmp->speed = va_arg(args, int);
 }
 
 static void controllable_fdctr(gc_engine *engine, void *component, node *n)
@@ -29,6 +30,7 @@ component;
     cmp->left_key = xml_getintprop(n, "left");
     cmp->right_key = xml_getintprop(n, "right");
     cmp->jump_key = xml_getintprop(n, "jump");
+    cmp->speed = xml_getintprop(n, "speed");
     (void)engine;
 }
 
@@ -61,4 +63,5 @@ const struct controllable_component controllable_component = {
     left_key: 16,
     right_key: 3,
     jump_key: ' ',
+    speed: 700
 };

@@ -17,6 +17,7 @@ SRC = src/engine/engine.c \
 	src/components/renderer.c \
 	src/components/parallax_component.c \
 	src/components/controllable_component.c \
+	src/components/gravity_component.c \
 	src/scene/scene.c \
 	src/utility/arraylen.c \
 	src/utility/list.c \

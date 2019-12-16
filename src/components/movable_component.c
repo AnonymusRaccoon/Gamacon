@@ -15,16 +15,16 @@ static void movable_ctr(void *component, va_list args)
 {
     struct movable_component *cmp = (struct movable_component *)component;
 
-    cmp->speed = va_arg(args, int);
+    cmp->speed_x = va_arg(args, int);
+    cmp->speed_y = va_arg(args, int);
 }
 
 static void movable_fdctr(gc_engine *engine, void *component, node *n)
 {
     struct movable_component *cmp = (struct movable_component *)component;
 
-    cmp->speed = xml_getintprop(n, "speed");
-    cmp->moving_left = false;
-    cmp->moving_right = false;
+    cmp->speed_x = xml_getintprop(n, "speedX");
+    cmp->speed_y = xml_getintprop(n, "speedY");
     (void)engine;
 }
 
@@ -50,7 +50,6 @@ const struct movable_component movable_component = {
         serialize: &movable_serialize,
         destroy: &component_destroy
     },
-    moving_left: false,
-    moving_right: false,
-    speed: 10
+    speed_x: 0,
+    speed_y: 0
 };

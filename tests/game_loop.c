@@ -19,9 +19,9 @@ Test(getentities, filter)
     engine->change_scene(engine, scene);
     prefab_load(engine, "tests/game.gcprefab");
     list = engine->scene->get_entity_by_cmp(engine->scene, "MovableComponent");
-    while(list) {
+    while (list) {
         count++;
-        list = list->next; 
+        list = list->next;
     }
     cr_assert_eq(count, 3);
 }

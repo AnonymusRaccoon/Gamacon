@@ -2,8 +2,9 @@
 ** EPITECH PROJECT, 2019
 ** MUL_my_runner_2019
 ** File description:
-** movable_system
+** gravity_system
 */
+
 
 #include "entity.h"
 #include "system.h"
@@ -14,33 +15,32 @@
 #include "components/renderer.h"
 #include <stddef.h>
 
-void controllable_update_entity(gc_engine *engine, void *system, \
+void gravity_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    struct controllable_component *con = (struct controllable_component *)\
-entity->get_component(entity, "ControllableComponent");
+    struct gravity_component *con = (struct gravity_component *)\
+entity->get_component(entity, "GravityComponent");
     struct movable_component *mov = (struct movable_component *)\
 entity->get_component(entity, "MovableComponent");
 
-    mov->speed_x = 0;
-    mov->speed_x -= engine->is_keypressed(con->left_key) * con->speed;
-    mov->speed_x += engine->is_keypressed(con->right_key) * con->speed;
+    mov->moving_left = engine->is_keypressed(con->left_key);
+    mov->moving_right = engine->is_keypressed(con->right_key);
     (void)system;
     (void)dtime;
 }
 
-void controllable_destroy(void *system)
+void gravity_destroy(void *system)
 {
     (void)system;
 }
 
-const gc_system controllable_system = {
-    name: "ControllableSystem",
-    component_name: "ControllableComponent",
+const gc_system gravity_system = {
+    name: "GravitySystem",
+    component_name: "GravityComponent",
     size: sizeof(gc_system),
     ctr: NULL,
     dtr: NULL,
     check_dependencies: &system_check_dependencies,
-    update_entity: &controllable_update_entity,
-    destroy: &controllable_destroy
+    update_entity: &gravoty_update_entity,
+    destroy: &gravity_destroy
 };
