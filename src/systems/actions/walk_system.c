@@ -23,11 +23,9 @@ gc_entity *entity, float dtime)
     struct movable_component *mov = GETCMP(movable_component);
     struct walk_action *walk = GETCMP(walk_action);
 
-    // mov->acceleration.x = 0;
-    mov->acceleration.x -= con->moving_left * walk->speed;
-    mov->acceleration.x += con->moving_right * walk->speed;
+    mov->acceleration.x -= con->moving_left * walk->acceleration;
+    mov->acceleration.x += con->moving_right * walk->acceleration;
     ABSCLAMP(mov->acceleration.x, walk->max_acceleration);
-    ABSCLAMP(mov->velocity.x, walk->max_speed);
     (void)system;
     (void)dtime;
     (void)engine;

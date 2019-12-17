@@ -37,6 +37,8 @@ quadtree *tree, float dtime)
         mov->velocity.x = 0;
     if (i.distance_down == 0 || i.distance_top == 0)
         mov->velocity.y = 0;
+    if (mov->velocity.x != 0)
+        printf("Acceleration: (%+.2f, %+.2f) Velocity: (%+.2f, %+.2f)Position: (%+.2f, %+.2f)\n", mov->acceleration.x, mov->acceleration.y, mov->velocity.x, mov->velocity.y, pos->position.x, pos->position.y);
     obj.rect.x = pos->position.x;
     obj.rect.y = pos->position.y;
     qt_update(tree, obj);

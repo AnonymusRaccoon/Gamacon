@@ -24,8 +24,8 @@ gc_entity *entity, float dtime)
 
     if (isnan(dir.x) || isnan(dir.y))
         return;
-    
-    mov->acceleration.x -= fric->value * dir.x;
+    if (mov->acceleration.x * dir.x > -fric->value)
+        mov->acceleration.x -= fric->value * dir.x;
     // mov->acceleration.y += fric->value * dir.y;
     (void)system;
     (void)engine;
