@@ -24,7 +24,9 @@ gc_entity *entity, float dtime)
 
     if (isnan(dir.x) || isnan(dir.y))
         return;
-    if (mov->acceleration.x * dir.x > -fric->value)
+    if (-fric->threshold < mov->velocity.x && mov->velocity.x < fric->threshold)
+        mov->velocity.x = 0;
+    else if (mov->acceleration.x * dir.x > -fric->value)
         mov->acceleration.x -= fric->value * dir.x;
     // mov->acceleration.y += fric->value * dir.y;
     (void)system;

@@ -16,6 +16,7 @@ static void fric_ctr(void *component, va_list args)
     struct friction_component *cmp = (struct friction_component *)component;
 
     cmp->value = va_arg(args, int);
+    cmp->threshold = va_arg(args, int);
 }
 
 static void fric_fdctr(gc_engine *engine, void *component, node *n)
@@ -23,6 +24,7 @@ static void fric_fdctr(gc_engine *engine, void *component, node *n)
     struct friction_component *cmp = (struct friction_component *)component;
 
     cmp->value = xml_getintprop(n, "value");
+    cmp->threshold = xml_getintprop(n, "threshold");
     (void)engine;
 }
 
@@ -52,5 +54,6 @@ const struct friction_component friction_component = {
         serialize: &fric_serialize,
         destroy: &component_destroy
     },
-    value: 10
+    value: 10,
+    threshold: 1
 };

@@ -50,12 +50,10 @@ void *system __attribute__((unused)), gc_entity *entity, float dtime)
     struct movable_component *mov = GETCMP(movable_component);
     gc_movable_system *sys = (gc_movable_system *)system;
 
-    mov->velocity.x += mov->acceleration.x * dtime;
-    mov->velocity.y += mov->acceleration.y * dtime;
     // if (mov->speed_x != 0 || mov->speed_y != 0) AND IS ALREADY INSIDE THE TREE
     move_entity(entity, mov, sys->tree, dtime);
-    mov->acceleration.x = 0;
-    mov->acceleration.y = 0;
+    mov->velocity.x += mov->acceleration.x * dtime;
+    mov->velocity.y += mov->acceleration.y * dtime;
 }
 
 void movable_ctr(void *system, va_list args)
