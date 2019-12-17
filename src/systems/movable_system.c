@@ -16,19 +16,6 @@
 #include "systems/movable_system.h"
 #include <stddef.h>
 
-void check_collisions(struct movable_component *mov, quadtree *tree, int id)
-{
-
-    // if (mov->velocity.x < 0)
-    //     mov->velocity.x = MIN(mov->velocity.x, i.distance_left);
-    // else
-    //     mov->velocity.x = MIN(mov->velocity.x, i.distance_right);
-    // if (mov->velocity.y < 0)
-    //     mov->velocity.y = MIN(mov->velocity.y, i.distance_down);
-    // else
-    //     mov->velocity.y = MIN(mov->velocity.y, i.distance_top);
-}
-
 void move_entity(gc_entity *entity, struct movable_component *mov, \
 quadtree *tree, float dtime)
 {
@@ -38,9 +25,18 @@ quadtree *tree, float dtime)
         {pos->position.x, pos->position.y, pos->size.y, pos->size.x}
     };
 
-    printf("Acceleration: %f\n Velocity: %f\n", mov->acceleration.x, mov->velocity.x);
-    pos->position.x += mov->velocity.x * dtime;
-    pos->position.y += mov->velocity.y * dtime;
+    if (mov->velocity.x < 0)
+        pos->position.x -= MIN(mov->velocity.x * -dtime, i.distance_left);
+    else
+        pos->position.x += MIN(mov->velocity.x * dtime, i.distance_right);
+    if (mov->velocity.y < 0)
+        pos->position.y -= MIN(mov->velocity.y * -dtime, i.distance_down);
+    else
+        pos->position.y += MIN(mov->velocity.y * dtime, i.distance_top);
+    if (i.distance_left == 0 || i.distance_right == 0)
+        mov->velocity.x = 0;
+    if (i.distance_down == 0 || i.distance_top == 0)
+        mov->velocity.y = 0;
     obj.rect.x = pos->position.x;
     obj.rect.y = pos->position.y;
     qt_update(tree, obj);

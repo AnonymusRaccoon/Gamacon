@@ -53,7 +53,7 @@ INCLUDE = -I ./include
 CFLAGS = $(INCLUDE) -Wall -Wshadow -Wextra
 
 LDFLAGS = -L ../my -L ../xmlparser -L ../quadtree\
--lxmlparser -lquadtree -lmy -lcsfml-system -lcsfml-graphics -lcsfml-window
+-lxmlparser -lquadtree -lmy -lcsfml-system -lcsfml-graphics -lcsfml-window -lm
 
 COVERAGE = --coverage -lcriterion
 
