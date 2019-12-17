@@ -19,12 +19,10 @@
 void gravity_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    struct gravity_component *grav = (struct gravity_component *)\
-entity->get_component(entity, "GravityComponent");
-    struct movable_component *mov = (struct movable_component *)\
-entity->get_component(entity, "MovableComponent");
+    // struct gravity_component *grav = GETCMP(gravity_component);
+    struct movable_component *mov = GETCMP(movable_component);
 
-    mov->speed_y = MAX(mov->speed_y - grav->gravity_speed, -grav->max_speed);
+    mov->acceleration.y = -9.8;
     (void)system;
     (void)dtime;
     (void)engine;
@@ -37,7 +35,7 @@ void gravity_destroy(void *system)
 
 const gc_system gravity_system = {
     name: "GravitySystem",
-    component_name: "GravityComponent",
+    component_name: "gravity_component",
     size: sizeof(gc_system),
     ctr: NULL,
     dtr: NULL,

@@ -16,10 +16,8 @@
 void parallax_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    struct renderer *text = \
-(struct renderer *)entity->get_component(entity, "Renderer");
-    struct parallax_component *parallax = \
-(struct parallax_component *)entity->get_component(entity, "ParallaxComponent");
+    struct renderer *text = GETCMP(renderer);
+    struct parallax_component *parallax = GETCMP(parallax_component);
 
     if (!text->sprite)
         return;
@@ -35,7 +33,7 @@ void parallax_destroy(void *system)
 
 const gc_system parallax_system = {
     name: "ParallaxSystem",
-    component_name: "ParallaxComponent",
+    component_name: "parallax_component",
     size: sizeof(gc_system),
     ctr: NULL,
     dtr: NULL,

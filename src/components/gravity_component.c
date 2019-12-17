@@ -41,11 +41,11 @@ static char *gravity_serialize(void *component)
 
 const struct gravity_component gravity_component = {
     base: {
-        name: "GravityComponent",
+        name: "gravity_component",
         size: sizeof(struct gravity_component),
         dependencies: (char *[]){
-            "MovableComponent",
-            "TransformComponent",
+            "movable_component",
+            "transform_component",
             NULL
         },
         ctr: &gravity_ctr,

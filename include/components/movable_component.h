@@ -13,8 +13,8 @@
 struct movable_component
 {
     gc_component base;
-    int speed_x;
-    int speed_y;
+    gc_vector2 acceleration;
+    gc_vector2 velocity;
 };
 
 extern const struct movable_component movable_component;

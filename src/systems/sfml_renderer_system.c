@@ -39,10 +39,8 @@ gc_sprite *sprite)
 void sfml_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    struct transform_component *pos = (struct transform_component *)\
-entity->get_component(entity, "TransformComponent");
-    struct renderer *text = (struct renderer *)\
-entity->get_component(entity, "Renderer");
+    struct transform_component *pos = GETCMP(transform_component);
+    struct renderer *text = GETCMP(renderer);
     struct sfml_renderer_system *rend = (struct sfml_renderer_system *)system;
 
     if (!text->sprite)
@@ -86,12 +84,13 @@ system;
 
     sfRenderWindow_destroy(renderer->window);
     sfSprite_destroy(renderer->sprite);
+    sfView_destroy(renderer->view);
 }
 
 const struct sfml_renderer_system sfml_renderer = {
     {
-        name: "SfmlRendererSystem",
-        component_name: "Renderer",
+        name: "SfmlrendererSystem",
+        component_name: "renderer",
         size: sizeof(struct sfml_renderer_system),
         ctr: &sfmlrend_ctr,
         dtr: &sfmlrend_dtr,

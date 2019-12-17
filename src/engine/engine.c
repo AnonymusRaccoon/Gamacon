@@ -7,6 +7,7 @@
 
 #include "engine.h"
 #include "system.h"
+#include "utility.h"
 #include <stdlib.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
@@ -22,6 +23,9 @@ void update_system(gc_engine *engine, gc_system *sys, float dtime)
     for (gc_list *entity = entities; entity; entity = entity->next) {
         if (sys->check_dependencies(sys, entity->data))
             sys->update_entity(engine, sys, entity->data, dtime);
+        else
+            my_printf("Entity %d does not have all the required components \
+for the system %s\n", ((gc_entity *)entity->data)->id, sys->name);
     }
 }
 

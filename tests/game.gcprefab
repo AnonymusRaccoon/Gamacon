@@ -1,75 +1,75 @@
 <gc_scene>
     <gc_entities>
         <gc_entity>
-            <TransformComponent>
+            <transform_component>
                 <Position x="0" y="0" />
                 <Size x="800" y="600" />
-            </TransformComponent>
-            <Renderer src="assets/sprites/bck_layer4.png">
+            </transform_component>
+            <renderer src="assets/sprites/bck_layer4.png">
                 <Rect height="auto" width="auto" top="0" left="0" /> 
-            </Renderer>
-            <ParallaxComponent speed="60" />
+            </renderer>
+            <parallax_component speed="60" />
         </gc_entity>
         <gc_entity>
-            <TransformComponent>
+            <transform_component>
                 <Position x="0" y="0" />
                 <Size x="800" y="600" />
-            </TransformComponent>
-            <Renderer src="assets/sprites/bck_layer3.png">
+            </transform_component>
+            <renderer src="assets/sprites/bck_layer3.png">
                 <Rect height="auto" width="auto" top="0" left="0" /> 
-            </Renderer>
-            <ParallaxComponent speed="90" />
+            </renderer>
+            <parallax_component speed="90" />
         </gc_entity>
         <gc_entity>
-            <TransformComponent>
+            <transform_component>
                 <Position x="0" y="0" />
                 <Size x="800" y="600" />
-            </TransformComponent>
-            <Renderer src="assets/sprites/bck_layer2.png">
+            </transform_component>
+            <renderer src="assets/sprites/bck_layer2.png">
                 <Rect height="auto" width="auto" top="0" left="0" /> 
-            </Renderer>
-            <ParallaxComponent speed="100" />
+            </renderer>
+            <parallax_component speed="100" />
         </gc_entity>
         <gc_entity>
-            <TransformComponent>
+            <transform_component>
                 <Position x="0" y="0" />
                 <Size x="800" y="600" />
-            </TransformComponent>
-            <Renderer src="assets/sprites/bck_layer1.png">
+            </transform_component>
+            <renderer src="assets/sprites/bck_layer1.png">
                 <Rect height="auto" width="auto" top="0" left="0" /> 
-            </Renderer>
-            <ParallaxComponent speed="120" />
+            </renderer>
+            <parallax_component speed="120" />
         </gc_entity>
         
         <gc_entity>
-            <TransformComponent>
+            <transform_component>
                 <Position x="200" y="500" />
                 <Size x="500" y="50" />
-            </TransformComponent>
-            <Renderer src="assets/sprites/grass.png">
+            </transform_component>
+            <renderer src="assets/sprites/grass.png">
                 <Rect height="auto" width="auto" top="0" left="0" /> 
-            </Renderer>
-            <MovableComponent speed="0" />
+            </renderer>
+            <movable_component speed="0" />
         </gc_entity>
         <gc_entity>
-            <TransformComponent>
+            <transform_component>
                 <Position x="100" y="200" />
                 <Size x="100" y="300" />
-            </TransformComponent>
-            <Renderer src="assets/sprites/grass.png">
+            </transform_component>
+            <renderer src="assets/sprites/grass.png">
                 <Rect height="auto" width="auto" top="0" left="0" /> 
-            </Renderer>
-            <MovableComponent speed="0" />
+            </renderer>
+            <movable_component speed="0" />
         </gc_entity>
         <gc_entity>
-            <TransformComponent>
+            <transform_component>
                 <Position x="700" y="200" />
                 <Size x="100" y="300" />
-            </TransformComponent>
-            <Renderer src="assets/sprites/grass.png">
+            </transform_component>
+            <renderer src="assets/sprites/grass.png">
                 <Rect height="auto" width="auto" top="0" left="0" /> 
-            </Renderer>
-            <MovableComponent speed="0" />
+            </renderer>
+            <movable_component speed="0" />
         </gc_entity>
     </gc_entities>
 </gc_scene>

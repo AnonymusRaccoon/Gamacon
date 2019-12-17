@@ -17,8 +17,10 @@ gc_component *deserialize_component(gc_engine *engine, node *n)
     const void *model = engine->get_component(engine, n->name);
     gc_component *cmp = NULL;
 
-    if (!model)
+    if (!model) {
+        my_printf("Couldn't find a component with the name: %s\n", n->name);
         return (NULL);
+    }
     cmp = new_component(model, 0, 0, 0, 0, 0, 0, 0);
     cmp->fdctr(engine, cmp, n);
     return (cmp);

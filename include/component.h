@@ -29,3 +29,5 @@ struct gc_component
 
 void *new_component(const void *component, ...);
 void component_destroy(void *component);
+
+#define GETCMP(x) (struct x *)entity->get_component(entity, #x)

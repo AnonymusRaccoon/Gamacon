@@ -50,7 +50,7 @@ char *transform_serialize(void *component)
 
 const struct transform_component transform_component = {
     base: {
-        name: "TransformComponent",
+        name: "transform_component",
         size: sizeof(struct transform_component),
         dependencies: (char *[]){NULL},
         ctr: &transform_ctr,

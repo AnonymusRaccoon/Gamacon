@@ -8,14 +8,14 @@
 #pragma once
 
 #include "component.h"
+#include <stdbool.h>
 
 struct controllable_component
 {
     gc_component base;
-    int left_key;
-    int right_key;
-    int jump_key;
-    int speed;
+    bool moving_left;
+    bool moving_right;
+    bool jumping;
 };
 
 extern const struct controllable_component controllable_component;

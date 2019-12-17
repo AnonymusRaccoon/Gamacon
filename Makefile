@@ -18,6 +18,9 @@ SRC = src/engine/engine.c \
 	src/components/parallax_component.c \
 	src/components/controllable_component.c \
 	src/components/gravity_component.c \
+	src/components/friction_component.c \
+	src/components/actions/walk_component.c \
+	src/components/controllers/keyboard_controller.c \
 	src/scene/scene.c \
 	src/utility/arraylen.c \
 	src/utility/list.c \
@@ -28,10 +31,13 @@ SRC = src/engine/engine.c \
 	src/systems/sfml_renderer_system.c \
 	src/systems/movable_system.c \
 	src/systems/parallax_system.c \
-	src/systems/controllable_system.c \
 	src/systems/gravity_system.c \
+	src/systems/actions/walk_system.c \
+	src/systems/controllers/keyboard_controller_system.c \
+	src/systems/friction_system.c \
 	src/engine/engine_system_builder.c \
-	src/engine/engine_component_builder.c
+	src/engine/engine_component_builder.c \
+	src/utility/vector2.c
 
 OBJ = $(SRC:%.c=%.o)
 

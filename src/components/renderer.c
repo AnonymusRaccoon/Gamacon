@@ -66,9 +66,9 @@ static char *rend_serialize(void *component)
 
 const struct renderer renderer_component = {
     base: {
-        name: "Renderer",
+        name: "renderer",
         size: sizeof(struct renderer),
-        dependencies: (char *[]){"TransformComponent", NULL},
+        dependencies: (char *[]){"transform_component", NULL},
         ctr: &rend_ctr,
         fdctr: &rend_fdctr,
         dtr: &rend_dtr,

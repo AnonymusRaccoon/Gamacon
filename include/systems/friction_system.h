@@ -9,4 +9,4 @@
 
 #include "system.h"
 
-extern const gc_system controllable_system;
+extern const gc_system friction_system;

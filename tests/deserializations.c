@@ -21,8 +21,8 @@ Test(deserialization, deserialize_entity)
     cr_assert_eq(ret, 0);
     cr_assert_neq(engine->scene, NULL);
     cr_assert_eq(((gc_entity *)engine->scene->entities->data)->id, 0);
-    cr_assert_str_eq(((gc_entity *)engine->scene->entities->data)->components->name, "TransformComponent");
-    cr_assert_str_eq(((gc_entity *)engine->scene->entities->data)->components->next->name, "Renderer");
-    cr_assert_str_eq(((gc_entity *)engine->scene->entities->data)->components->next->next->name, "MovableComponent");
-    cr_assert_str_eq(((gc_entity *)engine->scene->entities->data)->components->next->next->next->name, "ControllableComponent");
+    cr_assert_str_eq(((gc_entity *)engine->scene->entities->data)->components->name, "transform_component");
+    cr_assert_str_eq(((gc_entity *)engine->scene->entities->data)->components->next->name, "renderer");
+    cr_assert_str_eq(((gc_entity *)engine->scene->entities->data)->components->next->next->name, "movable_component");
+    cr_assert_str_eq(((gc_entity *)engine->scene->entities->data)->components->next->next->next->name, "controllable_component");
 }

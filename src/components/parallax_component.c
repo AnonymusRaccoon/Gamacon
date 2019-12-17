@@ -37,9 +37,9 @@ static char *parallax_serialize(void *component)
 
 const struct parallax_component parallax_component = {
     base: {
-        name: "ParallaxComponent",
+        name: "parallax_component",
         size: sizeof(struct parallax_component),
-        dependencies: (char *[]){"TransformComponent", "Renderer", NULL},
+        dependencies: (char *[]){"transform_component", "renderer", NULL},
         ctr: &parallax_ctr,
         fdctr: &parallax_fdctr,
         dtr: &parallax_dtr,

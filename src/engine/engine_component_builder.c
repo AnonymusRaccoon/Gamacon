@@ -13,6 +13,9 @@
 #include "components/transform_component.h"
 #include "components/controllable_component.h"
 #include "components/gravity_component.h"
+#include "components/actions/walk_action.h"
+#include "components/controllers/keyboard_controller.h"
+#include "components/friction_component.h"
 #include <stdlib.h>
 
 void engine_add_component(gc_engine *engine, const void *component)
@@ -30,5 +33,8 @@ void engine_add_buildin_components(gc_engine *engine)
     engine->add_component(engine, &renderer_component);
     engine->add_component(engine, &parallax_component);
     engine->add_component(engine, &controllable_component);
+    engine->add_component(engine, &walk_action);
+    engine->add_component(engine, &keyboard_controller);
     engine->add_component(engine, &gravity_component);
+    engine->add_component(engine, &friction_component);
 }
