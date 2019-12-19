@@ -16,19 +16,6 @@
 #include "systems/movable_system.h"
 #include <stddef.h>
 
-void check_collisions(struct movable_component *mov, quadtree *tree, int id)
-{
-
-    // if (mov->velocity.x < 0)
-    //     mov->velocity.x = MIN(mov->velocity.x, i.distance_left);
-    // else
-    //     mov->velocity.x = MIN(mov->velocity.x, i.distance_right);
-    // if (mov->velocity.y < 0)
-    //     mov->velocity.y = MIN(mov->velocity.y, i.distance_down);
-    // else
-    //     mov->velocity.y = MIN(mov->velocity.y, i.distance_top);
-}
-
 void move_entity(gc_entity *entity, struct movable_component *mov, \
 quadtree *tree, float dtime)
 {
@@ -38,9 +25,20 @@ quadtree *tree, float dtime)
         {pos->position.x, pos->position.y, pos->size.y, pos->size.x}
     };
 
-    printf("Acceleration: %f\n Velocity: %f\n", mov->acceleration.x, mov->velocity.x);
-    pos->position.x += mov->velocity.x * dtime;
-    pos->position.y += mov->velocity.y * dtime;
+    if (mov->velocity.x < 0)
+        pos->position.x -= MIN(mov->velocity.x * -dtime, i.distance_left);
+    else
+        pos->position.x += MIN(mov->velocity.x * dtime, i.distance_right);
+    if (mov->velocity.y < 0)
+        pos->position.y -= MIN(mov->velocity.y * -dtime, i.distance_down);
+    else
+        pos->position.y += MIN(mov->velocity.y * dtime, i.distance_top);
+    if (i.distance_left == 0 || i.distance_right == 0)
+        mov->velocity.x = 0;
+    if (i.distance_down == 0 || i.distance_top == 0)
+        mov->velocity.y = 0;
+    if (mov->velocity.x != 0)
+        printf("Acceleration: (%+.2f, %+.2f) Velocity: (%+.2f, %+.2f)Position: (%+.2f, %+.2f)\n", mov->acceleration.x, mov->acceleration.y, mov->velocity.x, mov->velocity.y, pos->position.x, pos->position.y);
     obj.rect.x = pos->position.x;
     obj.rect.y = pos->position.y;
     qt_update(tree, obj);
@@ -52,12 +50,10 @@ void *system __attribute__((unused)), gc_entity *entity, float dtime)
     struct movable_component *mov = GETCMP(movable_component);
     gc_movable_system *sys = (gc_movable_system *)system;
 
-    mov->velocity.x += mov->acceleration.x * dtime;
-    mov->velocity.y += mov->acceleration.y * dtime;
     // if (mov->speed_x != 0 || mov->speed_y != 0) AND IS ALREADY INSIDE THE TREE
     move_entity(entity, mov, sys->tree, dtime);
-    mov->acceleration.x = 0;
-    mov->acceleration.y = 0;
+    mov->velocity.x += mov->acceleration.x * dtime;
+    mov->velocity.y += mov->acceleration.y * dtime;
 }
 
 void movable_ctr(void *system, va_list args)

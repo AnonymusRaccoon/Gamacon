@@ -13,8 +13,7 @@
 struct walk_action
 {
     gc_component base;
-    int speed;
-    int max_speed;
+    int acceleration;
     int max_acceleration;
 };
 

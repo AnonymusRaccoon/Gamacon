@@ -30,3 +30,5 @@ int my_sqrt(int nb);
 #define ABSCLAMP(x, y) (((x) > 0) ? CLAMP((x), (y)) : NCLAMP((x), -(y)))
 
 #define GETSIGN(x) (((x) < 0) ? (-1) : (1))
+
+#define ABS(x) ((x) > 0 ? (x) : -(x))

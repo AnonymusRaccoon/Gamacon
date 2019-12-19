@@ -28,9 +28,9 @@ void engine_add_buildin_systems(gc_engine *engine)
     engine->get_system = &engine_get_system;
     engine->add_system(engine, &parallax_system);
     engine->add_system(engine, &keyboard_controller_system);
+    engine->add_system(engine, &friction_system);
     engine->add_system(engine, &walk_system);
     engine->add_system(engine, &gravity_system);
-    engine->add_system(engine, &friction_system);
     engine->add_system(engine, new_system(&movable_system));
 }
 

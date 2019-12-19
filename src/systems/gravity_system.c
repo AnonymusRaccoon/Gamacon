@@ -19,10 +19,15 @@
 void gravity_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    // struct gravity_component *grav = GETCMP(gravity_component);
+    struct gravity_component *grav = GETCMP(gravity_component);
     struct movable_component *mov = GETCMP(movable_component);
 
-    mov->acceleration.y = -9.8;
+    if (mov->acceleration.y > -grav->gravity_speed) {
+        if (mov->acceleration.y > 0)
+            mov->acceleration.y -= grav->gravity_speed;
+        else
+            mov->acceleration.y = -grav->gravity_speed;
+    }
     (void)system;
     (void)dtime;
     (void)engine;

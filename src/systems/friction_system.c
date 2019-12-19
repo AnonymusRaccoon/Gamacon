@@ -12,6 +12,7 @@
 #include "utility.h"
 #include "components/movable_component.h"
 #include "components/friction_component.h"
+#include "math.h"
 #include <stddef.h>
 
 void fric_update_entity(gc_engine *engine, void *system, \
@@ -19,7 +20,7 @@ gc_entity *entity, float dtime)
 {
     struct friction_component *fric = GETCMP(friction_component);
     struct movable_component *mov = GETCMP(movable_component);
-    gc_vector2 dir = gcvector2_normilize(mov->acceleration);
+    gc_vector2 dir = gcvector2_normilize(mov->velocity);
 
     if (isnan(dir.x) || isnan(dir.y))
         return;

@@ -18,7 +18,7 @@ bool system_check_dependencies(const gc_system *sys, const gc_entity *entity)
         return (false);
     for (int i = 0; comp->dependencies[i]; i++) {
         if (!entity->has_component(entity, comp->dependencies[i])) {
-            my_printf("\tMissing component: %s\n\n",comp->dependencies[i]);
+            my_printf("\tMissing component: %s\n\n", comp->dependencies[i]);
             return (false);
         }
     }
