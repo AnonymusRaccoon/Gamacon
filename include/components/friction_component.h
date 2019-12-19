@@ -13,7 +13,6 @@ struct friction_component
 {
     gc_component base;
     int value;
-    int threshold;
 };
 
 extern const struct friction_component friction_component;

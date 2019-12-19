@@ -37,8 +37,6 @@ quadtree *tree, float dtime)
         mov->velocity.x = 0;
     if (i.distance_down == 0 || i.distance_top == 0)
         mov->velocity.y = 0;
-    if (mov->velocity.x != 0)
-        printf("Acceleration: (%+.2f, %+.2f) Velocity: (%+.2f, %+.2f)Position: (%+.2f, %+.2f)\n", mov->acceleration.x, mov->acceleration.y, mov->velocity.x, mov->velocity.y, pos->position.x, pos->position.y);
     obj.rect.x = pos->position.x;
     obj.rect.y = pos->position.y;
     qt_update(tree, obj);
@@ -54,6 +52,7 @@ void *system __attribute__((unused)), gc_entity *entity, float dtime)
     move_entity(entity, mov, sys->tree, dtime);
     mov->velocity.x += mov->acceleration.x * dtime;
     mov->velocity.y += mov->acceleration.y * dtime;
+    mov->acceleration.x = 0;
 }
 
 void movable_ctr(void *system, va_list args)
