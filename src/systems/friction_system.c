@@ -21,9 +21,14 @@ gc_entity *entity, float dtime)
     struct movable_component *mov = GETCMP(movable_component);
     gc_vector2 dir = gcvector2_normilize(mov->acceleration);
 
-    //VECTOR NOT NORMALIZED
-    mov->acceleration.x += 10 * dir.x;
-    // mov->acceleration.y += fric->value * dir.y;
+    if (isnan(dir.x) || isnan(dir.y))
+        return;
+    if (-fric->threshold < mov->velocity.x && mov->velocity.x < fric->threshold)
+        mov->velocity.x = 0;
+    else if (mov->acceleration.x * dir.x > -fric->value) {
+        mov->acceleration.x -= fric->value * dir.x * .8f;
+        mov->acceleration.x -= MAX(fric->value * .02f * mov->velocity.x * dir.x, 0) / dir.x;
+    }
     (void)system;
     (void)engine;
     (void)dtime;
