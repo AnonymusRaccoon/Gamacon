@@ -12,8 +12,6 @@
 #include "systems/parallax_system.h"
 #include "systems/gravity_system.h"
 #include "systems/controllers/keyboard_controller_system.h"
-#include "systems/actions/walk_system.h"
-#include "systems/actions/jump_system.h"
 #include "systems/friction_system.h"
 #include <stdlib.h>
 
@@ -22,18 +20,21 @@ void engine_add_system(gc_engine *engine, const gc_system *system)
     engine->systems = list_add(engine->systems, (void *)system);
 }
 
+void engine_finish_physics(gc_engine *engine)
+{
+    engine->add_system(engine, new_system(&movable_system));
+}
+
 void engine_add_buildin_systems(gc_engine *engine)
 {
     engine->systems = NULL;
     engine->add_system = &engine_add_system;
     engine->get_system = &engine_get_system;
+    engine->finish_physics = &engine_finish_physics;
     engine->add_system(engine, &parallax_system);
     engine->add_system(engine, &keyboard_controller_system);
     engine->add_system(engine, &friction_system);
-    engine->add_system(engine, &walk_system);
-    engine->add_system(engine, &jump_system);
     engine->add_system(engine, &gravity_system);
-    engine->add_system(engine, new_system(&movable_system));
 }
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate)

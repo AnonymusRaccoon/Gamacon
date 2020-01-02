@@ -31,6 +31,7 @@ struct gc_engine
     gc_list *systems;
     void (*add_system)(gc_engine *engine, const gc_system *system);
     const gc_system *(*get_system)(gc_engine *engine, const char *name);
+    void (*finish_physics)(gc_engine *engine);
 
     gc_list *components;
     void (*add_component)(gc_engine *engine, const void *component);
