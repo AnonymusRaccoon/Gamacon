@@ -44,7 +44,11 @@ const struct movable_component movable_component = {
     base: {
         name: "movable_component",
         size: sizeof(struct movable_component),
-        dependencies: (char *[]){"transform_component", NULL},
+        dependencies: (char *[]){
+            "transform_component", 
+            "collision_component",
+            NULL
+        },
         ctr: &movable_ctr,
         fdctr: &movable_fdctr,
         dtr: &movable_dtr,

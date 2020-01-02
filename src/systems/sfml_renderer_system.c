@@ -27,7 +27,7 @@ gc_sprite *sprite)
     };
 
     if (!sprite->texture)
-        return (NULL);
+        return;
     t = sfTexture_getSize(sprite->texture->texture);
     scale = (sfVector2f){sprite->size.x / t.x, sprite->size.y / t.y};
     sfSprite_setTexture(renderer->sprite, sprite->texture->texture, true);

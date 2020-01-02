@@ -13,6 +13,7 @@
 #include "systems/gravity_system.h"
 #include "systems/controllers/keyboard_controller_system.h"
 #include "systems/friction_system.h"
+#include "systems/collision_system.h"
 #include <stdlib.h>
 
 void engine_add_system(gc_engine *engine, const gc_system *system)
@@ -34,6 +35,7 @@ void engine_add_buildin_systems(gc_engine *engine)
     engine->add_system(engine, &parallax_system);
     engine->add_system(engine, &keyboard_controller_system);
     engine->add_system(engine, &friction_system);
+    engine->add_system(engine, new_system(&collision_system, engine->scene));
     engine->add_system(engine, &gravity_system);
 }
 

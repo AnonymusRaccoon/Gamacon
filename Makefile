@@ -13,6 +13,7 @@ SRC = src/engine/engine.c \
 	src/entity/entity_factory.c \
 	src/component.c \
 	src/components/movable_component.c \
+	src/components/collision_component.c \
 	src/components/transform_component.c \
 	src/components/renderer.c \
 	src/components/parallax_component.c \
@@ -29,6 +30,7 @@ SRC = src/engine/engine.c \
 	src/system.c \
 	src/systems/sfml_renderer_system.c \
 	src/systems/movable_system.c \
+	src/systems/collision_system.c \
 	src/systems/parallax_system.c \
 	src/systems/gravity_system.c \
 	src/systems/controllers/keyboard_controller_system.c \
