@@ -23,7 +23,7 @@ component;
     cmp->jump_key = va_arg(args, int);
 }
 
-static void keyboard_fdctr(gc_engine *engine, void *component, node *n)
+static void keyboard_fdctr(gc_scene *scene, void *component, node *n)
 {
     struct keyboard_controller *cmp = (struct keyboard_controller *)\
 component;
@@ -31,7 +31,7 @@ component;
     cmp->left_key = xml_getintprop(n, "left");
     cmp->right_key = xml_getintprop(n, "right");
     cmp->jump_key = xml_getintprop(n, "jump");
-    (void)engine;
+    (void)scene;
 }
 
 static void keyboard_dtr(void *component)

@@ -18,5 +18,5 @@ struct gc_texture
     void (*destroy)(gc_texture *texture);
 };
 
-gc_texture *get_texture(gc_engine *engine, char *name);
+gc_texture *get_texture(gc_scene *scene, char *name);
 gc_texture *texture_create(const char *path);

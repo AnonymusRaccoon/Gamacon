@@ -19,13 +19,13 @@ static void gravity_ctr(void *component, va_list args)
     cmp->max_speed = va_arg(args, int);
 }
 
-static void gravity_fdctr(gc_engine *engine, void *component, node *n)
+static void gravity_fdctr(gc_scene *scene, void *component, node *n)
 {
     struct gravity_component *cmp = (struct gravity_component *)component;
 
     cmp->gravity_speed = xml_getintprop(n, "speed");
     cmp->max_speed = xml_getintprop(n, "max_speed");
-    (void)engine;
+    (void)scene;
 }
 
 static void gravity_dtr(void *component)

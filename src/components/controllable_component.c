@@ -22,7 +22,7 @@ component;
     (void)args;
 }
 
-static void controllable_fdctr(gc_engine *engine, void *component, node *n)
+static void controllable_fdctr(gc_scene *scene, void *component, node *n)
 {
     struct controllable_component *cmp = (struct controllable_component *)\
 component;
@@ -30,7 +30,7 @@ component;
     cmp->moving_left = false;
     cmp->moving_right = false;
     cmp->jumping = false;
-    (void)engine;
+    (void)scene;
     (void)n;
 }
 

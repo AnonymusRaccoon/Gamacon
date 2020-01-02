@@ -10,5 +10,5 @@
 #include "entity.h"
 
 int prefab_load(gc_engine *engine, const char *path);
-int prefab_loadentities(node *n, gc_engine *engine);
-gc_entity *deserialize_entity(gc_engine *engine, node *n);
+int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene);
+gc_entity *deserialize_entity(gc_engine *engine, gc_scene *scene, node *n);

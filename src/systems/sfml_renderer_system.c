@@ -12,6 +12,7 @@
 #include "systems/sfml_renderer_system.h"
 #include "components/transform_component.h"
 #include "components/renderer.h"
+#include "my.h"
 #include <stdlib.h>
 
 void renderer_draw_texture(struct sfml_renderer_system *renderer, \
@@ -26,7 +27,7 @@ gc_sprite *sprite)
     };
 
     if (!sprite->texture)
-        return;
+        return (NULL);
     t = sfTexture_getSize(sprite->texture->texture);
     scale = (sfVector2f){sprite->size.x / t.x, sprite->size.y / t.y};
     sfSprite_setTexture(renderer->sprite, sprite->texture->texture, true);
@@ -49,6 +50,8 @@ gc_entity *entity, float dtime)
     text->sprite->size = pos->size;
     if (text->type == GC_TEXTUREREND)
         renderer_draw_texture(rend, text->sprite);
+    else
+        my_printf("Trying to render a texture with an unknow type.\n");
     (void)dtime;
     (void)engine;
 }

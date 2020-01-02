@@ -21,13 +21,13 @@ int prefab_load(gc_engine *engine, const char *path)
     if (!engine || !engine->scene)
         return (-1);
     n = xml_parse(path);
-    if (!n || prefab_loadentities(n, engine) < 0)
+    if (!n || prefab_loadentities(n, engine, engine->scene) < 0)
         return (-1);
     xml_destroy(n);
     return (0);
 }
 
-int prefab_loadentities(node *n, gc_engine *engine)
+int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene)
 {
     gc_entity *entity;
 
@@ -35,10 +35,10 @@ int prefab_loadentities(node *n, gc_engine *engine)
     if (!n)
         return (-1);
     for (node *ent_n = n->child; ent_n; ent_n = ent_n->next) {
-        entity = deserialize_entity(engine, ent_n);
+        entity = deserialize_entity(engine, scene, ent_n);
         if (!entity)
             return (-1);
-        engine->scene->add_entity(engine->scene, entity);
+        scene->add_entity(scene, entity);
     }
     return (0);
 }

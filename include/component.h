@@ -18,7 +18,7 @@ struct gc_component
     unsigned size;
     char **dependencies;
     void (*ctr)(void *component, va_list);
-    void (*fdctr)(gc_engine *engine, void *component, node *n);
+    void (*fdctr)(gc_scene *scene, void *component, node *n);
     void (*dtr)(void *component);
     char *(*serialize)(void *component);
     void (*destroy)(void *component);

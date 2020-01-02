@@ -12,19 +12,26 @@
 #include <stdlib.h>
 
 
-gc_texture *get_texture(gc_engine *engine, char *name)
+gc_texture *get_texture(gc_scene *scene, char *name)
 {
     gc_texture **textures;
 
-    if (!engine->scene || !name)
+    if (!scene) {
+        my_printf("No scene, can't load textures\n");
         return (NULL);
-    textures = engine->scene->textures;
+    }
+    if (!name) {
+        my_printf("Texture name: null. How should I find a texture ?\n");
+        return (NULL);
+    }
+    textures = scene->textures;
     if (!textures)
         return (NULL);
     for (int i = 0; textures[i]; i++) {
         if (!my_strcmp(textures[i]->name, name))
             return (textures[i]);
     }
+    my_printf("Gamacon: no texture found for the name \"%s\"\n", name);
     return (NULL);
 }
 

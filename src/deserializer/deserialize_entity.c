@@ -12,7 +12,7 @@
 #include "entity.h"
 #include "engine.h"
 
-gc_component *deserialize_component(gc_engine *engine, node *n)
+gc_component *deserialize_component(gc_engine *engine, gc_scene *scene, node *n)
 {
     const void *model = engine->get_component(engine, n->name);
     gc_component *cmp = NULL;
@@ -22,11 +22,11 @@ gc_component *deserialize_component(gc_engine *engine, node *n)
         return (NULL);
     }
     cmp = new_component(model, 0, 0, 0, 0, 0, 0, 0);
-    cmp->fdctr(engine, cmp, n);
+    cmp->fdctr(scene, cmp, n);
     return (cmp);
 }
 
-gc_entity *deserialize_entity(gc_engine *engine, node *n)
+gc_entity *deserialize_entity(gc_engine *engine, gc_scene *scene, node *n)
 {
     gc_entity *entity = NULL;
     gc_component *cmp = NULL;
@@ -39,7 +39,7 @@ gc_entity *deserialize_entity(gc_engine *engine, node *n)
     if (!entity)
         return (NULL);
     for (node *cmp_n = n->child; cmp_n; cmp_n = cmp_n->next) {
-        cmp = deserialize_component(engine, cmp_n);
+        cmp = deserialize_component(engine, scene, cmp_n);
         entity->add_component(entity, cmp);
     }
     return (entity);

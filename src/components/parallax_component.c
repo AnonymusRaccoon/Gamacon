@@ -16,12 +16,12 @@ static void parallax_ctr(void *component, va_list args)
     cmp->speed = va_arg(args, double);
 }
 
-static void parallax_fdctr(gc_engine *engine, void *component, node *n)
+static void parallax_fdctr(gc_scene *scene, void *component, node *n)
 {
     struct parallax_component *cmp = (struct parallax_component *)component;
 
     cmp->speed = xml_getfloatprop(n, "speed");
-    (void)engine;
+    (void)scene;
 }
 
 static void parallax_dtr(void *component)

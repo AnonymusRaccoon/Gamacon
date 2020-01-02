@@ -19,7 +19,7 @@ void transform_ctr(void *component, va_list args)
     cmp->size = va_arg(args, gc_vector2);
 }
 
-void transform_fdctr(gc_engine *engine, void *component, node *n)
+void transform_fdctr(gc_scene *scene, void *component, node *n)
 {
     struct transform_component *cmp = (struct transform_component *)component;
     node *pos = xml_getnode(n, "Position");
@@ -39,7 +39,7 @@ void transform_fdctr(gc_engine *engine, void *component, node *n)
         cmp->size.x = 0;
         cmp->size.y = 0;
     }
-    (void)engine;
+    (void)scene;
 }
 
 char *transform_serialize(void *component)

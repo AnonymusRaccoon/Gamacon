@@ -18,12 +18,12 @@ static void fric_ctr(void *component, va_list args)
     cmp->value = va_arg(args, int);
 }
 
-static void fric_fdctr(gc_engine *engine, void *component, node *n)
+static void fric_fdctr(gc_scene *scene, void *component, node *n)
 {
     struct friction_component *cmp = (struct friction_component *)component;
 
     cmp->value = xml_getintprop(n, "value");
-    (void)engine;
+    (void)scene;
 }
 
 static void fric_dtr(void *component)

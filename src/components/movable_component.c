@@ -22,11 +22,11 @@ static void movable_ctr(void *component, va_list args)
     (void)args;
 }
 
-static void movable_fdctr(gc_engine *engine, void *component, node *n)
+static void movable_fdctr(gc_scene *scene, void *component, node *n)
 {
     (void)component;
     (void)n;
-    (void)engine;
+    (void)scene;
 }
 
 static void movable_dtr(void *component)

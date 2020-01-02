@@ -20,13 +20,13 @@ static void walk_ctr(void *component, va_list args)
     cmp->max_acceleration = va_arg(args, int);
 }
 
-static void walk_fdctr(gc_engine *engine, void *component, node *n)
+static void walk_fdctr(gc_scene *scene, void *component, node *n)
 {
     struct walk_action *cmp = (struct walk_action *)component;
 
     cmp->acceleration = xml_getintprop(n, "acceleration");
     cmp->max_acceleration = xml_getintprop(n, "max_acceleration");
-    (void)engine;
+    (void)scene;
 }
 
 static void walk_dtr(void *component)

@@ -30,7 +30,7 @@ static void rend_ctr(void *component, va_list args)
     }
 }
 
-static void rend_fdctr(gc_engine *engine, void *component, node *n)
+static void rend_fdctr(gc_scene *scene, void *component, node *n)
 {
     struct renderer *cmp = (struct renderer *)component;
     node *rect = xml_getnode(n, "Rect");
@@ -38,7 +38,7 @@ static void rend_fdctr(gc_engine *engine, void *component, node *n)
 
     if (!cmp->sprite)
         return;
-    cmp->sprite->texture = get_texture(engine, xml_getproperty(n, "src"));
+    cmp->sprite->texture = get_texture(scene, xml_getproperty(n, "src"));
     cmp->sprite->rect.height = xml_getfloatprop(rect, "height");
     cmp->sprite->rect.width = xml_getfloatprop(rect, "width");
     cmp->sprite->rect.top = xml_getfloatprop(rect, "top");

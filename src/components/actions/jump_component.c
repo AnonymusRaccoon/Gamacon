@@ -19,12 +19,12 @@ static void ctr(void *component, va_list args)
     cmp->acceleration = va_arg(args, int);
 }
 
-static void fdctr(gc_engine *engine, void *component, node *n)
+static void fdctr(gc_scene *scene, void *component, node *n)
 {
     struct jump_action *cmp = (struct jump_action *)component;
 
     cmp->acceleration = xml_getintprop(n, "acceleration");
-    (void)engine;
+    (void)scene;
 }
 
 static void dtr(void *component)
