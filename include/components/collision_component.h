@@ -10,10 +10,10 @@
 struct collision_component
 {
     gc_component base;
-    int distance_down;
-    int distance_top;
-    int distance_left;
-    int distance_right;
+    float distance_down;
+    float distance_top;
+    float distance_left;
+    float distance_right;
 };
 
 extern const struct collision_component collision_component;

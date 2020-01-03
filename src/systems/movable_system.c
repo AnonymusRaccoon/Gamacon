@@ -17,6 +17,8 @@
 #include "systems/movable_system.h"
 #include <stddef.h>
 
+#include "components/controllable_component.h"
+
 static void update_entity(gc_engine *engine __attribute__((unused)), \
 void *system __attribute__((unused)), gc_entity *entity, float dtime)
 {
@@ -31,8 +33,6 @@ void *system __attribute__((unused)), gc_entity *entity, float dtime)
     if (mov->velocity.y < 0)
         pos->position.y -= MIN(mov->velocity.y * -dtime, col->distance_down);
     else {
-        // if (mov->velocity.y != 0)
-        //     printf("Velocity y: %4.0f, Moving up of %4.0f\n", mov->velocity.y, mov->velocity.y * dtime);
         pos->position.y += MIN(mov->velocity.y * dtime, col->distance_top);
     }
     if (col->distance_left == 0 || col->distance_right == 0)
