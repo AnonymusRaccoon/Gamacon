@@ -17,8 +17,10 @@
 #include "systems/movable_system.h"
 #include <stddef.h>
 
-void move_entity(gc_entity *entity, struct movable_component *mov, float dtime)
+static void update_entity(gc_engine *engine __attribute__((unused)), \
+void *system __attribute__((unused)), gc_entity *entity, float dtime)
 {
+    struct movable_component *mov = GETCMP(movable_component);
     struct transform_component *pos = GETCMP(transform_component);
     struct collision_component *col = GETCMP(collision_component);
 
@@ -28,32 +30,27 @@ void move_entity(gc_entity *entity, struct movable_component *mov, float dtime)
         pos->position.x += MIN(mov->velocity.x * dtime, col->distance_right);
     if (mov->velocity.y < 0)
         pos->position.y -= MIN(mov->velocity.y * -dtime, col->distance_down);
-    else
+    else {
+        // if (mov->velocity.y != 0)
+        //     printf("Velocity y: %4.0f, Moving up of %4.0f\n", mov->velocity.y, mov->velocity.y * dtime);
         pos->position.y += MIN(mov->velocity.y * dtime, col->distance_top);
+    }
     if (col->distance_left == 0 || col->distance_right == 0)
         mov->velocity.x = 0;
     if (col->distance_down == 0 || col->distance_top == 0)
         mov->velocity.y = 0;
-}
-
-void movable_update_entity(gc_engine *engine __attribute__((unused)), \
-void *system __attribute__((unused)), gc_entity *entity, float dtime)
-{
-    struct movable_component *mov = GETCMP(movable_component);
-
-    move_entity(entity, mov, dtime);
     mov->velocity.x += mov->acceleration.x * dtime;
     mov->velocity.y += mov->acceleration.y * dtime;
     mov->acceleration.x = 0;
 }
 
-void movable_ctr(void *system, va_list args)
+static void ctr(void *system, va_list args)
 {
     (void)system;
     (void)args;
 }
 
-void movable_dtr(void *system)
+static void dtr(void *system)
 {
     (void)system;
 }
@@ -62,9 +59,9 @@ const gc_system movable_system = {
     name: "MovableSystem",
     component_name: "movable_component",
     size: sizeof(gc_system),
-    ctr: &movable_ctr,
-    dtr: &movable_dtr,
+    ctr: &ctr,
+    dtr: &dtr,
     check_dependencies: &system_check_dependencies,
-    update_entity: &movable_update_entity,
+    update_entity: &update_entity,
     destroy: &system_destroy
 };
