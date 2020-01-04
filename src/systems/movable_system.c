@@ -19,6 +19,16 @@
 
 #include "components/controllable_component.h"
 
+void clamp_vel(struct movable_component *mov, struct collision_component *col)
+{
+    if ((col->distance_left == 0 && mov->velocity.x < 0) ||
+    (col->distance_right == 0 && mov->velocity.x > 0))
+        mov->velocity.x = 0;
+    if ((col->distance_down == 0 && mov->velocity.y < 0) || 
+    (col->distance_top == 0 && mov->velocity.y > 0))
+        mov->velocity.y = 0;
+}
+
 static void update_entity(gc_engine *engine __attribute__((unused)), \
 void *system __attribute__((unused)), gc_entity *entity, float dtime)
 {
@@ -26,21 +36,21 @@ void *system __attribute__((unused)), gc_entity *entity, float dtime)
     struct transform_component *pos = GETCMP(transform_component);
     struct collision_component *col = GETCMP(collision_component);
 
+    if (entity->id == 25)
+        printf("Velocity before: %4.0f\n", mov->velocity.y);
     if (mov->velocity.x < 0)
         pos->position.x -= MIN(mov->velocity.x * -dtime, col->distance_left);
     else
         pos->position.x += MIN(mov->velocity.x * dtime, col->distance_right);
     if (mov->velocity.y < 0)
         pos->position.y -= MIN(mov->velocity.y * -dtime, col->distance_down);
-    else {
+    else
         pos->position.y += MIN(mov->velocity.y * dtime, col->distance_top);
-    }
-    if (col->distance_left == 0 || col->distance_right == 0)
-        mov->velocity.x = 0;
-    if (col->distance_down == 0 || col->distance_top == 0)
-        mov->velocity.y = 0;
     mov->velocity.x += mov->acceleration.x * dtime;
     mov->velocity.y += mov->acceleration.y * dtime;
+    clamp_vel(mov, col);
+    if (entity->id == 25)
+        printf("Acceleration: %4.0f, Velocity: %4.0f\n", mov->acceleration.y, mov->velocity.y);
     mov->acceleration.x = 0;
     mov->acceleration.y = 0;
 }
