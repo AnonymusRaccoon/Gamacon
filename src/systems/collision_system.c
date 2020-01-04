@@ -22,8 +22,10 @@ void *system, gc_entity *entity, float dtime __attribute__((unused)))
     gc_collision_system *sys = (gc_collision_system *)system;
     struct collision_component *col = GETCMP(collision_component);
     struct transform_component *pos = GETCMP(transform_component);
-    qt_object obj = (qt_object) {entity->id,
-        {pos->position.x, pos->position.y, pos->size.y, pos->size.x}
+    qt_object obj = (qt_object) {
+        entity->id,
+        {pos->position.x, pos->position.y, pos->size.y, pos->size.x},
+        col->layer
     };
     // if (GETCMP(movable_component) != NULL)
         qt_update(sys->tree, obj);

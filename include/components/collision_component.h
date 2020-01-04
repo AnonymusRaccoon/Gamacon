@@ -14,6 +14,7 @@ struct collision_component
     float distance_top;
     float distance_left;
     float distance_right;
+    int layer;
 };
 
 extern const struct collision_component collision_component;

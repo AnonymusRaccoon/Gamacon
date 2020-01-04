@@ -20,11 +20,9 @@ gc_entity *entity, float dtime)
 {
     struct friction_component *fric = GETCMP(friction_component);
     struct movable_component *mov = GETCMP(movable_component);
-    gc_vector2 dir = gcvector2_normilize(mov->velocity);
 
-    if (isnan(dir.x) || isnan(dir.y))
-        return;
     mov->acceleration.x -= fric->value * mov->velocity.x;
+    mov->acceleration.y -= fric->value * mov->velocity.y;
     (void)system;
     (void)engine;
     (void)dtime;

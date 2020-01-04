@@ -42,6 +42,7 @@ void *system __attribute__((unused)), gc_entity *entity, float dtime)
     mov->velocity.x += mov->acceleration.x * dtime;
     mov->velocity.y += mov->acceleration.y * dtime;
     mov->acceleration.x = 0;
+    mov->acceleration.y = 0;
 }
 
 static void ctr(void *system, va_list args)

@@ -19,7 +19,7 @@ static void ctr(void *component, va_list args)
     cmp->distance_top = 1024;
     cmp->distance_left = 1024;
     cmp->distance_right = 1024;
-    (void)args;
+    cmp->layer = va_arg(args, int);
 }
 
 static void fdctr(gc_scene *scene, void *component, node *n)
@@ -29,7 +29,7 @@ static void fdctr(gc_scene *scene, void *component, node *n)
     cmp->distance_top = 1024;
     cmp->distance_left = 1024;
     cmp->distance_right = 1024;
-    (void)n;
+    cmp->layer = xml_getbinaprop(n, "layer");
     (void)scene;
 }
 
