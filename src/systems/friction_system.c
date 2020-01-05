@@ -12,6 +12,7 @@
 #include "utility.h"
 #include "components/movable_component.h"
 #include "components/friction_component.h"
+#include "components/collision_component.h"
 #include "math.h"
 #include <stddef.h>
 
@@ -20,9 +21,12 @@ gc_entity *entity, float dtime)
 {
     struct friction_component *fric = GETCMP(friction_component);
     struct movable_component *mov = GETCMP(movable_component);
+    struct collision_component *col = GETCMP(collision_component);
 
-    mov->acceleration.x -= fric->value * mov->velocity.x;
-    mov->acceleration.y -= fric->value * mov->velocity.y;
+    if (!col || collision_is_in_contact(col)) {
+        mov->acceleration.x -= fric->value * mov->velocity.x;
+        mov->acceleration.y -= fric->value * mov->velocity.y;
+    }
     (void)system;
     (void)engine;
     (void)dtime;

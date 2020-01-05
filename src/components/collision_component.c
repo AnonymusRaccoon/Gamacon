@@ -20,6 +20,7 @@ static void ctr(void *component, va_list args)
     cmp->distance_left = 1024;
     cmp->distance_right = 1024;
     cmp->layer = va_arg(args, int);
+    cmp->on_collide = NULL;
 }
 
 static void fdctr(gc_scene *scene, void *component, node *n)
@@ -30,6 +31,7 @@ static void fdctr(gc_scene *scene, void *component, node *n)
     cmp->distance_left = 1024;
     cmp->distance_right = 1024;
     cmp->layer = xml_getbinaprop(n, "layer");
+    cmp->on_collide = NULL;
     (void)scene;
 }
 
@@ -42,6 +44,19 @@ static char *serialize(void *component)
 {
     (void)component;
     return (NULL);
+}
+
+bool collision_is_in_contact(struct collision_component *col)
+{
+    if (col->distance_down == 0)
+        return (true);
+    if (col->distance_top == 0)
+        return (true);
+    if (col->distance_left == 0)
+        return (true);
+    if (col->distance_right == 0)
+        return (true);
+    return (false);
 }
 
 const struct collision_component collision_component = {

@@ -16,7 +16,7 @@
 #include "systems/collision_system.h"
 #include <stddef.h>
 
-static void update_entity(gc_engine *engine __attribute__((unused)), \
+static void update_entity(gc_engine *engine, \
 void *system, gc_entity *entity, float dtime __attribute__((unused)))
 {
     gc_collision_system *sys = (gc_collision_system *)system;
@@ -29,11 +29,17 @@ void *system, gc_entity *entity, float dtime __attribute__((unused)))
     };
     // if (GETCMP(movable_component) != NULL)
         qt_update(sys->tree, obj);
-    qt_collision i = collision_get_info(sys->tree, entity->id);
-    col->distance_down = i.distance_down;
-    col->distance_top = i.distance_top;
-    col->distance_left = i.distance_left;
-    col->distance_right = i.distance_right;
+    qt_collision qtcol = collision_get_info(sys->tree, entity->id);
+    col->distance_down = qtcol.distance_down;
+    col->distance_top = qtcol.distance_top;
+    col->distance_left = qtcol.distance_left;
+    col->distance_right = qtcol.distance_right;
+    if (!col->on_collide)
+        return;
+    for (int i = 0; qtcol.collide_with[i] != -1; i++) {
+        for (int j = 0; col->on_collide[j]; j++)
+            col->on_collide[j](engine, entity, qtcol.collide_with[i]);
+    }
 }
 
 static void ctr(void *system, va_list args)
@@ -55,6 +61,7 @@ static void ctr(void *system, va_list args)
     //     obj.rect.h = pos->size.y;
     //     qt_add(col->tree, obj);
     // }
+    (void)args;
 }
 
 static void dtr(void *system)
