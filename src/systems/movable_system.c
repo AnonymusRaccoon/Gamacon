@@ -44,9 +44,9 @@ void *system __attribute__((unused)), gc_entity *entity, float dtime)
         pos->position.y -= MIN(mov->velocity.y * -dtime, col->distance_down);
     else
         pos->position.y += MIN(mov->velocity.y * dtime, col->distance_top);
+    clamp_vel(mov, col);
     mov->velocity.x += mov->acceleration.x * dtime;
     mov->velocity.y += mov->acceleration.y * dtime;
-    clamp_vel(mov, col);
     mov->acceleration.x = 0;
     mov->acceleration.y = 0;
 }
