@@ -19,6 +19,7 @@ SRC = src/engine/engine.c \
 	src/components/parallax_component.c \
 	src/components/controllable_component.c \
 	src/components/friction_component.c \
+	src/components/friction_giver.c \
 	src/components/controllers/keyboard_controller.c \
 	src/scene/scene.c \
 	src/utility/arraylen.c \
@@ -35,7 +36,8 @@ SRC = src/engine/engine.c \
 	src/systems/friction_system.c \
 	src/engine/engine_system_builder.c \
 	src/engine/engine_component_builder.c \
-	src/utility/vector2.c
+	src/utility/vector2.c \
+	src/utility/my_realloc.c
 
 OBJ = $(SRC:%.c=%.o)
 

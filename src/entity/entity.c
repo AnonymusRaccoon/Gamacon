@@ -12,6 +12,8 @@
 
 gc_entity *entity_get(gc_scene *scene, int id)
 {
+    if (!scene)
+        return (NULL);
     for (gc_list *ent = scene->entities; ent; ent = ent->next) {
         if (((gc_entity *)ent->data)->id == id)
             return (ent->data);
@@ -21,6 +23,8 @@ gc_entity *entity_get(gc_scene *scene, int id)
 
 void *entity_get_component(const gc_entity *entity, const char *name)
 {
+    if (!entity || !name)
+        return (NULL);
     for (gc_component *cmp = entity->components; cmp; cmp = cmp->next) {
         if (!my_strcmp(cmp->name, name))
             return (cmp);

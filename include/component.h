@@ -11,6 +11,7 @@ typedef struct gc_component gc_component;
 
 #include <stdarg.h>
 #include "engine.h"
+#include "entity.h"
 
 struct gc_component
 {
@@ -18,7 +19,7 @@ struct gc_component
     unsigned size;
     char **dependencies;
     void (*ctr)(void *component, va_list);
-    void (*fdctr)(gc_scene *scene, void *component, node *n);
+    void (*fdctr)(gc_entity *entity, gc_scene *scene, void *component, node *n);
     void (*dtr)(void *component);
     char *(*serialize)(void *component);
     void (*destroy)(void *component);
@@ -30,4 +31,5 @@ struct gc_component
 void *new_component(const void *component, ...);
 void component_destroy(void *component);
 
-#define GETCMP(x) (struct x *)entity->get_component(entity, #x)
+#define GETCMP(x) ((struct x *)entity->get_component(entity, #x))
+#define GETCOLCMP(x) ((struct x *)entity_get_component(entity_get(engine->scene, id), #x))

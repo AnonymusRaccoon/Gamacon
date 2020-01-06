@@ -13,7 +13,7 @@
 #include "components/renderer.h"
 #include <stdlib.h>
 
-static void rend_ctr(void *component, va_list args)
+static void ctr(void *component, va_list args)
 {
     struct renderer *cmp = (struct renderer *)component;
     sfVector2u size;
@@ -30,7 +30,7 @@ static void rend_ctr(void *component, va_list args)
     }
 }
 
-static void rend_fdctr(gc_scene *scene, void *component, node *n)
+static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct renderer *cmp = (struct renderer *)component;
     node *rect = xml_getnode(n, "Rect");
@@ -49,16 +49,17 @@ static void rend_fdctr(gc_scene *scene, void *component, node *n)
         cmp->sprite->rect.width = (float)size.x;
     }
     cmp->type = GC_TEXTUREREND;
+    (void)entity;
 }
 
-static void rend_dtr(void *component)
+static void dtr(void *component)
 {
     struct renderer *cmp = (struct renderer *)component;
 
     free(cmp->sprite);
 }
 
-static char *rend_serialize(void *component)
+static char *serialize(void *component)
 {
     (void)component;
     return (NULL);
@@ -69,10 +70,10 @@ const struct renderer renderer_component = {
         name: "renderer",
         size: sizeof(struct renderer),
         dependencies: (char *[]){"transform_component", NULL},
-        ctr: &rend_ctr,
-        fdctr: &rend_fdctr,
-        dtr: &rend_dtr,
-        serialize: &rend_serialize,
+        ctr: &ctr,
+        fdctr: &fdctr,
+        dtr: &dtr,
+        serialize: &serialize,
         destroy: &component_destroy,
         next: NULL,
         prev: NULL

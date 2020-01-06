@@ -1,31 +1,27 @@
 /*
-** EPITECH PROJECT, 2019
-** Gamacon
+** EPITECH PROJECT, 2020
+** Twac
 ** File description:
-** movable_component
+** friction_giver
 */
 
 #include "xml.h"
-#include "component.h"
-#include "components/movable_component.h"
-#include "utility.h"
-#include <stdlib.h>
+#include "entity.h"
+#include "scene.h"
+#include "components/friction_giver.h"
 
 static void ctr(void *component, va_list args)
 {
-    struct movable_component *cmp = (struct movable_component *)component;
+    struct friction_giver *cmp = (struct friction_giver *)component;
 
-    cmp->acceleration.x = 0;
-    cmp->acceleration.y = 0;
-    cmp->velocity.x = 0;
-    cmp->velocity.y = 0;
-    (void)args;
+    cmp->value = va_arg(args, double);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
-    (void)component;
-    (void)n;
+    struct friction_giver *cmp = (struct friction_giver *)component;
+
+    cmp->value = xml_getfloatprop(n, "value");
     (void)scene;
     (void)entity;
 }
@@ -41,13 +37,13 @@ static char *serialize(void *component)
     return (NULL);
 }
 
-const struct movable_component movable_component = {
+const struct friction_giver friction_giver = {
     base: {
-        name: "movable_component",
-        size: sizeof(struct movable_component),
+        name: "friction_giver",
+        size: sizeof(struct friction_giver),
         dependencies: (char *[]){
             "transform_component",
-            "collision_component",
+            "friction_giver",
             NULL
         },
         ctr: &ctr,
@@ -55,5 +51,6 @@ const struct movable_component movable_component = {
         dtr: &dtr,
         serialize: &serialize,
         destroy: &component_destroy
-    }
+    },
+    value: 10
 };

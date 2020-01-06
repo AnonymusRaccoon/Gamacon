@@ -16,7 +16,7 @@
 #include "systems/collision_system.h"
 #include <stddef.h>
 
-static void update_entity(gc_engine *engine, \
+void col_update_entity(gc_engine *engine, \
 void *system, gc_entity *entity, float dtime __attribute__((unused)))
 {
     gc_collision_system *sys = (gc_collision_system *)system;
@@ -37,7 +37,7 @@ void *system, gc_entity *entity, float dtime __attribute__((unused)))
     if (!col->on_collide)
         return;
     for (int i = 0; qtcol.collide_with[i] != -1; i++) {
-        for (int j = 0; col->on_collide[j]; j++)
+        for (size_t j = 0; j < col->collide_size / sizeof(void (*)()); j++)
             col->on_collide[j](engine, entity, qtcol.collide_with[i]);
     }
 }
@@ -80,7 +80,7 @@ const gc_collision_system collision_system = {
         ctr: &ctr,
         dtr: &dtr,
         check_dependencies: &system_check_dependencies,
-        update_entity: &update_entity,
+        update_entity: &col_update_entity,
         destroy: &system_destroy
     },
     tree: NULL

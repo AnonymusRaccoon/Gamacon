@@ -20,8 +20,11 @@ struct collision_component
     float distance_right;
     int layer;
     void (**on_collide)(gc_engine *engine, gc_entity *entity, int id);
+    int collide_size;
 };
 
-bool collision_is_in_contact(struct collision_component *col);
+typedef void (*collide_listener)(gc_engine *, gc_entity *, int);
+
+void add_on_collide(struct collision_component *, collide_listener);
 
 extern const struct collision_component collision_component;

@@ -11,7 +11,7 @@
 #include "utility.h"
 #include <stddef.h>
 
-void transform_ctr(void *component, va_list args)
+static void ctr(void *component, va_list args)
 {
     struct transform_component *cmp = (struct transform_component *)component;
 
@@ -19,7 +19,7 @@ void transform_ctr(void *component, va_list args)
     cmp->size = va_arg(args, gc_vector2);
 }
 
-void transform_fdctr(gc_scene *scene, void *component, node *n)
+static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct transform_component *cmp = (struct transform_component *)component;
     node *pos = xml_getnode(n, "Position");
@@ -40,9 +40,10 @@ void transform_fdctr(gc_scene *scene, void *component, node *n)
         cmp->size.y = 0;
     }
     (void)scene;
+    (void)entity;
 }
 
-char *transform_serialize(void *component)
+static char *serialize(void *component)
 {
     (void)component;
     return (NULL);
@@ -53,10 +54,10 @@ const struct transform_component transform_component = {
         name: "transform_component",
         size: sizeof(struct transform_component),
         dependencies: (char *[]){NULL},
-        ctr: &transform_ctr,
-        fdctr: &transform_fdctr,
+        ctr: &ctr,
+        fdctr: &fdctr,
         dtr: NULL,
-        serialize: &transform_serialize,
+        serialize: &serialize,
         destroy: &component_destroy
     },
     position: {0, 0},

@@ -21,12 +21,10 @@ gc_entity *entity, float dtime)
 {
     struct friction_component *fric = GETCMP(friction_component);
     struct movable_component *mov = GETCMP(movable_component);
-    struct collision_component *col = GETCMP(collision_component);
 
-    if (!col || collision_is_in_contact(col)) {
-        mov->acceleration.x -= fric->value * mov->velocity.x;
-        mov->acceleration.y -= fric->value * mov->velocity.y;
-    }
+    mov->acceleration.x -= fric->value * mov->velocity.x;
+    mov->acceleration.y -= fric->value * mov->velocity.y;
+    fric->value = fric->default_value;
     (void)system;
     (void)engine;
     (void)dtime;

@@ -13,7 +13,7 @@
 #include "utility.h"
 #include <stdlib.h>
 
-static void keyboard_ctr(void *component, va_list args)
+static void ctr(void *component, va_list args)
 {
     struct keyboard_controller *cmp = (struct keyboard_controller *)\
 component;
@@ -23,7 +23,7 @@ component;
     cmp->jump_key = va_arg(args, int);
 }
 
-static void keyboard_fdctr(gc_scene *scene, void *component, node *n)
+static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct keyboard_controller *cmp = (struct keyboard_controller *)\
 component;
@@ -32,14 +32,15 @@ component;
     cmp->right_key = xml_getintprop(n, "right");
     cmp->jump_key = xml_getintprop(n, "jump");
     (void)scene;
+    (void)entity;
 }
 
-static void keyboard_dtr(void *component)
+static void dtr(void *component)
 {
     (void)component;
 }
 
-static char *keyboard_serialize(void *component)
+static char *serialize(void *component)
 {
     (void)component;
     return (NULL);
@@ -55,10 +56,10 @@ const struct keyboard_controller keyboard_controller = {
             "controllable_component",
             NULL
         },
-        ctr: &keyboard_ctr,
-        fdctr: &keyboard_fdctr,
-        dtr: &keyboard_dtr,
-        serialize: &keyboard_serialize,
+        ctr: &ctr,
+        fdctr: &fdctr,
+        dtr: &dtr,
+        serialize: &serialize,
         destroy: &component_destroy
     },
     left_key: 16,

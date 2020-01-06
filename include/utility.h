@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <stddef.h>
+
 char *my_strdup(const char *src);
 int my_printf(const char *fmt, ...);
 int my_strlen(const char *str);
@@ -21,6 +23,7 @@ float parse_arg_float(char **str);
 char *parse_arg_str(char **str);
 int my_pow(int nb, int p);
 int my_sqrt(int nb);
+void *my_realloc(void *oldptr, size_t oldsize, size_t newsize);
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))

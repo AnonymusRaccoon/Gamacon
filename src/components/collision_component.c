@@ -21,9 +21,10 @@ static void ctr(void *component, va_list args)
     cmp->distance_right = 1024;
     cmp->layer = va_arg(args, int);
     cmp->on_collide = NULL;
+    cmp->collide_size = 0;
 }
 
-static void fdctr(gc_scene *scene, void *component, node *n)
+static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct collision_component *cmp = (struct collision_component *)component;
     cmp->distance_down = 1024;
@@ -32,7 +33,9 @@ static void fdctr(gc_scene *scene, void *component, node *n)
     cmp->distance_right = 1024;
     cmp->layer = xml_getbinaprop(n, "layer");
     cmp->on_collide = NULL;
+    cmp->collide_size = 0;
     (void)scene;
+    (void)entity;
 }
 
 static void dtr(void *component)
@@ -46,18 +49,18 @@ static char *serialize(void *component)
     return (NULL);
 }
 
-bool collision_is_in_contact(struct collision_component *col)
+void add_on_collide(struct collision_component *col, collide_listener list)
 {
-    if (col->distance_down == 0)
-        return (true);
-    if (col->distance_top == 0)
-        return (true);
-    if (col->distance_left == 0)
-        return (true);
-    if (col->distance_right == 0)
-        return (true);
-    return (false);
-}
+    int old = col->collide_size;
+
+    col->collide_size += sizeof(list);
+    col->on_collide = my_realloc(col->on_collide, old, col->collide_size);
+    if (!col->on_collide) {
+        col->collide_size = 0;
+        return;
+    }
+    col->on_collide[old] = list;
+} 
 
 const struct collision_component collision_component = {
     base: {
