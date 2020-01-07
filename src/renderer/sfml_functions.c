@@ -38,6 +38,16 @@ void sfml_handle_events(gc_engine *engine)
     while (sfRenderWindow_pollEvent(renderer->window, &event)) {
         if (event.type == sfEvtClosed)
             sfRenderWindow_close(renderer->window);
+        if (event.type == sfEvtResized) {
+            sfView_setSize(renderer->view, (sfVector2f){
+                event.size.width,
+                event.size.height
+            });
+            entities_update_to_cam_size(engine->scene, (gc_vector2) {
+                event.size.width,
+                event.size.height
+            });
+        }
     }
 }
 

@@ -29,3 +29,18 @@ struct sfml_renderer_system *renderer, struct camerafollow_system *cam)
         };
     }
 }
+
+void entities_update_to_cam_size(gc_scene *scene, gc_vector2 size)
+{
+    gc_list *list;
+    gc_entity *entity;
+
+    list = scene->get_entity_by_cmp(scene, "fixed_to_cam");
+    for (gc_list *li = list; li; li = li->next) {
+        entity = (gc_entity *)li->data;
+        GETCMP(transform_component)->size = (gc_vector2) {
+            size.x,
+            size.y
+        };
+    }
+}

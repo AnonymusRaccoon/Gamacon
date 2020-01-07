@@ -30,5 +30,6 @@ void sfml_handle_events(gc_engine *engine);
 void sfml_draw(gc_engine *engine);
 void entities_update_to_cam(gc_scene *scene, \
 struct sfml_renderer_system *renderer, struct camerafollow_system *cam);
+void entities_update_to_cam_size(gc_scene *scene, gc_vector2 size);
 
 extern const struct sfml_renderer_system sfml_renderer;

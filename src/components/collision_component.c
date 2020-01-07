@@ -59,7 +59,7 @@ void add_on_collide(struct collision_component *col, collide_listener list)
         col->collide_size = 0;
         return;
     }
-    col->on_collide[old] = list;
+    col->on_collide[old / sizeof(void (*)())] = list;
 } 
 
 const struct collision_component collision_component = {
