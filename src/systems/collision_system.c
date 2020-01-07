@@ -74,7 +74,7 @@ static void dtr(void *system)
 
 const gc_collision_system collision_system = {
     base: {
-        name: "CollisionSystem",
+        name: "collision_system",
         component_name: "collision_component",
         size: sizeof(gc_collision_system),
         ctr: &ctr,

@@ -32,7 +32,7 @@ void parallax_destroy(void *system)
 }
 
 const gc_system parallax_system = {
-    name: "ParallaxSystem",
+    name: "parallax_system",
     component_name: "parallax_component",
     size: sizeof(gc_system),
     ctr: NULL,

@@ -13,9 +13,10 @@
 #include "systems/controllers/keyboard_controller_system.h"
 #include "systems/friction_system.h"
 #include "systems/collision_system.h"
+#include "systems/camerafollow_system.h"
 #include <stdlib.h>
 
-void engine_add_system(gc_engine *engine, const gc_system *system)
+void engine_add_system(gc_engine *engine, const void *system)
 {
     engine->systems = list_add(engine->systems, (void *)system);
 }
@@ -39,10 +40,12 @@ void engine_add_buildin_systems(gc_engine *engine)
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate)
 {
-    gc_system *renderer = new_system(&sfml_renderer, engine, title, framerate);
+    void *renderer = new_system(&sfml_renderer, engine, title, framerate);
+    void *camfollow = new_system(&camerafollow_system);
 
-    if (!renderer)
+    if (!renderer || !camfollow)
         return (-1);
     engine->add_system(engine, renderer);
+    engine->add_system(engine, camfollow);
     return (0);
 }

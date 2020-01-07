@@ -36,7 +36,7 @@ void fric_destroy(void *system)
 }
 
 const gc_system friction_system = {
-    name: "FrictionSystem",
+    name: "friction_system",
     component_name: "friction_component",
     size: sizeof(gc_system),
     ctr: NULL,

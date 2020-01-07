@@ -23,7 +23,8 @@ gc_scene *scene, node *n)
         return (NULL);
     }
     cmp = new_component(model, 0, 0, 0, 0, 0, 0, 0);
-    cmp->fdctr(entity, scene, cmp, n);
+    if (cmp->fdctr)
+        cmp->fdctr(entity, scene, cmp, n);
     return (cmp);
 }
 

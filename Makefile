@@ -8,6 +8,7 @@
 SRC = src/engine/engine.c \
 	src/engine/engine_internal.c \
 	src/renderer/sfml_functions.c \
+	src/renderer/update_to_cam.c \
 	src/renderer/texture_utility.c \
 	src/entity/entity.c \
 	src/entity/entity_factory.c \
@@ -16,6 +17,8 @@ SRC = src/engine/engine.c \
 	src/components/collision_component.c \
 	src/components/transform_component.c \
 	src/components/renderer.c \
+	src/components/camera_follow.c \
+	src/components/fixed_to_cam.c \
 	src/components/parallax_component.c \
 	src/components/controllable_component.c \
 	src/components/friction_component.c \
@@ -30,6 +33,7 @@ SRC = src/engine/engine.c \
 	src/system.c \
 	src/systems/sfml_renderer_system.c \
 	src/systems/movable_system.c \
+	src/systems/camera_follow_system.c \
 	src/systems/collision_system.c \
 	src/systems/parallax_system.c \
 	src/systems/controllers/keyboard_controller_system.c \

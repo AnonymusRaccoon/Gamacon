@@ -63,7 +63,7 @@ static void dtr(void *system)
 }
 
 const gc_system movable_system = {
-    name: "MovableSystem",
+    name: "movable_system",
     component_name: "movable_component",
     size: sizeof(gc_system),
     ctr: &ctr,

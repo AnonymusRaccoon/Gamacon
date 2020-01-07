@@ -34,7 +34,7 @@ void keyboard_destroy(void *system)
 }
 
 const gc_system keyboard_controller_system = {
-    name: "KeyboardSystem",
+    name: "keyboard_controller_system",
     component_name: "keyboard_controller",
     size: sizeof(gc_system),
     ctr: NULL,

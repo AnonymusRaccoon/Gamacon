@@ -92,7 +92,7 @@ system;
 
 const struct sfml_renderer_system sfml_renderer = {
     {
-        name: "SfmlrendererSystem",
+        name: "sfml_renderer_system",
         component_name: "renderer",
         size: sizeof(struct sfml_renderer_system),
         ctr: &sfmlrend_ctr,

@@ -29,8 +29,8 @@ struct gc_engine
     void (*destroy)(gc_engine *engine);
 
     gc_list *systems;
-    void (*add_system)(gc_engine *engine, const gc_system *system);
-    const gc_system *(*get_system)(gc_engine *engine, const char *name);
+    void (*add_system)(gc_engine *engine, const void *system);
+    void *(*get_system)(gc_engine *engine, const char *name);
     void (*finish_physics)(gc_engine *engine);
 
     gc_list *components;
@@ -47,11 +47,13 @@ void engine_draw(gc_engine *engine);
 int change_scene(gc_engine *engine, gc_scene *scene);
 
 void engine_add_buildin_systems(gc_engine *engine);
-const gc_system *engine_get_system(gc_engine *engine, const char *name);
-void engine_add_system(gc_engine *engine, const gc_system *system);
+void *engine_get_system(gc_engine *engine, const char *name);
+void engine_add_system(gc_engine *engine, const void *system);
 
 void engine_add_buildin_components(gc_engine *engine);
 const void *engine_get_component(gc_engine *engine, const char *name);
 void engine_add_component(gc_engine *engine, const void *component);
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate);
+
+#define GETSYS(x) ((struct x *)engine->get_system(engine, #x))

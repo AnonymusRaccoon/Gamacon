@@ -9,7 +9,9 @@
 #include "system.h"
 #include "components/movable_component.h"
 #include "components/parallax_component.h"
+#include "components/fixed_to_cam_component.h"
 #include "components/renderer.h"
+#include "components/camerafollow_component.h"
 #include "components/transform_component.h"
 #include "components/controllable_component.h"
 #include "components/controllers/keyboard_controller.h"
@@ -31,6 +33,8 @@ void engine_add_buildin_components(gc_engine *engine)
     engine->add_component(engine, &transform_component);
     engine->add_component(engine, &movable_component);
     engine->add_component(engine, &renderer_component);
+    engine->add_component(engine, &camerafollow_component);
+    engine->add_component(engine, &fixed_to_cam);
     engine->add_component(engine, &parallax_component);
     engine->add_component(engine, &controllable_component);
     engine->add_component(engine, &keyboard_controller);
