@@ -9,6 +9,7 @@
 
 #include "system.h"
 #include <SFML/Graphics.h>
+#include "texture.h"
 #include "scene.h"
 #include "systems/sfml_renderer_system.h"
 #include "systems/camerafollow_system.h"
@@ -28,6 +29,7 @@ bool sfml_has_focus(gc_engine *engine);
 bool sfml_is_keypressed(int key);
 void sfml_handle_events(gc_engine *engine);
 void sfml_draw(gc_engine *engine);
+void sfml_play_music(gc_music *music);
 void entities_update_to_cam(gc_scene *scene, \
 struct sfml_renderer_system *renderer, struct camerafollow_system *cam);
 void entities_update_to_cam_size(gc_scene *scene, gc_vector2 size);

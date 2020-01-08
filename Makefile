@@ -7,6 +7,8 @@
 
 SRC = src/engine/engine.c \
 	src/engine/engine_internal.c \
+	src/engine/discard_player.c \
+	src/engine/sfml_music_player.c \
 	src/renderer/sfml_functions.c \
 	src/renderer/update_to_cam.c \
 	src/renderer/texture_utility.c \
@@ -25,6 +27,7 @@ SRC = src/engine/engine.c \
 	src/components/friction_giver.c \
 	src/components/controllers/keyboard_controller.c \
 	src/scene/scene.c \
+	src/scene/scene_music.c \
 	src/utility/arraylen.c \
 	src/utility/list.c \
 	src/utility/tupple.c \

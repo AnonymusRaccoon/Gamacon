@@ -72,6 +72,7 @@ gc_engine *engine_create(void)
     engine->game_loop = &game_loop;
     engine->draw = &engine_draw;
     engine->change_scene = &change_scene;
+    engine->play_music = &engine_play_music;
     engine->destroy = &engine_destroy;
     engine_add_buildin_systems(engine);
     engine_add_buildin_components(engine);

@@ -36,6 +36,8 @@ struct gc_engine
     gc_list *components;
     void (*add_component)(gc_engine *engine, const void *component);
     const void *(*get_component)(gc_engine *engine, const char *name);
+
+    void (*play_music)(gc_music *music);
 };
 
 gc_engine *engine_create(void);
@@ -44,6 +46,7 @@ bool engine_has_focus(gc_engine *engine);
 bool engine_is_keypressed(int key);
 void handle_events(gc_engine *engine);
 void engine_draw(gc_engine *engine);
+void engine_play_music(gc_music *music);
 int change_scene(gc_engine *engine, gc_scene *scene);
 
 void engine_add_buildin_systems(gc_engine *engine);

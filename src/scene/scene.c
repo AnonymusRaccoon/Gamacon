@@ -54,7 +54,7 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     scene->textures = NULL;
     if (xmlpath && !(n = xml_parse(xmlpath)))
         return (NULL);
-    if (scene_load_textures(scene, n) < 0)
+    if (scene_load_textures(scene, n) < 0 || scene_load_musics(scene, n) < 0)
         return (NULL);
     scene->entities = NULL;
     scene->entities_by_cmp = NULL;
@@ -72,6 +72,8 @@ int change_scene(gc_engine *engine, gc_scene *scene)
     if (engine->scene)
         engine->scene->destroy(engine->scene);
     engine->scene = scene;
+    if (scene->music)
+        engine->play_music(scene->music);
     return (0);
 }
 

@@ -78,6 +78,7 @@ void sfmlrend_ctr(void *rend, va_list list)
     engine->is_keypressed = &sfml_is_keypressed;
     engine->handle_events = &sfml_handle_events;
     engine->draw = &sfml_draw;
+    engine->play_music = &sfml_play_music;
 }
 
 void sfmlrend_dtr(void *system)

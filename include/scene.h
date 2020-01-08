@@ -18,6 +18,7 @@ typedef struct gc_scene gc_scene;
 struct gc_scene
 {
     gc_texture **textures;
+    gc_music *music;
     void (*destroy)(gc_scene *scene);
 
     gc_list *entities;
@@ -30,3 +31,4 @@ struct gc_scene
 gc_scene *scene_create(gc_engine *engine, const char *mappath);
 int scene_add_entity(gc_scene *scene, gc_entity *entity);
 void scene_destroy(gc_scene *scene);
+int scene_load_musics(gc_scene *scene, node *n);
