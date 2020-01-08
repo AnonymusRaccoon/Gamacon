@@ -19,13 +19,13 @@ gc_entity *entity, float dtime)
 {
     struct renderer *text = GETCMP(renderer);
     struct parallax_component *par = GETCMP(parallax_component);
-    struct transform_component *trans = GETCMP(transform_component);
+    struct transform_component *tra = GETCMP(transform_component);
 
     if (!text->sprite)
         return;
     printf("Speed: %f\n", par->speed);
-    text->sprite->rect.left += (trans->position.x - par->old_pos.x) * par->speed;
-    par->old_pos = trans->position;
+    text->sprite->rect.left += (tra->position.x - par->old_pos.x) * par->speed;
+    par->old_pos = tra->position;
     (void)system;
     (void)engine;
     (void)dtime;
