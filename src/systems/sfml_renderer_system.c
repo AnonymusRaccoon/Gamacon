@@ -28,12 +28,11 @@ gc_sprite *sprite)
 
     if (!sprite->texture)
         return;
-    t = sfTexture_getSize(sprite->texture->texture);
-    scale = (sfVector2f){sprite->size.x / t.x, sprite->size.y / t.y};
+    scale = (sfVector2f){sprite->size.x / rect.width, sprite->size.y / rect.height};
     sfSprite_setTexture(renderer->sprite, sprite->texture->texture, true);
+    sfSprite_setTextureRect(renderer->sprite, rect);
     sfSprite_setPosition(renderer->sprite, pos);
     sfSprite_setScale(renderer->sprite, scale);
-    sfSprite_setTextureRect(renderer->sprite, rect);
     sfRenderWindow_drawSprite(renderer->window, renderer->sprite, NULL);
 }
 

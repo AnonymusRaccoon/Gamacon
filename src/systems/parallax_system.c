@@ -23,7 +23,6 @@ gc_entity *entity, float dtime)
 
     if (!text->sprite)
         return;
-    printf("Speed: %f\n", par->speed);
     text->sprite->rect.left += (tra->position.x - par->old_pos.x) * par->speed;
     par->old_pos = tra->position;
     (void)system;
