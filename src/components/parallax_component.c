@@ -14,6 +14,7 @@ static void ctr(void *component, va_list args)
     struct parallax_component *cmp = (struct parallax_component *)component;
 
     cmp->speed = va_arg(args, double);
+    cmp->old_pos = (gc_vector2){0, 0};
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
@@ -21,6 +22,7 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     struct parallax_component *cmp = (struct parallax_component *)component;
 
     cmp->speed = xml_getfloatprop(n, "speed");
+    cmp->old_pos = (gc_vector2){0, 0};
     (void)scene;
     (void)entity;
 }

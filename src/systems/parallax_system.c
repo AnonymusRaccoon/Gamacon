@@ -11,19 +11,24 @@
 #include "vector2.h"
 #include "components/parallax_component.h"
 #include "components/renderer.h"
+#include "components/transform_component.h"
 #include <stddef.h>
 
 void parallax_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
     struct renderer *text = GETCMP(renderer);
-    struct parallax_component *parallax = GETCMP(parallax_component);
+    struct parallax_component *par = GETCMP(parallax_component);
+    struct transform_component *trans = GETCMP(transform_component);
 
     if (!text->sprite)
         return;
-    text->sprite->rect.left += parallax->speed * dtime;
+    printf("Speed: %f\n", par->speed);
+    text->sprite->rect.left += (trans->position.x - par->old_pos.x) * par->speed;
+    par->old_pos = trans->position;
     (void)system;
     (void)engine;
+    (void)dtime;
 }
 
 void parallax_destroy(void *system)
