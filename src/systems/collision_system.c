@@ -27,8 +27,7 @@ void *system, gc_entity *entity, float dtime __attribute__((unused)))
         {pos->position.x, pos->position.y, pos->size.y, pos->size.x},
         col->layer
     };
-    // if (GETCMP(movable_component) != NULL)
-        qt_update(sys->tree, obj);
+    qt_update(sys->tree, obj);
     qt_collision qtcol = collision_get_info(sys->tree, entity->id);
     col->distance_down = qtcol.distance_down;
     col->distance_top = qtcol.distance_top;
@@ -45,22 +44,8 @@ void *system, gc_entity *entity, float dtime __attribute__((unused)))
 static void ctr(void *system, va_list args)
 {
     gc_collision_system *col = (gc_collision_system *)system;
-    // gc_scene *scene = va_arg(args, gc_scene *);
-    // struct transform_component *pos;
-    // gc_entity *entity;
-    // qt_object obj;
 
     col->tree = qt_create((qt_intrect){-1000, -1000, 2000, 2000}, 25);
-    // for (gc_list *ent = scene->entities; ent; ent = ent->next) {
-    //     entity = (gc_entity *)ent->data;
-    //     pos = GETCMP(transform_component);
-    //     obj.id = entity->id;
-    //     obj.rect.x = pos->position.x;
-    //     obj.rect.y = pos->position.y;
-    //     obj.rect.w = pos->size.x;
-    //     obj.rect.h = pos->size.y;
-    //     qt_add(col->tree, obj);
-    // }
     (void)args;
 }
 
