@@ -26,6 +26,7 @@ void rend_set_anim(struct renderer *rend, const char *name)
             return;
         }
     }
+    my_printf("Gamacon: unknown animation %s.\n", name);
 }
 
 void anim_ctr(struct renderer *cmp, va_list args)
@@ -97,6 +98,7 @@ void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
         if (my_strcmp(n->name, "animation"))
             continue;
         animation_fdctr(&anims[i], hold->sprite, n);
+        i++;
     }
     cmp->type = GC_ANIMREND;
 }
