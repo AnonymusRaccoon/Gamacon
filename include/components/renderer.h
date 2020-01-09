@@ -8,18 +8,26 @@
 #pragma once
 
 #include "component.h"
-#include "sprite.h"
 #include "vector2.h"
 
-enum GC_TEXTURETYPE {
-    GC_TEXTUREREND
-};
+typedef enum GC_TEXTURETYPE {
+    GC_NONE,
+    GC_TEXTUREREND,
+    GC_ANIMREND
+} GC_TEXTURETYPE;
 
 struct renderer
 {
     gc_component base;
-    gc_sprite *sprite;
     enum GC_TEXTURETYPE type;
+    void *data;
 };
+
+void sprite_ctr(struct renderer *cmp, va_list args);
+void sprite_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
+
+void anim_ctr(struct renderer *cmp, va_list args);
+void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
+void rend_set_anim(struct renderer *rend, const char *name);
 
 extern const struct renderer renderer_component;

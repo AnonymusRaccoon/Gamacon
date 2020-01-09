@@ -9,6 +9,7 @@
 #include "system.h"
 #include "texture.h"
 #include "vector2.h"
+#include "sprite.h"
 #include "systems/sfml_renderer_system.h"
 #include "components/transform_component.h"
 #include "components/renderer.h"
@@ -16,24 +17,46 @@
 #include <stdlib.h>
 
 void renderer_draw_texture(struct sfml_renderer_system *renderer, \
-gc_sprite *sprite)
+struct transform_component *tra, gc_sprite *sprite)
 {
-    sfVector2f pos = (sfVector2f){sprite->pos.x, -sprite->pos.y};
-    sfVector2f scale;
-    sfVector2u t;
-    sfIntRect rect = {
-        (int)sprite->rect.left, (int)sprite->rect.top,
-        (int)sprite->rect.width, (int)sprite->rect.height
-    };
+    sfVector2f pos = (sfVector2f){tra->position.x, -tra->position.y};
+    sfVector2f scale = (sfVector2f){
+        tra->size.x * sprite->scale.x / sprite->rect.width,
+        tra->size.y * sprite->scale.y / sprite->rect.height
+    };;
 
+    sprite->pos = tra->position;
     if (!sprite->texture)
         return;
-    scale = (sfVector2f){sprite->size.x / rect.width, sprite->size.y / rect.height};
     sfSprite_setTexture(renderer->sprite, sprite->texture->texture, true);
-    sfSprite_setTextureRect(renderer->sprite, rect);
+    sfSprite_setTextureRect(renderer->sprite, (sfIntRect){
+        (int)sprite->rect.left, (int)sprite->rect.top,
+        (int)sprite->rect.width, (int)sprite->rect.height
+    });
     sfSprite_setPosition(renderer->sprite, pos);
     sfSprite_setScale(renderer->sprite, scale);
+    sfSprite_setOrigin(renderer->sprite, (sfVector2f){
+        scale.x < 0 ? sprite->rect.width : 0,
+        scale.y < 0 ? sprite->rect.height : 0
+    });
     sfRenderWindow_drawSprite(renderer->window, renderer->sprite, NULL);
+}
+
+void renderer_draw_anim(struct sfml_renderer_system *renderer, \
+struct transform_component *tra, gc_animholder *holder, float dtime)
+{
+    gc_int_rect *rec = &holder->sprite->rect;
+    gc_anim *curr = holder->current;
+
+    if (curr)
+        holder->timesince_up += dtime;
+    if (curr && holder->timesince_up > 1 / curr->frame_rate) {
+        rec->left += rec->width;
+        holder->timesince_up = 0;
+        if (rec->left > curr->rect.left + rec->width * (curr->frame_count - 1))
+            rec->left = curr->rect.left;
+    }
+    renderer_draw_texture(renderer, tra, holder->sprite);
 }
 
 void sfml_update_entity(gc_engine *engine, void *system, \
@@ -43,14 +66,19 @@ gc_entity *entity, float dtime)
     struct renderer *text = GETCMP(renderer);
     struct sfml_renderer_system *rend = (struct sfml_renderer_system *)system;
 
-    if (!text->sprite)
+    if (!text->data)
         return;
-    text->sprite->pos = pos->position;
-    text->sprite->size = pos->size;
-    if (text->type == GC_TEXTUREREND)
-        renderer_draw_texture(rend, text->sprite);
-    else
-        my_printf("Trying to render a texture with an unknow type.\n");
+    switch (text->type) {
+    case GC_TEXTUREREND:
+        renderer_draw_texture(rend, pos, (gc_sprite *)text->data);
+        break;
+    case GC_ANIMREND:
+        renderer_draw_anim(rend, pos, (gc_animholder *)text->data, dtime);
+        break;
+    default:
+        my_printf("Trying to render a texture with an unknown type.\n");
+        break;
+    }
     (void)dtime;
     (void)engine;
 }

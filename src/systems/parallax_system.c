@@ -8,6 +8,7 @@
 #include "entity.h"
 #include "system.h"
 #include "texture.h"
+#include "sprite.h"
 #include "vector2.h"
 #include "components/parallax_component.h"
 #include "components/renderer.h"
@@ -20,10 +21,12 @@ gc_entity *entity, float dtime)
     struct renderer *text = GETCMP(renderer);
     struct parallax_component *par = GETCMP(parallax_component);
     struct transform_component *tra = GETCMP(transform_component);
+    gc_sprite *sprite;
 
-    if (!text->sprite)
+    if (text->type != GC_TEXTUREREND || !text->data)
         return;
-    text->sprite->rect.left += (tra->position.x - par->old_pos.x) * par->speed;
+    sprite = ((gc_sprite *)text->data);
+    sprite->rect.left += (tra->position.x - par->old_pos.x) * par->speed;
     par->old_pos = tra->position;
     (void)system;
     (void)engine;

@@ -26,6 +26,8 @@ SRC = src/engine/engine.c \
 	src/components/friction_component.c \
 	src/components/friction_giver.c \
 	src/components/controllers/keyboard_controller.c \
+	src/components/renderers/sprite_renderer.c \
+	src/components/renderers/anim_renderer.c \
 	src/scene/scene.c \
 	src/scene/scene_music.c \
 	src/utility/arraylen.c \

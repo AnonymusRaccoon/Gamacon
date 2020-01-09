@@ -16,39 +16,31 @@
 static void ctr(void *component, va_list args)
 {
     struct renderer *cmp = (struct renderer *)component;
-    sfVector2u size;
+    GC_TEXTURETYPE type = va_arg(args, GC_TEXTURETYPE);
 
-    cmp->sprite = malloc(sizeof(gc_sprite));
-    if (!cmp->sprite)
-        return;
-    cmp->sprite->texture = va_arg(args, gc_texture *);
-    cmp->sprite->rect = va_arg(args, gc_int_rect);
-    if (cmp->sprite->texture && cmp->sprite->rect.height < 0) {
-        size = sfTexture_getSize(cmp->sprite->texture->texture);
-        cmp->sprite->rect.height = (float)size.y;
-        cmp->sprite->rect.width = (float)size.x;
-    }
+    cmp->data = NULL;
+    if (type == GC_TEXTUREREND)
+        sprite_ctr(cmp, args);
+    if (type == GC_ANIMREND)
+        anim_ctr(cmp, args);
+}
+
+GC_TEXTURETYPE renderer_get_type(node *n)
+{
+    if (xml_getnode(n, "animation"))
+        return (GC_ANIMREND);
+    return (GC_TEXTUREREND);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct renderer *cmp = (struct renderer *)component;
-    node *rect = xml_getnode(n, "Rect");
-    sfVector2u size;
+    GC_TEXTURETYPE type = renderer_get_type(n);
 
-    if (!cmp->sprite)
-        return;
-    cmp->sprite->texture = get_texture(scene, xml_getproperty(n, "src"));
-    cmp->sprite->rect.height = xml_getfloatprop(rect, "height");
-    cmp->sprite->rect.width = xml_getfloatprop(rect, "width");
-    cmp->sprite->rect.top = xml_getfloatprop(rect, "top");
-    cmp->sprite->rect.left = xml_getfloatprop(rect, "left");
-    if (cmp->sprite->texture && cmp->sprite->rect.height < 0) {
-        size = sfTexture_getSize(cmp->sprite->texture->texture);
-        cmp->sprite->rect.height = (float)size.y;
-        cmp->sprite->rect.width = (float)size.x;
-    }
-    cmp->type = GC_TEXTUREREND;
+    if (type == GC_TEXTUREREND)
+        sprite_fdctr(scene, cmp, n);
+    if (type == GC_ANIMREND)
+        anim_fdctr(scene, cmp, n);
     (void)entity;
 }
 
@@ -56,7 +48,13 @@ static void dtr(void *component)
 {
     struct renderer *cmp = (struct renderer *)component;
 
-    free(cmp->sprite);
+    if (cmp->type == GC_TEXTUREREND)
+        free(cmp->data);
+    if (cmp->type == GC_ANIMREND) {
+        free(((gc_animholder *)cmp->data)->sprite);
+        free(((gc_animholder *)cmp->data)->anims);
+        free(cmp->data);
+    }
 }
 
 static char *serialize(void *component)
@@ -78,6 +76,6 @@ const struct renderer renderer_component = {
         next: NULL,
         prev: NULL
     },
-    sprite: NULL,
+    data: NULL,
     type: GC_TEXTUREREND
 };
