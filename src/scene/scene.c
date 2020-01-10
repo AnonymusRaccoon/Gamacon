@@ -8,7 +8,6 @@
 #include "engine.h"
 #include "entity.h"
 #include "utility.h"
-#include "texture.h"
 #include "prefab.h"
 #include <stdlib.h>
 
@@ -21,27 +20,20 @@ gc_list *get_entity_by_cmp(gc_scene *scene, const char *cmp_name)
     return (NULL);
 }
 
-int scene_load_textures(gc_scene *scene, node *n)
+void *scene_get_data(gc_scene *scene, const char *type, const char *name)
 {
-    gc_texture *texture;
-    int len;
-    int i = 0;
-    char *src;
+    gc_data *data;
 
-    n = xml_getnode(n, "textures");
-    if (!n)
-        return (0);
-    len = xml_getchildcount(n);
-    scene->textures = malloc(sizeof(gc_texture) * (len + 1));
-    for (n = n->child; n; n = n->next) {
-        src = xml_getproperty(n, "src");
-        if (!src || !(texture = texture_create(src)))
-            return (-1);
-        scene->textures[i] = texture;
-        i++;
+    if (!scene || !scene->data)
+        return (NULL);
+    for (gc_list *li = scene->data; li; li = li->next) {
+        data = (gc_data *)li->data;
+        if (type && my_strcmp(data->type, type))
+            continue;
+        if (!name || !my_strcmp(data->name, name))
+            return (data->custom);
     }
-    scene->textures[len] = NULL;
-    return (0);
+    return (NULL);
 }
 
 gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
@@ -51,17 +43,16 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
 
     if (!scene)
         return (NULL);
-    scene->textures = NULL;
     if (xmlpath && !(n = xml_parse(xmlpath)))
         return (NULL);
-    if (scene_load_textures(scene, n) < 0 || scene_load_musics(scene, n) < 0)
-        return (NULL);
+    scene_load_data(engine, scene, n);
     scene->entities = NULL;
     scene->entities_by_cmp = NULL;
     scene->add_entity = &entity_add;
     scene->get_entity = &entity_get;
     scene->get_entity_by_cmp = &get_entity_by_cmp;
     scene->destroy = &scene_destroy;
+    scene->get_data = &scene_get_data;
     prefab_loadentities(n, engine, scene);
     xml_destroy(n);
     return (scene);
@@ -69,17 +60,19 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
 
 int change_scene(gc_engine *engine, gc_scene *scene)
 {
+    void *music = scene->get_data(scene, "music", NULL);
+
     if (engine->scene)
         engine->scene->destroy(engine->scene);
     engine->scene = scene;
-    if (scene->music)
-        engine->play_music(scene->music);
+    if (music)
+        engine->play_music(music);
     return (0);
 }
 
 void scene_destroy(gc_scene *scene)
 {
-    gc_list *next = NULL;
+    void *next = NULL;
     gc_tupple *tup = scene->entities_by_cmp;
 
     for (gc_list *entity = scene->entities; entity; entity = next) {
@@ -87,9 +80,12 @@ void scene_destroy(gc_scene *scene)
         ((gc_entity *)entity->data)->destroy(entity->data);
         free(entity);
     }
-    for (int i = 0; scene->textures[i]; i++)
-        scene->textures[i]->destroy(scene->textures[i]);
-    free(scene->textures);
+    for (gc_list *data = scene->data; data; data = next) {
+        next = data->next;
+        if (((gc_data *)data->data)->destroy)
+            ((gc_data *)data->data)->destroy(data->data);
+        free(data);
+    }
     for (gc_tupple *tupple = tup; tupple; tupple = tup) {
         tup = tupple->next;
         for (gc_list *li = tupple->entities; li; li = next) {

@@ -8,10 +8,9 @@
 SRC = src/engine/engine.c \
 	src/engine/engine_internal.c \
 	src/engine/discard_player.c \
-	src/engine/sfml_music_player.c \
+	src/engine/engine_dataloader.c \
 	src/renderer/sfml_functions.c \
 	src/renderer/update_to_cam.c \
-	src/renderer/texture_utility.c \
 	src/entity/entity.c \
 	src/entity/entity_factory.c \
 	src/component.c \
@@ -28,8 +27,9 @@ SRC = src/engine/engine.c \
 	src/components/controllers/keyboard_controller.c \
 	src/components/renderers/sprite_renderer.c \
 	src/components/renderers/anim_renderer.c \
+	src/components/renderers/text_renderer.c \
 	src/scene/scene.c \
-	src/scene/scene_music.c \
+	src/scene/scene_loader.c \
 	src/utility/arraylen.c \
 	src/utility/list.c \
 	src/utility/tupple.c \
@@ -46,7 +46,10 @@ SRC = src/engine/engine.c \
 	src/engine/engine_system_builder.c \
 	src/engine/engine_component_builder.c \
 	src/utility/vector2.c \
-	src/utility/my_realloc.c
+	src/utility/my_realloc.c \
+	src/sfml_renderer/sfml_dataloaders.c \
+	src/sfml_renderer/sfml_music_player.c \
+	src/sfml_renderer/texture_utility.c
 
 OBJ = $(SRC:%.c=%.o)
 

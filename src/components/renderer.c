@@ -23,12 +23,16 @@ static void ctr(void *component, va_list args)
         sprite_ctr(cmp, args);
     if (type == GC_ANIMREND)
         anim_ctr(cmp, args);
+    if (type == GC_TXTREND)
+        text_ctr(cmp, args);
 }
 
 GC_TEXTURETYPE renderer_get_type(node *n)
 {
     if (xml_getnode(n, "animation"))
         return (GC_ANIMREND);
+    if (xml_getproperty(n, "text"))
+        return (GC_TXTREND);
     return (GC_TEXTUREREND);
 }
 
@@ -41,6 +45,8 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
         sprite_fdctr(scene, cmp, n);
     if (type == GC_ANIMREND)
         anim_fdctr(scene, cmp, n);
+    if (type == GC_TXTREND)
+        text_fdctr(scene, cmp, n);
     (void)entity;
 }
 

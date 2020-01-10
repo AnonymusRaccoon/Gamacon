@@ -11,6 +11,7 @@ typedef struct gc_system gc_system;
 
 #include "entity.h"
 #include <stdbool.h>
+#include <stddef.h>
 
 struct gc_system
 {

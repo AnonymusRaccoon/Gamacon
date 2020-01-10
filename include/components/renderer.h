@@ -13,7 +13,8 @@
 typedef enum GC_TEXTURETYPE {
     GC_NONE,
     GC_TEXTUREREND,
-    GC_ANIMREND
+    GC_ANIMREND,
+    GC_TXTREND
 } GC_TEXTURETYPE;
 
 struct renderer
@@ -29,5 +30,8 @@ void sprite_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
 void anim_ctr(struct renderer *cmp, va_list args);
 void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
 void rend_set_anim(struct renderer *rend, const char *name);
+
+void text_ctr(struct renderer *cmp, va_list args);
+void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
 
 extern const struct renderer renderer_component;

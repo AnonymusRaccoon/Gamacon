@@ -76,5 +76,7 @@ gc_engine *engine_create(void)
     engine->destroy = &engine_destroy;
     engine_add_buildin_systems(engine);
     engine_add_buildin_components(engine);
+    engine->dataloaders = NULL;
+    engine->add_dataloader = &engine_add_dataloader;
     return (engine);
 }

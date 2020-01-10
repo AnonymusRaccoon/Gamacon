@@ -14,6 +14,7 @@
 #include "systems/friction_system.h"
 #include "systems/collision_system.h"
 #include "systems/camerafollow_system.h"
+#include "sfml_renderer.h"
 #include <stdlib.h>
 
 void engine_add_system(gc_engine *engine, const void *system)
@@ -47,5 +48,7 @@ int engine_use_sfml(gc_engine *engine, const char *title, int framerate)
         return (-1);
     engine->add_system(engine, renderer);
     engine->add_system(engine, camfollow);
+    engine->add_dataloader(engine, "music", &sfml_music_loader);
+    engine->add_dataloader(engine, "sprite", &sfml_sprite_loader);
     return (0);
 }

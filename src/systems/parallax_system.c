@@ -7,7 +7,6 @@
 
 #include "entity.h"
 #include "system.h"
-#include "texture.h"
 #include "sprite.h"
 #include "vector2.h"
 #include "components/parallax_component.h"

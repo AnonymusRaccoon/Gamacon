@@ -7,7 +7,6 @@
 
 #include "entity.h"
 #include "system.h"
-#include "texture.h"
 #include "vector2.h"
 #include "components/movable_component.h"
 #include "components/controllable_component.h"

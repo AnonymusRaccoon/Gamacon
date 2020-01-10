@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "texture.h"
 #include "vector2.h"
 #include <SFML/Graphics.h>
 
@@ -20,7 +19,7 @@ typedef struct gc_int_rect
 } gc_int_rect;
 
 typedef struct gc_sprite {
-    gc_texture *texture;
+    void *texture;
     gc_int_rect rect;
     gc_vector2 pos;
     gc_vector2 scale;

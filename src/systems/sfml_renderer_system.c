@@ -7,7 +7,6 @@
 
 #include "entity.h"
 #include "system.h"
-#include "texture.h"
 #include "vector2.h"
 #include "sprite.h"
 #include "systems/sfml_renderer_system.h"
@@ -28,7 +27,7 @@ struct transform_component *tra, gc_sprite *sprite)
     sprite->pos = tra->position;
     if (!sprite->texture)
         return;
-    sfSprite_setTexture(renderer->sprite, sprite->texture->texture, true);
+    sfSprite_setTexture(renderer->sprite, sprite->texture, true);
     sfSprite_setTextureRect(renderer->sprite, (sfIntRect){
         (int)sprite->rect.left, (int)sprite->rect.top,
         (int)sprite->rect.width, (int)sprite->rect.height

@@ -38,10 +38,10 @@ void anim_ctr(struct renderer *cmp, va_list args)
     if (!sprite)
         return;
     cmp->data = sprite;
-    sprite->texture = va_arg(args, gc_texture *);
+    sprite->texture = va_arg(args, sfTexture *);
     sprite->rect = va_arg(args, gc_int_rect);
     if (sprite->texture && sprite->rect.height < 0) {
-        size = sfTexture_getSize(sprite->texture->texture);
+        size = sfTexture_getSize(sprite->texture);
         sprite->rect.height = (float)size.y;
         sprite->rect.width = (float)size.x;
     }

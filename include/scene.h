@@ -10,15 +10,15 @@ typedef struct gc_scene gc_scene;
 
 #include "engine.h"
 #include "entity.h"
-#include "texture.h"
 #include "list.h"
 #include "tupple.h"
 #include <stdbool.h>
 
 struct gc_scene
 {
-    gc_texture **textures;
-    gc_music *music;
+    gc_list *data;
+    void *(*get_data)(gc_scene *scene, const char *type, const char *name);
+
     void (*destroy)(gc_scene *scene);
 
     gc_list *entities;
@@ -30,5 +30,7 @@ struct gc_scene
 
 gc_scene *scene_create(gc_engine *engine, const char *mappath);
 int scene_add_entity(gc_scene *scene, gc_entity *entity);
+void scene_load_data(gc_engine *engine, gc_scene *scene, node *n);
+void *scene_get_data(gc_scene *scene, const char *type, const char *name);
 void scene_destroy(gc_scene *scene);
 int scene_load_musics(gc_scene *scene, node *n);
