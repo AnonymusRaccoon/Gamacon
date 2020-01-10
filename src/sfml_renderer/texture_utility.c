@@ -43,3 +43,9 @@ void sfml_music_destroy(gc_data *data)
     sfMusic_destroy(data->custom);
     free(data->name);
 }
+
+void sfml_font_destroy(gc_data *data)
+{
+    sfFont_destroy(data->custom);
+    free(data->name);
+}

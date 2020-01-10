@@ -32,9 +32,8 @@ void rend_set_anim(struct renderer *rend, const char *name)
 void anim_ctr(struct renderer *cmp, va_list args)
 {
     sfVector2u size;
-    gc_sprite *sprite;
+    gc_sprite *sprite = malloc(sizeof(gc_sprite));
 
-    sprite = malloc(sizeof(gc_sprite));
     if (!sprite)
         return;
     cmp->data = sprite;

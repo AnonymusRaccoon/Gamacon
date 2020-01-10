@@ -49,7 +49,8 @@ SRC = src/engine/engine.c \
 	src/utility/my_realloc.c \
 	src/sfml_renderer/sfml_dataloaders.c \
 	src/sfml_renderer/sfml_music_player.c \
-	src/sfml_renderer/texture_utility.c
+	src/sfml_renderer/texture_utility.c \
+	src/sfml_renderer/sfml_drawer.c
 
 OBJ = $(SRC:%.c=%.o)
 

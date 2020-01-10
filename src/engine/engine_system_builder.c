@@ -50,5 +50,6 @@ int engine_use_sfml(gc_engine *engine, const char *title, int framerate)
     engine->add_system(engine, camfollow);
     engine->add_dataloader(engine, "music", &sfml_music_loader);
     engine->add_dataloader(engine, "sprite", &sfml_sprite_loader);
+    engine->add_dataloader(engine, "font", &sfml_font_loader);
     return (0);
 }

@@ -18,6 +18,7 @@ struct sfml_renderer_system
     gc_system system;
     sfRenderWindow *window;
     sfSprite *sprite;
+    sfText *text;
     sfView *view;
 };
 

@@ -41,3 +41,17 @@ int sfml_sprite_loader(gc_data *data, node *n)
     data->destroy = &sfml_texture_destroy;
     return (0);
 }
+
+int sfml_font_loader(gc_data *data, node *n)
+{
+    char *path = xml_getproperty(n, "src");
+
+    if (!path)
+        return (-1);
+    data->name = my_strdup(path);
+    data->custom = sfFont_createFromFile(path);
+    if (!data->custom || !data->name)
+        return (-1);
+    data->destroy = &sfml_font_destroy;
+    return (0);
+}
