@@ -19,6 +19,7 @@ typedef struct gc_engine gc_engine;
 struct gc_engine
 {
     gc_scene *scene;
+    bool should_close;
     bool (*is_open)(gc_engine *engine);
     bool (*has_focus)(gc_engine *engine);
     bool (*is_keypressed)(int key);
@@ -38,6 +39,7 @@ struct gc_engine
     const void *(*get_component)(gc_engine *engine, const char *name);
 
     void (*play_music)(void *music);
+    void (*stop_music)(gc_engine *engine);
 
     gc_list *dataloaders;
     void (*add_dataloader)(gc_engine *engine, char *type, gc_loader loader);
@@ -50,6 +52,8 @@ bool engine_is_keypressed(int key);
 void handle_events(gc_engine *engine);
 void engine_draw(gc_engine *engine);
 void engine_play_music(void *music);
+void engine_stop_music(gc_engine *engine);
+
 int change_scene(gc_engine *engine, gc_scene *scene);
 
 void engine_add_buildin_systems(gc_engine *engine);

@@ -7,6 +7,7 @@
 
 #include "engine.h"
 #include <SFML/Graphics.h>
+#include "sfml_renderer.h"
 #include "systems/sfml_renderer_system.h"
 #include "systems/camerafollow_system.h"
 #include "components/transform_component.h"
@@ -15,6 +16,8 @@ bool sfml_is_open(gc_engine *engine)
 {
     struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
 
+    if (engine->should_close)
+        return (false);
     return (sfRenderWindow_isOpen(renderer->window));
 }
 
@@ -43,10 +46,10 @@ void sfml_handle_events(gc_engine *engine)
                 event.size.width,
                 event.size.height
             });
-            entities_update_to_cam_size(engine->scene, (gc_vector2) {
-                event.size.width,
-                event.size.height
-            });
+            // entities_update_to_cam_size(engine->scene, (gc_vector2) {
+            //     event.size.width,
+            //     event.size.height
+            // });
         }
     }
 }

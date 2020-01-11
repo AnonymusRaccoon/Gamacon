@@ -62,6 +62,7 @@ int change_scene(gc_engine *engine, gc_scene *scene)
 {
     void *music = scene->get_data(scene, "music", NULL);
 
+    engine->stop_music(engine);
     if (engine->scene)
         engine->scene->destroy(engine->scene);
     engine->scene = scene;
@@ -84,6 +85,8 @@ void scene_destroy(gc_scene *scene)
         next = data->next;
         if (((gc_data *)data->data)->destroy)
             ((gc_data *)data->data)->destroy(data->data);
+        free(((gc_data *)data->data)->type);
+        free(data->data);
         free(data);
     }
     for (gc_tupple *tupple = tup; tupple; tupple = tup) {

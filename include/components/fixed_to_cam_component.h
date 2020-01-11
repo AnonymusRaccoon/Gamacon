@@ -8,5 +8,12 @@
 #pragma once
 
 #include "component.h"
+#include "vector2.h"
 
-extern const gc_component fixed_to_cam;
+struct fixed_to_cam
+{
+    gc_component base;
+    gc_vector2 offset;
+};
+
+extern const struct fixed_to_cam fixed_to_cam;

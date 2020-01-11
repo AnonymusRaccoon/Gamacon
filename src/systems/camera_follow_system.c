@@ -35,11 +35,6 @@ static void ctr(void *system, va_list args)
     (void)args;
 }
 
-static void destroy(void *system)
-{
-    (void)system;
-}
-
 const struct camerafollow_system camerafollow_system = {
     base: {
         name: "camerafollow_system",
@@ -49,7 +44,7 @@ const struct camerafollow_system camerafollow_system = {
         dtr: NULL,
         check_dependencies: &system_check_dependencies,
         update_entity: &update_entity,
-        destroy: &destroy
+        destroy: &system_destroy
     },
     cam_pos: (gc_vector2){0, 0}
 };

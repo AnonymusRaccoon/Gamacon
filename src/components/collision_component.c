@@ -40,7 +40,10 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 
 static void dtr(void *component)
 {
-    (void)component;
+    struct collision_component *cmp = (struct collision_component *)component;
+
+    if (cmp->on_collide)
+        free(cmp->on_collide);
 }
 
 static char *serialize(void *component)

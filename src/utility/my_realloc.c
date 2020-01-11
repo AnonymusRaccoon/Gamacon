@@ -17,5 +17,7 @@ void *my_realloc(void *oldptr, size_t oldsize, size_t newsize)
             ((char *)new)[i] = ((char *)oldptr)[i];
         }
     }
+    if (oldptr)
+        free(oldptr);
     return (new);
 }

@@ -52,6 +52,7 @@ void sfml_setup_options(gc_engine *engine)
     engine->handle_events = &sfml_handle_events;
     engine->draw = &sfml_draw;
     engine->play_music = &sfml_play_music;
+    engine->stop_music = &sfml_stop_music;
 }
 
 void sfmlrend_ctr(void *rend, va_list list)
@@ -83,6 +84,7 @@ system;
 
     sfRenderWindow_destroy(renderer->window);
     sfSprite_destroy(renderer->sprite);
+    sfText_destroy(renderer->text);
     sfView_destroy(renderer->view);
 }
 

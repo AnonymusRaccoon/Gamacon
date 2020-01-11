@@ -9,6 +9,7 @@
 #include "xml.h"
 #include "utility.h"
 #include "sprite.h"
+#include "text.h"
 #include "components/transform_component.h"
 #include "components/renderer.h"
 #include <stdlib.h>
@@ -31,7 +32,7 @@ GC_TEXTURETYPE renderer_get_type(node *n)
 {
     if (xml_getnode(n, "animation"))
         return (GC_ANIMREND);
-    if (xml_getproperty(n, "text"))
+    if (xml_hasproperty(n, "text"))
         return (GC_TXTREND);
     return (GC_TEXTUREREND);
 }
@@ -54,13 +55,22 @@ static void dtr(void *component)
 {
     struct renderer *cmp = (struct renderer *)component;
 
-    if (cmp->type == GC_TEXTUREREND)
-        free(cmp->data);
-    if (cmp->type == GC_ANIMREND) {
+    switch (cmp->type) {
+    case GC_ANIMREND:
+        for (int i = 0; i < ((gc_animholder *)cmp->data)->animcount; i++) {
+            if (my_strcmp(((gc_animholder *)cmp->data)->anims[i].name, "none"))
+                free(((gc_animholder *)cmp->data)->anims[i].name);
+        }
         free(((gc_animholder *)cmp->data)->sprite);
         free(((gc_animholder *)cmp->data)->anims);
-        free(cmp->data);
+        break;
+    case GC_TXTREND:
+        free(((gc_text *)cmp->data)->text);
+        break;
+    default:
+        break;
     }
+    free(cmp->data);
 }
 
 static char *serialize(void *component)

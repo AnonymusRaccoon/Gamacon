@@ -13,3 +13,13 @@ void sfml_play_music(void *music)
     sfMusic_setLoop(music, true);
     sfMusic_play(music);
 }
+
+void sfml_stop_music(gc_engine *engine)
+{
+    void *music;
+    
+    if (!engine->scene)
+        return;
+    music = engine->scene->get_data(engine->scene, "music", NULL); 
+    sfMusic_stop(music);
+}

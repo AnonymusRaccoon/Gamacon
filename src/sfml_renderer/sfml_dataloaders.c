@@ -33,7 +33,7 @@ int sfml_sprite_loader(gc_data *data, node *n)
 
     if (!path)
         return (-1);
-    data->name = my_strdup(path);
+    data->name = path;
     data->custom = sfTexture_createFromFile(path, NULL);
     if (!data->custom || !data->name)
         return (-1);
@@ -48,7 +48,7 @@ int sfml_font_loader(gc_data *data, node *n)
 
     if (!path)
         return (-1);
-    data->name = my_strdup(path);
+    data->name = path;
     data->custom = sfFont_createFromFile(path);
     if (!data->custom || !data->name)
         return (-1);

@@ -41,7 +41,7 @@ void sprite_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     cmp->data = sprite;
     if (!cmp->data)
         return;
-    sprite->texture = get_texture(scene, xml_getproperty(n, "src"));
+    sprite->texture = get_texture(scene, xml_gettempprop(n, "src"));
     sprite->rect.height = xml_getfloatprop(rect, "height");
     sprite->rect.width = xml_getfloatprop(rect, "width");
     sprite->rect.top = xml_getfloatprop(rect, "top");
