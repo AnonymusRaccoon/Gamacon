@@ -42,3 +42,19 @@ gc_tupple *tupple_add(gc_tupple *list, const char *name, gc_entity *entity)
     list->next = NULL;
     return (listconst);
 }
+
+void tup_remove(gc_tupple *tup, int id)
+{
+    gc_list *prev = NULL;
+
+    for (gc_list *ent = tup->entities; ent; ent = ent->next) {
+        if (((gc_entity *)ent->data)->id == id) {
+            if (prev)
+                prev->next = ent->next;
+            else
+                tup->entities = ent->next;
+            return;
+        }
+        prev = ent;
+    }
+}

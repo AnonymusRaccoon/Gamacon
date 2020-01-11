@@ -46,3 +46,17 @@ void component_destroy(void *component)
         cmp->dtr(component);
     free(component);
 }
+
+gc_component *component_remove(gc_component *cmp, const char *name)
+{
+    for (; cmp; cmp = cmp->next) {
+        if (my_strcmp(cmp->name, name))
+            continue;
+        if (cmp->prev)
+            cmp->prev->next = cmp->next;
+        if (cmp->next)
+            cmp->next->prev = cmp->prev;
+        return (cmp);
+    }
+    return (NULL);
+}

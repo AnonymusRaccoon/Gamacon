@@ -20,3 +20,4 @@ struct gc_tupple
 };
 
 gc_tupple *tupple_add(gc_tupple *list, const char *name, gc_entity *entity);
+void tup_remove(gc_tupple *tup, int id);

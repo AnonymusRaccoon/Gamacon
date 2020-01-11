@@ -7,6 +7,7 @@
 
 #include "entity.h"
 #include "component.h"
+#include "my.h"
 #include <stdlib.h>
 
 static unsigned int next_id = 0;
@@ -66,4 +67,21 @@ gc_entity *entity_add_component(gc_entity *entity, void *component)
         components->next = component;
     }
     return (entity);
+}
+
+void entity_remove_component(const gc_scene *scene, const gc_entity *entity, \
+const char *name)
+{
+    gc_component *cmp;
+
+    if (!scene || !entity || !entity->components)
+        return;
+    cmp = component_remove(entity->components, name);
+    if (!cmp)
+        return;
+    for (gc_tupple *tup = scene->entities_by_cmp; tup; tup = tup->next) {
+        if (!my_strcmp(tup->name, name))
+            tup_remove(tup, entity->id);
+    }
+    component_destroy(cmp);
 }

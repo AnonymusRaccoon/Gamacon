@@ -70,6 +70,7 @@ const gc_entity entity_prefab = {
     add_component: &entity_add_component,
     get_component: &entity_get_component,
     has_component: &entity_has_component,
+    remove_component: &entity_remove_component,
     serialize: &entity_serialize,
     destroy: &destroy
 };
