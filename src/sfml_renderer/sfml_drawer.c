@@ -20,7 +20,7 @@ struct transform_component *tra, gc_sprite *sprite)
     sfVector2f scale = (sfVector2f){
         tra->size.x * sprite->scale.x / sprite->rect.width,
         tra->size.y * sprite->scale.y / sprite->rect.height
-    };;
+    };
 
     sprite->pos = tra->position;
     if (!sprite->texture)

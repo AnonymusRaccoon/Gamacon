@@ -70,33 +70,3 @@ int change_scene(gc_engine *engine, gc_scene *scene)
         engine->play_music(music);
     return (0);
 }
-
-void scene_destroy(gc_scene *scene)
-{
-    void *next = NULL;
-    gc_tupple *tup = scene->entities_by_cmp;
-
-    for (gc_list *entity = scene->entities; entity; entity = next) {
-        next = entity->next;
-        ((gc_entity *)entity->data)->destroy(entity->data);
-        free(entity);
-    }
-    for (gc_list *data = scene->data; data; data = next) {
-        next = data->next;
-        if (((gc_data *)data->data)->destroy)
-            ((gc_data *)data->data)->destroy(data->data);
-        free(((gc_data *)data->data)->type);
-        free(data->data);
-        free(data);
-    }
-    for (gc_tupple *tupple = tup; tupple; tupple = tup) {
-        tup = tupple->next;
-        for (gc_list *li = tupple->entities; li; li = next) {
-            next = li->next;
-            free(li);
-        }
-        free(tupple->name);
-        free(tupple);
-    }
-    free(scene);
-}

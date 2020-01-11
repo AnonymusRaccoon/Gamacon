@@ -80,23 +80,22 @@ void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
 {
     gc_animholder *hold = malloc(sizeof(gc_animholder));
     int animcount = xml_getchildcount_filtered(n, "animation") + 1;
-    gc_anim *anims = malloc(sizeof(gc_anim) * animcount);
     int i = 1;
 
-    if (!hold || !anims)
+    hold->anims = malloc(sizeof(gc_anim) * animcount);
+    if (!hold || !hold->anims)
         return;
     sprite_fdctr(scene, cmp, n);
     hold->sprite = (gc_sprite *)cmp->data;
-    hold->anims = anims;
     hold->current = NULL;
     hold->animcount = animcount;
     hold->timesince_up = 0;
     cmp->data = hold;
-    animation_setnone(&anims[0], hold->sprite);
+    animation_setnone(&hold->anims[0], hold->sprite);
     for (n = n->child; n; n = n->next) {
         if (my_strcmp(n->name, "animation"))
             continue;
-        animation_fdctr(&anims[i], hold->sprite, n);
+        animation_fdctr(&hold->anims[i], hold->sprite, n);
         i++;
     }
     cmp->type = GC_ANIMREND;

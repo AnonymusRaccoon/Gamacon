@@ -46,10 +46,10 @@ void sfml_handle_events(gc_engine *engine)
                 event.size.width,
                 event.size.height
             });
-            // entities_update_to_cam_size(engine->scene, (gc_vector2) {
-            //     event.size.width,
-            //     event.size.height
-            // });
+            entities_update_to_cam_size(engine->scene, (gc_vector2) {
+                event.size.width,
+                event.size.height
+            });
         }
     }
 }

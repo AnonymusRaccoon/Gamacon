@@ -40,7 +40,6 @@ gc_entity *entity, float dtime)
         my_printf("Trying to render a texture with an unknown type.\n");
         break;
     }
-    (void)dtime;
     (void)engine;
 }
 

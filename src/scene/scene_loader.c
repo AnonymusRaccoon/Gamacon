@@ -45,8 +45,8 @@ void scene_load_data(gc_engine *engine, gc_scene *scene, node *n)
             return ((void)my_printf("Couldn't find data loader for the type %s\
 \n", data->type));
         if (loader->load(data, n) < 0)
-            return ((void)my_printf("Error while loading data %s (type %s).\n",\
-data->name, data->type));
+            return ((void)my_printf("Error while loading data %s (type %s).\
+\n", data->name, data->type));
         scene->data = list_add(scene->data, data);
     }
 }
