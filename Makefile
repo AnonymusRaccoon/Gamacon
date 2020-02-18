@@ -19,6 +19,7 @@ SRC = src/engine/engine.c \
 	src/components/camera_follow.c \
 	src/components/fixed_to_cam.c \
 	src/components/parallax_component.c \
+	src/components/vertex_component.c \
 	src/components/controllable_component.c \
 	src/components/friction_component.c \
 	src/components/friction_giver.c \
@@ -26,6 +27,7 @@ SRC = src/engine/engine.c \
 	src/components/renderers/sprite_renderer.c \
 	src/components/renderers/anim_renderer.c \
 	src/components/renderers/text_renderer.c \
+	src/components/renderers/map_renderer.c \
 	src/scene/scene.c \
 	src/scene/scene_loader.c \
 	src/scene/scene_destroy.c \
@@ -51,7 +53,8 @@ SRC = src/engine/engine.c \
 	src/sfml_renderer/sfml_music_player.c \
 	src/sfml_renderer/texture_utility.c \
 	src/sfml_renderer/sfml_drawer.c \
-	src/sfml_renderer/sfml_functions.c
+	src/sfml_renderer/sfml_functions.c \
+	src/sfml_renderer/sfml_vertex.c
 
 OBJ = $(SRC:%.c=%.o)
 

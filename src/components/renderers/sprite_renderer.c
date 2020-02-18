@@ -52,5 +52,4 @@ void sprite_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
         sprite->rect.width = (float)size.x;
     }
     sprite->scale = (gc_vector2){1, 1};
-    cmp->type = GC_TEXTUREREND;
 }

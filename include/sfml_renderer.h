@@ -13,12 +13,14 @@
 #include "text.h"
 #include "components/transform_component.h"
 #include "systems/sfml_renderer_system.h"
+#include "components/vertex_component.h"
 
 int sfml_music_loader(gc_data *data, node *n);
 int sfml_sprite_loader(gc_data *data, node *n);
 int sfml_font_loader(gc_data *data, node *n);
 
 sfTexture *get_texture(gc_scene *scene, char *name);
+sfVertexArray *sfml_init_verticies(void);
 
 void sfmlrenderer_draw_texture(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_sprite *sprite);
@@ -26,6 +28,8 @@ void sfmlrenderer_draw_anim(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_animholder *holder, float dtime);
 void sfmlrenderer_draw_txt(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_text *txt);
+void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *renderer, \
+struct vertex_component *txt);
 
 void sfml_texture_destroy(gc_data *data);
 void sfml_music_destroy(gc_data *data);

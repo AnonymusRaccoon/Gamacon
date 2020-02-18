@@ -10,17 +10,18 @@
 #include "component.h"
 #include "vector2.h"
 
-typedef enum GC_TEXTURETYPE {
+typedef enum gc_texturetype {
     GC_NONE,
     GC_TEXTUREREND,
     GC_ANIMREND,
-    GC_TXTREND
-} GC_TEXTURETYPE;
+    GC_TXTREND,
+    GC_MAP
+} gc_texturetype;
 
 struct renderer
 {
     gc_component base;
-    enum GC_TEXTURETYPE type;
+    enum gc_texturetype type;
     void *data;
 };
 
@@ -33,5 +34,8 @@ void rend_set_anim(struct renderer *rend, const char *name);
 
 void text_ctr(struct renderer *cmp, va_list args);
 void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
+
+void map_ctr(struct renderer *cmp, va_list args);
+void map_fdctr(gc_scene *scene, struct renderer *cmp, gc_entity *entity);
 
 extern const struct renderer renderer_component;

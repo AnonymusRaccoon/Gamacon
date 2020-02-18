@@ -17,37 +17,45 @@
 static void ctr(void *component, va_list args)
 {
     struct renderer *cmp = (struct renderer *)component;
-    GC_TEXTURETYPE type = va_arg(args, GC_TEXTURETYPE);
+    gc_texturetype type = va_arg(args, gc_texturetype);
 
     cmp->data = NULL;
+    cmp->type = type;
     if (type == GC_TEXTUREREND)
         sprite_ctr(cmp, args);
     if (type == GC_ANIMREND)
         anim_ctr(cmp, args);
     if (type == GC_TXTREND)
         text_ctr(cmp, args);
+    if (type == GC_MAP)
+        map_ctr(cmp, args);
 }
 
-GC_TEXTURETYPE renderer_get_type(node *n)
+gc_texturetype renderer_get_type(node *n)
 {
     if (xml_getnode(n, "animation"))
         return (GC_ANIMREND);
     if (xml_hasproperty(n, "text"))
         return (GC_TXTREND);
+    if (xml_hasproperty(n, "tilemap"))
+        return (GC_MAP);
     return (GC_TEXTUREREND);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct renderer *cmp = (struct renderer *)component;
-    GC_TEXTURETYPE type = renderer_get_type(n);
+    gc_texturetype type = renderer_get_type(n);
 
+    cmp->type = type;
     if (type == GC_TEXTUREREND)
         sprite_fdctr(scene, cmp, n);
     if (type == GC_ANIMREND)
         anim_fdctr(scene, cmp, n);
     if (type == GC_TXTREND)
         text_fdctr(scene, cmp, n);
+    if (type == GC_MAP)
+        map_fdctr(scene, cmp, entity);
     (void)entity;
 }
 
@@ -63,14 +71,18 @@ static void dtr(void *component)
         }
         free(((gc_animholder *)cmp->data)->sprite);
         free(((gc_animholder *)cmp->data)->anims);
+        free(cmp->data);
         break;
     case GC_TXTREND:
         free(((gc_text *)cmp->data)->text);
+        free(cmp->data);
+        break;
+    case GC_TEXTUREREND:
+        free(cmp->data);
         break;
     default:
         break;
     }
-    free(cmp->data);
 }
 
 static char *serialize(void *component)

@@ -13,7 +13,7 @@
 Test(deserialization, deserialize_entity)
 {
     gc_engine *engine = engine_create();
-    gc_scene *scene = scene_create((const char **){ NULL });
+    gc_scene *scene = scene_create((const char **){ NULL }, "tests/player.gcprefab");
     int ret;
 
     engine->change_scene(engine, scene);

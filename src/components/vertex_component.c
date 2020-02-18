@@ -9,6 +9,8 @@
 #include "component.h"
 #include "components/vertex_component.h"
 #include "utility.h"
+#include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h> 
 
 static void ctr(void *component, va_list args)
@@ -19,10 +21,26 @@ static void ctr(void *component, va_list args)
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
-    struct vertex_component *tmp = (struct vertex_component *)component;
-    (void)n;
-    (void)scene;
-    (void)entity;
+    struct vertex_component *this = (struct vertex_component *)component;
+    int i = 0;
+    int j = 0;
+
+    this->vertices = malloc(sizeof(int *) * (xml_getchildcount(n) + 1));
+    if (!this->vertices)
+        return;
+    for (node *line = n->child; n; n = n->next) {
+        this->vertices[i] = malloc(sizeof(int) * (xml_getchildcount(line) + 1));
+        if (!this->vertices[i])
+            return;
+        for (node *row = n->child; row; row = row->next) {
+            this->vertices[i][j] = xml_getintprop(row, "height");
+            j++;
+        }
+        this->vertices[i][j + 1] = INT32_MIN;
+        i++;
+        j = 0;
+    }
+    this->vertices[i][0] = INT32_MIN;
 }
 
 static void dtr(void *component)
@@ -36,7 +54,7 @@ static char *serialize(void *component)
     return (NULL);
 }
 
-const struct vertex_component movable_component = {
+const struct vertex_component vertex_component = {
     base: {
         name: "vertex_component",
         size: sizeof(struct vertex_component),

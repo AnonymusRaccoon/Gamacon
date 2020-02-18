@@ -20,6 +20,7 @@ struct sfml_renderer_system
     sfSprite *sprite;
     sfText *text;
     sfView *view;
+    sfVertexArray *vertices;
 };
 
 gc_system *gc_new_sfml_renderer(gc_engine *engine, \

@@ -22,7 +22,6 @@ void text_ctr(struct renderer *cmp, va_list args)
     cmp->data = gctext;
     gctext->text = va_arg(args, char *);
     gctext->font = va_arg(args, sfFont *);
-    cmp->type = GC_TXTREND;
 }
 
 void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
@@ -36,5 +35,4 @@ void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     if (!gctext->text)
         return;
     gctext->font = scene->get_data(scene, "font", xml_getproperty(n, "src"));
-    cmp->type = GC_TXTREND;
 }

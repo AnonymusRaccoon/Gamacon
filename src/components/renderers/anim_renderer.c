@@ -11,7 +11,6 @@
 #include "xml.h"
 #include "my.h"
 #include <malloc.h>
-#include <SFML/Graphics.h>
 
 void rend_set_anim(struct renderer *rend, const char *name)
 {
@@ -98,5 +97,4 @@ void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
         animation_fdctr(&hold->anims[i], hold->sprite, n);
         i++;
     }
-    cmp->type = GC_ANIMREND;
 }

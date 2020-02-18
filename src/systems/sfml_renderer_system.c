@@ -12,6 +12,7 @@
 #include "systems/sfml_renderer_system.h"
 #include "components/transform_component.h"
 #include "components/renderer.h"
+#include "components/vertex_component.h"
 #include "my.h"
 #include "sfml_renderer.h"
 #include "text.h"
@@ -35,6 +36,9 @@ gc_entity *entity, float dtime)
         break;
     case GC_TXTREND:
         sfmlrenderer_draw_txt(rend, pos, (gc_text *)text->data);
+        break;
+    case GC_MAP:
+        sfmlrenderer_draw_tilemap(rend, (struct vertex_component *)text->data);
         break;
     default:
         my_printf("Trying to render a texture with an unknown type.\n");
@@ -66,8 +70,9 @@ void sfmlrend_ctr(void *rend, va_list list)
     renderer->sprite = sfSprite_create();
     renderer->view = sfView_create();
     renderer->text = sfText_create();
+    renderer->vertices = sfml_init_verticies();
     if (!renderer->window || !renderer->sprite || \
-!renderer->view || !renderer->text)
+!renderer->view || !renderer->text || !renderer->vertices)
         return;
     sfRenderWindow_setFramerateLimit(renderer->window, framerate);
     sfView_setSize(renderer->view, (sfVector2f){800, 600});

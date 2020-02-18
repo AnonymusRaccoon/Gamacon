@@ -10,15 +10,10 @@
 #include "component.h"
 #include <stdbool.h>
 
-typedef struct vertex {
-    int x;
-    int y;
-    int z;
-} vertex;
-
 struct vertex_component
 {
-    vertex *vertices;
+    gc_component base;
+    int **vertices;
 };
 
 extern const struct vertex_component vertex_component;
