@@ -69,7 +69,7 @@ const struct collision_component collision_component = {
     base: {
         name: "collision_component",
         size: sizeof(struct collision_component),
-        dependencies: (char *[]){"collision_component", NULL},
+        dependencies: (char *[]){"transform_component", NULL},
         ctr: &ctr,
         fdctr: &fdctr,
         dtr: &dtr,
