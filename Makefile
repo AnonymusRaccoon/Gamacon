@@ -82,9 +82,9 @@ CC = gcc
 
 AR = ar rc
 
-all: build
+all: $(NAME)
 
-build: $(OBJ)
+$(NAME): $(OBJ)
 	$(AR) $(NAME) $(OBJ)
 
 tests_run:
