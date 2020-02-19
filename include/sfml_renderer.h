@@ -28,7 +28,7 @@ void sfmlrenderer_draw_anim(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_animholder *holder, float dtime);
 void sfmlrenderer_draw_txt(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_text *txt);
-void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *renderer, \
+void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this, \
 struct vertex_component *txt);
 
 void sfml_texture_destroy(gc_data *data);

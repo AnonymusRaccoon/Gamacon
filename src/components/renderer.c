@@ -37,7 +37,7 @@ gc_texturetype renderer_get_type(node *n)
         return (GC_ANIMREND);
     if (xml_hasproperty(n, "text"))
         return (GC_TXTREND);
-    if (xml_hasproperty(n, "tilemap"))
+    if (xml_hasproperty(n, "vertex"))
         return (GC_MAP);
     return (GC_TEXTUREREND);
 }
