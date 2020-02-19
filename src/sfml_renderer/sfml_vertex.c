@@ -30,7 +30,7 @@ struct vertex_component *info)
     sfVertex *vert0 = sfVertexArray_getVertex(renderer->vertices, 0);
     sfVertex *vert1 = sfVertexArray_getVertex(renderer->vertices, 1);
 
-    for (int y = 0; info->vertices[y][0] != INT32_MIN; y++) {
+    for (int y = 0; info->vertices[y] != NULL; y++) {
         for (int x = 0; info->vertices[y][x] != INT32_MIN; x++) {
             vert0->position = (sfVector2f){x, y};
         }

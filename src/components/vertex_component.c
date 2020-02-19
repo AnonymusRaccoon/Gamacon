@@ -25,22 +25,26 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     int i = 0;
     int j = 0;
 
+    this->vertices = NULL;
+    n = xml_parse(xml_gettempprop(n, "tilemap"));
+    if (!n)
+    	return;
     this->vertices = malloc(sizeof(int *) * (xml_getchildcount(n) + 1));
     if (!this->vertices)
         return;
-    for (node *line = n->child; n; n = n->next) {
+    for (node *line = n->child; line; line = line->next) {
         this->vertices[i] = malloc(sizeof(int) * (xml_getchildcount(line) + 1));
         if (!this->vertices[i])
             return;
-        for (node *row = n->child; row; row = row->next) {
+        for (node *row = line->child; row; row = row->next) {
             this->vertices[i][j] = xml_getintprop(row, "height");
             j++;
         }
-        this->vertices[i][j + 1] = INT32_MIN;
+        this->vertices[i][j] = INT32_MIN;
         i++;
         j = 0;
     }
-    this->vertices[i][0] = INT32_MIN;
+    this->vertices[i] = NULL;
 }
 
 static void dtr(void *component)
