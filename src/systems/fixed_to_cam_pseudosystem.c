@@ -21,20 +21,20 @@ struct sfml_renderer_system *renderer, struct camerafollow_system *cam)
     gc_list *list;
     gc_entity *entity;
     sfVector2f size;
-    gc_vector2 offset;
     struct transform_component *tra;
+	struct fixed_to_cam *fc;
 
     list = scene->get_entity_by_cmp(scene, "fixed_to_cam");
     for (gc_list *li = list; li; li = li->next) {
         entity = (gc_entity *)li->data;
         tra = GETCMP(transform_component);
-        if (!tra)
+		fc = GETCMP(fixed_to_cam);
+		if (!tra)
             continue;
         size = sfView_getSize(renderer->view);
-        offset = GETCMP(fixed_to_cam)->offset;
         tra->position = (gc_vector2) {
-            cam->cam_pos.x - size.x / 2 + offset.x,
-            cam->cam_pos.y + size.y / 2 - offset.y,
+			(cam->cam_pos.x - size.x / 2 + fc->pos.x) * fc->per_x ? size.x / 100 : 1,
+			(cam->cam_pos.y + size.y / 2 - fc->pos.y) * fc->per_y ? size.y / 100 : 1
         };
     }
 }

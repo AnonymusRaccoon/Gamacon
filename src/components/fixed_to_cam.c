@@ -15,16 +15,21 @@ static void ctr(void *component, va_list args)
 {
     struct fixed_to_cam *cmp = (struct fixed_to_cam *)component;
 
-    cmp->offset = va_arg(args, gc_vector2);
+    cmp->pos = va_arg(args, gc_vector2);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct fixed_to_cam *cmp = (struct fixed_to_cam *)component;
+	char *tmp;
 
     n = xml_getnode(n, "Position");
-    cmp->offset.x = xml_getintprop(n, "x");
-    cmp->offset.y = xml_getintprop(n, "y");
+    cmp->pos.x = xml_getintprop(n, "x");
+    cmp->pos.y = xml_getintprop(n, "y");
+	tmp = xml_gettempprop(n, "x");
+	cmp->per_x = tmp && my_strchr(tmp, '%');
+	tmp = xml_gettempprop(n, "y");
+	cmp->per_y = tmp && my_strchr(tmp, '%');
     (void)scene;
     (void)entity;
 }
@@ -49,5 +54,5 @@ const struct fixed_to_cam fixed_to_cam = {
         serialize: &serialize,
         destroy: &component_destroy
     },
-    offset: (gc_vector2){0, 0}
+    pos: (gc_vector2){0, 0}
 };

@@ -11,6 +11,7 @@
 #include "text.h"
 #include "components/transform_component.h"
 #include "systems/sfml_renderer_system.h"
+#include "my.h"
 #include <SFML/Graphics.h>
 
 void sfmlrenderer_draw_texture(struct sfml_renderer_system *renderer, \
@@ -59,11 +60,16 @@ struct transform_component *tra, gc_animholder *holder, float dtime)
 void sfmlrenderer_draw_txt(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_text *txt)
 {
-    sfText_setString(renderer->text, txt->text);
+	sfFloatRect bounds;
+
+	sfText_setString(renderer->text, txt->text);
+    if (!txt->font)
+    	my_printf("%s has a font not loaded. Rendering impossible.", txt->font);
     sfText_setFont(renderer->text, txt->font);
+    bounds = sfText_getLocalBounds(renderer->text);
     sfText_setPosition(renderer->text, (sfVector2f){
-        tra->position.x,
-        -tra->position.y
+        tra->position.x - bounds.width / 2,
+        -tra->position.y - bounds.height / 2
     });
     sfRenderWindow_drawText(renderer->window, renderer->text, NULL);
 }
