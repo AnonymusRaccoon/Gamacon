@@ -5,11 +5,16 @@
 ** data
 */
 
-#pragma once
+#include "engine.h"
+
+typedef struct gc_data gc_data;
+typedef gc_data *(*gc_loader)(gc_engine *engine, gc_scene *scene, node *n);
+
+#ifndef DATA
+#define DATA
 
 #include "xml.h"
 
-typedef struct gc_data gc_data;
 struct gc_data
 {
     char *type;
@@ -18,10 +23,10 @@ struct gc_data
     void (*destroy)(gc_data *data);
 };
 
-typedef int (*gc_loader)(gc_data *data, node *n);
-
 typedef struct gc_dataloader
 {
     char *type;
     gc_loader load;
 } gc_dataloader;
+
+#endif

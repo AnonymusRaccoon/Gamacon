@@ -10,11 +10,11 @@
 #include "my.h"
 #include <stdlib.h>
 
-static unsigned int next_id = 0;
 const gc_entity entity_prefab;
 
 gc_entity *entity_create(void)
 {
+	static unsigned int next_id = 0;
     gc_entity *entity = malloc(sizeof(gc_entity));
 
     if (!entity)
@@ -40,6 +40,8 @@ int entity_add(gc_scene *scene, gc_entity *e)
 {
     char *name;
 
+    if (!e)
+    	return (0);
     scene->entities = list_add(scene->entities, e);
     if (!scene->entities)
         return (-1);

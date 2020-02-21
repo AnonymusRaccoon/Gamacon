@@ -13,45 +13,56 @@
 #include <SFML/Graphics.h>
 #include <SFML/Audio.h>
 
-int sfml_music_loader(gc_data *data, node *n)
+gc_data *sfml_music_loader(gc_engine *engine, gc_scene *scene, node *n)
 {
-    char *path = xml_getproperty(n, "src");
+    gc_data *data = malloc(sizeof(*data));
 
-    if (!path)
-        return (-1);
-    data->name = path;
-    data->custom = sfMusic_createFromFile(path);
+    if (!data)
+    	return (NULL);
+	data->type = my_strdup(n->name);
+	data->name = xml_getproperty(n, "src");
+    if (!data->name || !data->type)
+        return (NULL);
+    data->custom = sfMusic_createFromFile(data->name);
     data->destroy = &sfml_music_destroy;
     if (!data->custom)
-        return (-1);
-    return (0);
+        return (NULL);
+    return (data);
 }
 
-int sfml_sprite_loader(gc_data *data, node *n)
+gc_data *sfml_sprite_loader(gc_engine *engine, gc_scene *scene, node *n)
 {
-    char *path = xml_getproperty(n, "src");
+	gc_data *data = malloc(sizeof(*data));
 
-    if (!path)
-        return (-1);
-    data->name = path;
-    data->custom = sfTexture_createFromFile(path, NULL);
-    if (!data->custom || !data->name)
-        return (-1);
+	if (!data)
+		return (NULL);
+	data->type = my_strdup(n->name);
+    data->name = xml_getproperty(n, "src");
+    if (!data->name || !data->type)
+    	return (NULL);
+    data->custom = sfTexture_createFromFile(data->name, NULL);
+    if (!data->custom)
+        return (NULL);
     sfTexture_setRepeated(data->custom, sfTrue);
     data->destroy = &sfml_texture_destroy;
-    return (0);
+	if (xml_hasproperty(n, "name"))
+		data->name = xml_getproperty(n, "name");
+    return (data);
 }
 
-int sfml_font_loader(gc_data *data, node *n)
+gc_data *sfml_font_loader(gc_engine *engine, gc_scene *scene, node *n)
 {
-    char *path = xml_getproperty(n, "src");
+	gc_data *data = malloc(sizeof(*data));
 
-    if (!path)
-        return (-1);
-    data->name = path;
-    data->custom = sfFont_createFromFile(path);
-    if (!data->custom || !data->name)
-        return (-1);
+	if (!data)
+		return (NULL);
+	data->type = my_strdup(n->name);
+    data->name = xml_getproperty(n, "src");
+    if (!data->name || !data->type)
+    	return (NULL);
+    data->custom = sfFont_createFromFile(data->name);
+    if (!data->custom)
+        return (NULL);
     data->destroy = &sfml_font_destroy;
-    return (0);
+    return (data);
 }

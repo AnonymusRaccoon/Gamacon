@@ -35,7 +35,11 @@ int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene)
     if (!n)
         return (-1);
     for (node *ent_n = n->child; ent_n; ent_n = ent_n->next) {
-        entity = deserialize_entity(engine, scene, ent_n);
+		if (my_strcmp(ent_n->name, "gc_entity")) {
+			scene->load_entity(scene, engine, ent_n);
+			continue;
+		}
+		entity = deserialize_entity(engine, scene, ent_n);
         if (!entity)
             return (-1);
         scene->add_entity(scene, entity);

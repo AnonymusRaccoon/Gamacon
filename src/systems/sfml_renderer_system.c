@@ -18,8 +18,18 @@
 #include "text.h"
 #include <stdlib.h>
 
+gc_vector2 sfml_get_text_size(sf_renderer *this, gc_text *text)
+{
+	sfFloatRect bounds;
+
+	sfText_setString(this->text, text->text);
+	sfText_setFont(this->text, text->font);
+	bounds = sfText_getLocalBounds(this->text);
+	return (gc_vector2) {bounds.width, bounds.height};
+}
+
 void sfml_update_entity(gc_engine *engine, void *system, \
-gc_entity *entity, float dtime)
+gc_entity *entity, float dt)
 {
     struct transform_component *pos = GETCMP(transform_component);
     struct renderer *text = GETCMP(renderer);
@@ -29,10 +39,10 @@ gc_entity *entity, float dtime)
         return;
     switch (text->type) {
     case GC_TEXTUREREND:
-        sfmlrenderer_draw_texture(rend, pos, (gc_sprite *)text->data);
+        sfmlrenderer_draw_texture(rend, pos, entity, (gc_sprite *)text->data);
         break;
     case GC_ANIMREND:
-        sfmlrenderer_draw_anim(rend, pos, (gc_animholder *)text->data, dtime);
+        sfmlrenderer_draw_anim(rend, entity, (gc_animholder *)text->data, dt);
         break;
     case GC_TXTREND:
         sfmlrenderer_draw_txt(rend, pos, (gc_text *)text->data);
@@ -66,6 +76,7 @@ void sfmlrend_ctr(void *rend, va_list list)
     const char *title = va_arg(list, const char *);
     int framerate = va_arg(list, int);
 
+    renderer->get_text_size = &sfml_get_text_size;
     renderer->window = sfRenderWindow_create(mode, title, sfDefaultStyle, NULL);
     renderer->sprite = sfSprite_create();
     renderer->view = sfView_create();

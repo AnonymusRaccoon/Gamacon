@@ -10,9 +10,11 @@
 #include "system.h"
 #include <SFML/Graphics.h>
 #include "scene.h"
+#include "text.h"
 #include "systems/sfml_renderer_system.h"
 #include "systems/camerafollow_system.h"
 
+typedef struct sfml_renderer_system sf_renderer;
 struct sfml_renderer_system
 {
     gc_system system;
@@ -21,6 +23,7 @@ struct sfml_renderer_system
     sfText *text;
     sfView *view;
     sfVertexArray *vertices;
+    gc_vector2 (*get_text_size)(sf_renderer *this, gc_text *text);
 };
 
 gc_system *gc_new_sfml_renderer(gc_engine *engine, \

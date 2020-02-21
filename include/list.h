@@ -16,3 +16,5 @@ struct gc_list
 };
 
 gc_list *list_add(gc_list *list, void *obj);
+
+#define LISTADD(list, obj) (list = list_add(list, obj))

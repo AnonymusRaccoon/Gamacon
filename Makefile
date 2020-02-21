@@ -54,7 +54,9 @@ SRC = src/engine/engine.c \
 	src/sfml_renderer/texture_utility.c \
 	src/sfml_renderer/sfml_drawer.c \
 	src/sfml_renderer/sfml_functions.c \
-	src/sfml_renderer/sfml_vertex.c
+	src/sfml_renderer/sfml_vertex.c \
+	src/ui/setup_ui.c \
+	src/ui/button.c
 
 OBJ = $(SRC:%.c=%.o)
 

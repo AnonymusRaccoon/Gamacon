@@ -16,6 +16,9 @@ static void ctr(void *component, va_list args)
     struct fixed_to_cam *cmp = (struct fixed_to_cam *)component;
 
     cmp->pos = va_arg(args, gc_vector2);
+    cmp->per_x = va_arg(args, int);
+    cmp->per_y = va_arg(args, int);
+    cmp->set_size = va_arg(args, int);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
@@ -30,6 +33,7 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 	cmp->per_x = tmp && my_strchr(tmp, '%');
 	tmp = xml_gettempprop(n, "y");
 	cmp->per_y = tmp && my_strchr(tmp, '%');
+	cmp->set_size = xml_hasproperty(n, "size");
     (void)scene;
     (void)entity;
 }

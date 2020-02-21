@@ -9,6 +9,7 @@
 #include "data.h"
 #include "my.h"
 #include <malloc.h>
+#include "ui.h"
 
 void engine_add_dataloader(gc_engine *engine, char *type, gc_loader loader)
 {
@@ -19,4 +20,24 @@ void engine_add_dataloader(gc_engine *engine, char *type, gc_loader loader)
     dataloader->type = type;
     dataloader->load = loader;
     engine->dataloaders = list_add(engine->dataloaders, dataloader);
+}
+
+gc_dataloader *engine_get_dataloader(gc_engine *this, const char *type)
+{
+	gc_dataloader *loader;
+
+	for (gc_list *li = this->dataloaders; li; li = li->next) {
+		loader = (gc_dataloader *)li->data;
+		if (!my_strcmp(loader->type, type))
+			return (loader);
+	}
+	return (NULL);
+}
+
+void engine_init_dataloaders(gc_engine *this)
+{
+	this->dataloaders = NULL;
+	this->add_dataloader = &engine_add_dataloader;
+	this->get_dataloader = &engine_get_dataloader;
+	ui_setup(this);
 }
