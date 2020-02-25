@@ -58,7 +58,7 @@ struct transform_component *tra, gc_entity *entity, gc_sprite *sprite)
 void sfmlrenderer_draw_anim(struct sfml_renderer_system *renderer, \
 gc_entity *entity, gc_animholder *holder, float dtime)
 {
-	struct transform_component *tra = GETCMP(transform_component);
+	struct transform_component *tra = GETCMP(entity, transform_component);
     gc_int_rect *rec = &holder->sprite->rect;
     gc_anim *curr = holder->current;
 

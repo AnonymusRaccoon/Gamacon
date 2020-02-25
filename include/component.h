@@ -32,5 +32,6 @@ void *new_component(const void *component, ...);
 void component_destroy(void *component);
 gc_component *component_remove(gc_component *cmp, const char *name);
 
-#define GETCMP(x) ((struct x *)entity->get_component(entity, #x))
-#define GETCOLCMP(x) ((struct x *)entity_get_component(entity_get(engine->scene, id), #x))
+#define GETCMP(entity, x) ((struct x *)entity->get_component(entity, #x))
+#define GETCOLCMP(x) ((struct x *)entity_get_component(\
+entity_get(engine->scene, id), #x))

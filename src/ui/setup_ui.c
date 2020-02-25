@@ -9,6 +9,7 @@
 #include "components/transform_component.h"
 #include "components/renderer.h"
 #include "components/fixed_to_cam_component.h"
+#include "components/clickable_component.h"
 #include "systems/sfml_renderer_system.h"
 #include <malloc.h>
 
@@ -65,8 +66,13 @@ gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
 		xml_gettempprop(n, "text"),
 		scene->get_data(scene, "font", NULL)
 	};
+	gc_entity *background = background_from_text(engine, scene, n, &text);
 
-	LISTADD(entities, background_from_text(engine, scene, n, &text));
+	if (!background)
+		return (NULL);
+	background->add_component(background, new_component(&clickable_component,
+		engine, xml_getproperty(n, "click")));
+	LISTADD(entities, background);
 	LISTADD(entities, new_text(engine, scene, n));
 	return (entities);
 }

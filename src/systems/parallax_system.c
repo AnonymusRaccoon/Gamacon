@@ -17,9 +17,9 @@
 void parallax_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    struct renderer *text = GETCMP(renderer);
-    struct parallax_component *par = GETCMP(parallax_component);
-    struct transform_component *tra = GETCMP(transform_component);
+    struct renderer *text = GETCMP(entity, renderer);
+    struct parallax_component *par = GETCMP(entity, parallax_component);
+    struct transform_component *tra = GETCMP(entity, transform_component);
     gc_sprite *sprite;
 
     if (text->type != GC_TEXTUREREND || !text->data)

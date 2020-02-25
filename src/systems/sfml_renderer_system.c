@@ -31,8 +31,8 @@ gc_vector2 sfml_get_text_size(sf_renderer *this, gc_text *text)
 void sfml_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dt)
 {
-    struct transform_component *pos = GETCMP(transform_component);
-    struct renderer *text = GETCMP(renderer);
+    struct transform_component *pos = GETCMP(entity, transform_component);
+    struct renderer *text = GETCMP(entity, renderer);
     struct sfml_renderer_system *rend = (struct sfml_renderer_system *)system;
 
     if (!text->data)

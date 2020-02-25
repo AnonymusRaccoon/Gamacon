@@ -36,8 +36,33 @@ gc_dataloader *engine_get_dataloader(gc_engine *this, const char *type)
 
 void engine_init_dataloaders(gc_engine *this)
 {
+	this->callbacks = NULL;
 	this->dataloaders = NULL;
 	this->add_dataloader = &engine_add_dataloader;
 	this->get_dataloader = &engine_get_dataloader;
+	this->add_callback = &engine_add_callback;
+	this->get_callback = &engine_get_callback;
 	ui_setup(this);
+}
+
+void engine_add_callback(gc_engine *this, char *name, callback_t func)
+{
+	gc_data *callback = malloc(sizeof(*callback));
+
+	if (!this || !callback)
+		return;
+	callback->type = my_strdup("callback");
+	callback->name = name;
+	callback->destroy = NULL;
+	callback->custom = func;
+	LISTADD(this->callbacks, callback);
+}
+
+callback_t engine_get_callback(gc_engine *this, char *name)
+{
+	for (gc_list *cal = this->callbacks; cal; cal = cal->next) {
+		if (!my_strcmp(((gc_data *)cal->data)->name, name))
+			return (((gc_data *)cal->data)->custom);
+	}
+	return (NULL);
 }

@@ -18,8 +18,8 @@
 void fric_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    struct friction_component *fric = GETCMP(friction_component);
-    struct movable_component *mov = GETCMP(movable_component);
+    struct friction_component *fric = GETCMP(entity, friction_component);
+    struct movable_component *mov = GETCMP(entity, movable_component);
 
     mov->acceleration.x -= fric->value * mov->velocity.x;
     mov->acceleration.y -= fric->value * mov->velocity.y;
