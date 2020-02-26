@@ -17,8 +17,8 @@
 void keyboard_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
-    struct controllable_component *con = GETCMP(controllable_component);
-    struct keyboard_controller *key = GETCMP(keyboard_controller);
+    struct controllable_component *con = GETCMP(entity, controllable_component);
+    struct keyboard_controller *key = GETCMP(entity, keyboard_controller);
 
     con->moving_left = engine->is_keypressed(key->left_key);
     con->moving_right = engine->is_keypressed(key->right_key);

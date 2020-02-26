@@ -22,7 +22,7 @@ void map_ctr(struct renderer *cmp, va_list args)
 void map_fdctr(gc_scene *scene, struct renderer *cmp, gc_entity *entity)
 {
     (void)scene;
-    cmp->data = GETCMP(vertex_component);
+    cmp->data = GETCMP(entity, vertex_component);
     if (!cmp->data)
         my_printf("Gamacon: missing component \"vertext component\" from \
 the entity with id: %d\n", entity->id);

@@ -7,6 +7,7 @@
 
 #include "engine.h"
 #include <SFML/Graphics.h>
+#include <SFML/Window.h>
 #include "sfml_renderer.h"
 #include "systems/sfml_renderer_system.h"
 #include "systems/camerafollow_system.h"
@@ -51,6 +52,12 @@ void sfml_handle_events(gc_engine *engine)
                 event.size.height
             });
         }
+        if (event.type == sfEvtMouseButtonReleased) {
+			sfVector2i mousePos = sfMouse_getPosition(renderer->window);
+			sfVector2f pos = sfRenderWindow_mapPixelToCoords(renderer->window, mousePos, renderer->view);
+			pos.y *= -1;
+			clickable_onclick(engine, pos);
+		}
     }
 }
 

@@ -15,7 +15,7 @@
 
 static void on_collide(gc_engine *engine, gc_entity *entity, int id)
 {
-    struct friction_component *fric = GETCMP(friction_component);
+    struct friction_component *fric = GETCMP(entity, friction_component);
     struct friction_giver *f = GETCOLCMP(friction_giver);
 
     if (!f)
@@ -34,7 +34,7 @@ static void ctr(void *component, va_list args)
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct friction_component *cmp = (struct friction_component *)component;
-    struct collision_component *col = GETCMP(collision_component);
+    struct collision_component *col = GETCMP(entity, collision_component);
 
     cmp->value = xml_getfloatprop(n, "value");
     cmp->default_value = cmp->value;

@@ -53,6 +53,7 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     scene->get_entity_by_cmp = &get_entity_by_cmp;
     scene->destroy = &scene_destroy;
     scene->get_data = &scene_get_data;
+    scene->load_entity = &scene_load_entity;
     prefab_loadentities(n, engine, scene);
     xml_destroy(n);
     return (scene);

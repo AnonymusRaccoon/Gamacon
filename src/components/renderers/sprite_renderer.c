@@ -24,7 +24,7 @@ void sprite_ctr(struct renderer *cmp, va_list args)
     cmp->data = sprite;
     sprite->texture = va_arg(args, sfTexture *);
     sprite->rect = va_arg(args, gc_int_rect);
-    if (sprite->texture && sprite->rect.height < 0) {
+    if (sprite->texture && sprite->rect.height <= 0) {
         size = sfTexture_getSize(sprite->texture);
         sprite->rect.height = (float)size.y;
         sprite->rect.width = (float)size.x;
@@ -46,7 +46,7 @@ void sprite_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     sprite->rect.width = xml_getfloatprop(rect, "width");
     sprite->rect.top = xml_getfloatprop(rect, "top");
     sprite->rect.left = xml_getfloatprop(rect, "left");
-    if (sprite->texture && sprite->rect.height < 0) {
+    if (sprite->texture && sprite->rect.height <= 0) {
         size = sfTexture_getSize(sprite->texture);
         sprite->rect.height = (float)size.y;
         sprite->rect.width = (float)size.x;

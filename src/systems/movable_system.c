@@ -31,9 +31,9 @@ void clamp_vel(struct movable_component *mov, struct collision_component *col)
 static void update_entity(gc_engine *engine __attribute__((unused)), \
 void *system __attribute__((unused)), gc_entity *entity, float dtime)
 {
-    struct movable_component *mov = GETCMP(movable_component);
-    struct transform_component *pos = GETCMP(transform_component);
-    struct collision_component *col = GETCMP(collision_component);
+    struct movable_component *mov = GETCMP(entity, movable_component);
+    struct transform_component *pos = GETCMP(entity, transform_component);
+    struct collision_component *col = GETCMP(entity, collision_component);
 
     if (mov->velocity.x < 0)
         pos->position.x -= MIN(mov->velocity.x * -dtime, col->distance_left);

@@ -27,7 +27,7 @@ void engine_finish_physics(gc_engine *engine)
     engine->add_system(engine, new_system(&movable_system));
 }
 
-void engine_add_buildin_systems(gc_engine *engine)
+void engine_add_builtin_systems(gc_engine *engine)
 {
     engine->systems = NULL;
     engine->add_system = &engine_add_system;

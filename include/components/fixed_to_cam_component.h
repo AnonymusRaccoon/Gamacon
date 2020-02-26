@@ -13,7 +13,10 @@
 struct fixed_to_cam
 {
     gc_component base;
-    gc_vector2 offset;
+    gc_vector2 pos;
+    bool per_x;
+    bool per_y;
+    bool set_size;
 };
 
 extern const struct fixed_to_cam fixed_to_cam;

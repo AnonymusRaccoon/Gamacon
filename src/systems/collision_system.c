@@ -19,8 +19,8 @@ void col_update_entity(gc_engine *engine, \
 void *system, gc_entity *entity, float dtime __attribute__((unused)))
 {
     gc_collision_system *sys = (gc_collision_system *)system;
-    struct collision_component *col = GETCMP(collision_component);
-    struct transform_component *pos = GETCMP(transform_component);
+    struct collision_component *col = GETCMP(entity, collision_component);
+    struct transform_component *pos = GETCMP(entity, transform_component);
     qt_object obj = (qt_object) {
         entity->id,
         {pos->position.x, pos->position.y, pos->size.y, pos->size.x},

@@ -9,8 +9,6 @@
 #include "system.h"
 #include "utility.h"
 #include <stdlib.h>
-#include <SFML/Graphics.h>
-#include <SFML/System.h>
 
 void update_system(gc_engine *engine, gc_system *sys, float dtime)
 {
@@ -81,9 +79,8 @@ gc_engine *engine_create(void)
     engine->play_music = &engine_play_music;
     engine->stop_music = &engine_stop_music;
     engine->destroy = &engine_destroy;
-    engine_add_buildin_systems(engine);
+	engine_add_builtin_systems(engine);
     engine_add_buildin_components(engine);
-    engine->dataloaders = NULL;
-    engine->add_dataloader = &engine_add_dataloader;
+    engine_init_dataloaders(engine);
     return (engine);
 }

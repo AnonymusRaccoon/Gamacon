@@ -6,7 +6,8 @@
 */
 typedef struct gc_engine gc_engine;
 
-#pragma once
+#ifndef ENGINE
+#define ENGINE
 
 #include "xml.h"
 #include "scene.h"
@@ -15,6 +16,8 @@ typedef struct gc_engine gc_engine;
 #include "list.h"
 #include "data.h"
 #include <stdbool.h>
+
+typedef void (*callback_t)(gc_engine *engine, int entity_id);
 
 struct gc_engine
 {
@@ -43,6 +46,11 @@ struct gc_engine
 
     gc_list *dataloaders;
     void (*add_dataloader)(gc_engine *engine, char *type, gc_loader loader);
+    gc_dataloader *(*get_dataloader)(gc_engine *engine, const char *type);
+
+    gc_list *callbacks;
+    void (*add_callback)(gc_engine *this, char *name, callback_t callback);
+	callback_t (*get_callback)(gc_engine *this, char *name);
 };
 
 gc_engine *engine_create(void);
@@ -56,7 +64,7 @@ void engine_stop_music(gc_engine *engine);
 
 int change_scene(gc_engine *engine, gc_scene *scene);
 
-void engine_add_buildin_systems(gc_engine *engine);
+void engine_add_builtin_systems(gc_engine *engine);
 void *engine_get_system(gc_engine *engine, const char *name);
 void engine_add_system(gc_engine *engine, const void *system);
 
@@ -64,8 +72,14 @@ void engine_add_buildin_components(gc_engine *engine);
 const void *engine_get_component(gc_engine *engine, const char *name);
 void engine_add_component(gc_engine *engine, const void *component);
 
+void engine_init_dataloaders(gc_engine *this);
 void engine_add_dataloader(gc_engine *engine, char *type, gc_loader loader);
+gc_dataloader *engine_get_dataloader(gc_engine *this, const char *type);
+void engine_add_callback(gc_engine *engine, char *name, callback_t func);
+callback_t engine_get_callback(gc_engine *engine, char *name);
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate);
 
 #define GETSYS(x) ((struct x *)engine->get_system(engine, #x))
+
+#endif

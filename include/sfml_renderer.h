@@ -15,17 +15,17 @@
 #include "systems/sfml_renderer_system.h"
 #include "components/vertex_component.h"
 
-int sfml_music_loader(gc_data *data, node *n);
-int sfml_sprite_loader(gc_data *data, node *n);
-int sfml_font_loader(gc_data *data, node *n);
+gc_data *sfml_music_loader(gc_engine *engine, gc_scene *scene, node *n);
+gc_data *sfml_sprite_loader(gc_engine *engine, gc_scene *scene, node *n);
+gc_data *sfml_font_loader(gc_engine *engine, gc_scene *scene, node *n);
 
 sfTexture *get_texture(gc_scene *scene, char *name);
 sfVertexArray *sfml_init_verticies(void);
 
 void sfmlrenderer_draw_texture(struct sfml_renderer_system *renderer, \
-struct transform_component *tra, gc_sprite *sprite);
+struct transform_component *tra, gc_entity *entity, gc_sprite *sprite);
 void sfmlrenderer_draw_anim(struct sfml_renderer_system *renderer, \
-struct transform_component *tra, gc_animholder *holder, float dtime);
+gc_entity *entity, gc_animholder *holder, float dtime);
 void sfmlrenderer_draw_txt(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_text *txt);
 void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this, \

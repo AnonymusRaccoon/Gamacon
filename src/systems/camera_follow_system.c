@@ -19,7 +19,7 @@ static void update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dtime)
 {
     struct camerafollow_system *sys = (struct camerafollow_system *)system;
-    struct transform_component *tra = GETCMP(transform_component);
+    struct transform_component *tra = GETCMP(entity, transform_component);
 
     sys->cam_pos.x = (sys->cam_pos.x + tra->position.x) / 2;
     sys->cam_pos.y = (sys->cam_pos.y + tra->position.y) / 2;
