@@ -11,6 +11,7 @@
 #include "components/fixed_to_cam_component.h"
 #include "components/clickable_component.h"
 #include "systems/sfml_renderer_system.h"
+#include "ui.h"
 #include <malloc.h>
 
 gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
@@ -33,20 +34,15 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 	return (entity);
 }
 
-gc_entity *background_from_text(gc_engine *engine, gc_scene *scene, node *n, \
-gc_text *text)
+gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
 {
 	gc_entity *entity = entity_create();
-	struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
-	sfTexture *texture = scene->get_data(scene, "sprite", "button_background");
+	char *src = xml_gettempprop(n, "src");
+	sfTexture *texture = scene->get_data(scene, "sprite", src);
 
-	if (!renderer)
-		return (NULL);
-	if (!texture)
-		my_printf("No texture defined for the button_background.\n");
 	entity->add_component(entity, new_component(&transform_component,
 		(gc_vector2){0, 0},
-		renderer->get_text_size(renderer, text)));
+		(gc_vector2){0, 0}));
 	entity->add_component(entity, new_component(&renderer_component,
 		GC_TEXTUREREND,
 		texture,
@@ -55,40 +51,25 @@ gc_text *text)
 		(gc_vector2){
 		xml_getintprop(n, "x"),
 		xml_getintprop(n, "y")
-		}, true, true, false));
+		}, true, true, xml_getintprop(n, "width"), xml_getintprop(n, "height")));
 	return (entity);
 }
 
-gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
+gc_data *sprite_make(gc_engine *engine, gc_scene *scene, node *n)
 {
-	gc_list *entities = NULL;
-	gc_text text = (gc_text){
-		xml_gettempprop(n, "text"),
-		scene->get_data(scene, "font", NULL)
-	};
-	gc_entity *background = background_from_text(engine, scene, n, &text);
-
-	if (!background)
-		return (NULL);
-	background->add_component(background, new_component(&clickable_component,
-		engine, xml_getproperty(n, "click")));
-	LISTADD(entities, background);
-	LISTADD(entities, new_text(engine, scene, n));
-	return (entities);
-}
-
-gc_data *button_make(gc_engine *engine, gc_scene *scene, node *n)
-{
+	gc_list *list = NULL;
 	gc_data *data = malloc(sizeof(*data));
 
-	data->name = "button";
+	LISTADD(list, new_sprite(engine, scene, n));
+	data->name = "sprite";
 	data->type = "ui";
 	data->destroy = NULL;
-	data->custom = new_button(engine, scene, n);
+	data->custom = list;
 	return (data);
 }
 
 void ui_setup(gc_engine *engine)
 {
 	engine->add_dataloader(engine, "button", &button_make);
+	engine->add_dataloader(engine, "panel", &sprite_make);
 }

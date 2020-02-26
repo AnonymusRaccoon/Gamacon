@@ -31,7 +31,7 @@ struct sfml_renderer_system *renderer, struct camerafollow_system *cam)
 		if (!tra)
 			continue;
 		x += fc->pos.x * (fc->per_x ? size.x / 100 : 1);
-		y -= fc->pos.y * (fc->per_x ? size.y / 100 : 1);
+		y -= fc->pos.y * (fc->per_y ? size.y / 100 : 1);
         tra->position = (gc_vector2){x, y};
     }
 }
@@ -48,11 +48,11 @@ void entities_update_to_cam_size(gc_scene *scene, gc_vector2 size)
         entity = (gc_entity *)li->data;
         tra = GETCMP(entity, transform_component);
         fc = GETCMP(entity, fixed_to_cam);
-        if (!tra || !fc->set_size)
+        if (!tra)
             continue;
         tra->size = (gc_vector2) {
-            size.x,
-            size.y
+            fc->size_x != 0 ? size.x * fc->size_x / 100: tra->size.x,
+			fc->size_y != 0 ? size.y * fc->size_y / 100 : tra->size.y
         };
     }
 }

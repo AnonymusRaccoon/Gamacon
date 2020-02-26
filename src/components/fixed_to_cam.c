@@ -18,7 +18,8 @@ static void ctr(void *component, va_list args)
     cmp->pos = va_arg(args, gc_vector2);
     cmp->per_x = va_arg(args, int);
     cmp->per_y = va_arg(args, int);
-    cmp->set_size = va_arg(args, int);
+    cmp->size_x = va_arg(args, int);
+    cmp->size_y = va_arg(args, int);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
@@ -33,7 +34,8 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 	cmp->per_x = tmp && my_strchr(tmp, '%');
 	tmp = xml_gettempprop(n, "y");
 	cmp->per_y = tmp && my_strchr(tmp, '%');
-	cmp->set_size = xml_hasproperty(n, "size");
+	cmp->size_x = xml_getintprop(n, "width");
+	cmp->size_y = xml_getintprop(n, "height");
     (void)scene;
     (void)entity;
 }
