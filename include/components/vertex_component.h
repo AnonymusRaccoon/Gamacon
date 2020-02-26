@@ -21,7 +21,6 @@ struct tile
 {
     char *texture_name;
     struct vertex *corners[4];
-    //int *corners[4];
     void *texture;
 };
 
@@ -29,7 +28,6 @@ struct vertex_component
 {
     gc_component base;
     struct tile *map;
-    //int **vertices;
     struct vertex **vertices;
 };
 
