@@ -44,5 +44,6 @@ int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene)
             return (-1);
         scene->add_entity(scene, entity);
     }
+
     return (0);
 }

@@ -41,4 +41,5 @@ int xml_gethexaprop(node *n, const char *key);
 float xml_getfloatprop(node *n, const char *key);
 int xml_getchildcount(node *n);
 int xml_getchildcount_filtered(node *n, char *name);
+bool xml_propcontains(node *n, const char *key, const char *tofind);
 void xml_destroy(node *n);

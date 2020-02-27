@@ -51,8 +51,8 @@ void entities_update_to_cam_size(gc_scene *scene, gc_vector2 size)
         if (!tra)
             continue;
         tra->size = (gc_vector2) {
-            fc->size_x != 0 ? size.x * fc->size_x / 100: tra->size.x,
-			fc->size_y != 0 ? size.y * fc->size_y / 100 : tra->size.y
+            fc->per_w != 0 ? size.x * fc->size_x / 100 : tra->size.x,
+			fc->per_h != 0 ? size.y * fc->size_y / 100 : tra->size.y
         };
     }
 }

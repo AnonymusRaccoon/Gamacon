@@ -5,6 +5,7 @@
 #include "engine.h"
 #include "data.h"
 #include "xml.h"
+#include "sprite.h"
 #include "my.h"
 #include "components/transform_component.h"
 #include "components/renderer.h"
@@ -31,12 +32,12 @@ gc_text *text)
 	entity->add_component(entity, new_component(&renderer_component,
 		GC_TEXTUREREND,
 		texture,
-		(sfIntRect){0, 0, -1, -1}));
+		(gc_int_rect){-1, -1, 0, 0}));
 	entity->add_component(entity, new_component(&fixed_to_cam,
 		(gc_vector2){
 		xml_getintprop(n, "x"),
 		xml_getintprop(n, "y")
-		}, true, true, false, false));
+		}, true, true, 0, 0, false, false));
 	return (entity);
 }
 
@@ -52,7 +53,7 @@ gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
 	if (!background)
 		return (NULL);
 	background->add_component(background, new_component(&clickable_component,
-		engine, xml_getproperty(n, "click")));
+		scene, xml_getproperty(n, "click")));
 	LISTADD(entities, background);
 	LISTADD(entities, new_text(engine, scene, n));
 	return (entities);

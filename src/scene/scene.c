@@ -53,7 +53,9 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     scene->get_entity_by_cmp = &get_entity_by_cmp;
     scene->destroy = &scene_destroy;
     scene->get_data = &scene_get_data;
+    scene->get_callback = &scene_get_callback;
     scene->load_entity = &scene_load_entity;
+    scene->callbacks = engine->callbacks;
     prefab_loadentities(n, engine, scene);
     xml_destroy(n);
     return (scene);
@@ -69,5 +71,15 @@ int change_scene(gc_engine *engine, gc_scene *scene)
     engine->scene = scene;
     if (music)
         engine->play_music(music);
+    engine->on_resize(engine, engine->get_screen_size(engine));
     return (0);
+}
+
+callback_t scene_get_callback(gc_scene *this, char *name)
+{
+	for (gc_list *cal = this->callbacks; cal; cal = cal->next) {
+		if (!my_strcmp(((gc_data *)cal->data)->name, name))
+			return (((gc_data *)cal->data)->custom);
+	}
+	return (NULL);
 }

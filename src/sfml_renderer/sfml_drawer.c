@@ -26,7 +26,7 @@ gc_entity *entity, gc_sprite *sprite, struct transform_component *tra)
 	if (entity->has_component(entity, "fixed_to_cam"))
 		sfSprite_setOrigin(renderer->sprite, (sfVector2f) {
 			sprite->rect.width / 2,
-			0
+			sprite->rect.height / 2
 		});
 	else
 		sfSprite_setOrigin(renderer->sprite, (sfVector2f){
@@ -47,8 +47,8 @@ struct transform_component *tra, gc_entity *entity, gc_sprite *sprite)
 	}
     sfSprite_setTexture(renderer->sprite, sprite->texture, true);
     sfSprite_setTextureRect(renderer->sprite, (sfIntRect){
-        (int)sprite->rect.left, (int)sprite->rect.top,
-        (int)sprite->rect.width, (int)sprite->rect.height
+        sprite->rect.left, sprite->rect.top,
+        sprite->rect.width, sprite->rect.height
     });
     sfSprite_setPosition(renderer->sprite, pos);
    	sfmlrenderer_setorigin(renderer, entity, sprite, tra);
@@ -83,9 +83,10 @@ struct transform_component *tra, gc_text *txt)
     	my_printf("%s has a font not loaded. Rendering impossible.", txt->font);
     sfText_setFont(renderer->text, txt->font);
     bounds = sfText_getLocalBounds(renderer->text);
+    sfText_setColor(renderer->text, *(sfColor*)&txt->color);
     sfText_setPosition(renderer->text, (sfVector2f){
         tra->position.x - bounds.width / 2,
-        -tra->position.y - bounds.height / 2
+        -tra->position.y - bounds.height
     });
     sfRenderWindow_drawText(renderer->window, renderer->text, NULL);
 }

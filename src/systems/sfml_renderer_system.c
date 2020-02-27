@@ -16,7 +16,6 @@
 #include "my.h"
 #include "sfml_renderer.h"
 #include "text.h"
-#include <stdlib.h>
 
 gc_vector2 sfml_get_text_size(sf_renderer *this, gc_text *text)
 {
@@ -25,7 +24,7 @@ gc_vector2 sfml_get_text_size(sf_renderer *this, gc_text *text)
 	sfText_setString(this->text, text->text);
 	sfText_setFont(this->text, text->font);
 	bounds = sfText_getLocalBounds(this->text);
-	return (gc_vector2) {bounds.width, bounds.height};
+	return (gc_vector2) {bounds.width * 1.3, bounds.height * 2.5};
 }
 
 void sfml_update_entity(gc_engine *engine, void *system, \
@@ -66,6 +65,8 @@ void sfml_setup_options(gc_engine *engine)
     engine->draw = &sfml_draw;
     engine->play_music = &sfml_play_music;
     engine->stop_music = &sfml_stop_music;
+    engine->on_resize = &sfml_resize;
+    engine->get_screen_size = &sfml_get_screen_size;
 }
 
 void sfmlrend_ctr(void *rend, va_list list)

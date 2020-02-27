@@ -11,4 +11,5 @@ typedef struct gc_text
 {
     char *text;
     void *font;
+    int color;
 } gc_text;
