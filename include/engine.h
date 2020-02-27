@@ -5,6 +5,7 @@
 ** engine
 */
 typedef struct gc_engine gc_engine;
+typedef void (*callback_t)(gc_engine *engine, int entity_id);
 
 #ifndef ENGINE
 #define ENGINE
@@ -17,7 +18,6 @@ typedef struct gc_engine gc_engine;
 #include "data.h"
 #include <stdbool.h>
 
-typedef void (*callback_t)(gc_engine *engine, int entity_id);
 
 struct gc_engine
 {
@@ -50,7 +50,6 @@ struct gc_engine
 
     gc_list *callbacks;
     void (*add_callback)(gc_engine *this, char *name, callback_t callback);
-	callback_t (*get_callback)(gc_engine *this, char *name);
 };
 
 gc_engine *engine_create(void);
@@ -76,7 +75,6 @@ void engine_init_dataloaders(gc_engine *this);
 void engine_add_dataloader(gc_engine *engine, char *type, gc_loader loader);
 gc_dataloader *engine_get_dataloader(gc_engine *this, const char *type);
 void engine_add_callback(gc_engine *engine, char *name, callback_t func);
-callback_t engine_get_callback(gc_engine *engine, char *name);
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate);
 

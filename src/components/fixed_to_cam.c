@@ -20,6 +20,8 @@ static void ctr(void *component, va_list args)
     cmp->per_y = va_arg(args, int);
     cmp->size_x = va_arg(args, int);
     cmp->size_y = va_arg(args, int);
+    cmp->per_w = va_arg(args, int);
+    cmp->per_h = va_arg(args, int);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)

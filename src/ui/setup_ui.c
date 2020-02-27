@@ -30,7 +30,7 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 		xml_getintprop(n, "x"),
 		xml_getintprop(n, "y")
 		},
-		true, true, false));
+		true, true, 0, 0, false, false));
 	return (entity);
 }
 
@@ -41,8 +41,7 @@ gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
 	sfTexture *texture = scene->get_data(scene, "sprite", src);
 
 	entity->add_component(entity, new_component(&transform_component,
-		(gc_vector2){0, 0},
-		(gc_vector2){0, 0}));
+		(gc_vector2){0, 0}, (gc_vector2){0, 0}));
 	entity->add_component(entity, new_component(&renderer_component,
 		GC_TEXTUREREND,
 		texture,
@@ -51,7 +50,12 @@ gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
 		(gc_vector2){
 		xml_getintprop(n, "x"),
 		xml_getintprop(n, "y")
-		}, true, true, xml_getintprop(n, "width"), xml_getintprop(n, "height")));
+		}, xml_propcontains(n, "x", "%"),
+		xml_propcontains(n, "y", "%"),
+		xml_getintprop(n, "width"),
+		xml_getintprop(n, "height"),
+		xml_propcontains(n, "width", "%"),
+		xml_propcontains(n, "height", "%")));
 	return (entity);
 }
 

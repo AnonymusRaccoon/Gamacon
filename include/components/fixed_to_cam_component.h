@@ -18,6 +18,8 @@ struct fixed_to_cam
     bool per_y;
     int size_x;
     int size_y;
+    bool per_w;
+    bool per_h;
 };
 
 extern const struct fixed_to_cam fixed_to_cam;

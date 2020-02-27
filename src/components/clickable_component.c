@@ -14,20 +14,22 @@
 static void ctr(void *component, va_list args)
 {
 	struct clickable_component *cmp = (struct clickable_component *)component;
-	gc_engine *engine = va_arg(args, gc_engine *);
+	gc_scene *scene = va_arg(args, gc_scene *);
 	char *onclick = va_arg(args, char *);
 
-	if (!engine)
+	if (!scene)
 		return;
-	cmp->onclick = engine->get_callback(engine, onclick);
+	cmp->onclick = scene->get_callback(scene, onclick);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
-	(void)entity;
-	(void)scene;
-	(void)component;
-	(void)n;
+	struct clickable_component *cmp = (struct clickable_component *)component;
+	char *onclick = xml_gettempprop(n, "click");
+
+	if (!scene)
+		return;
+	cmp->onclick = scene->get_callback(scene, onclick);
 }
 
 static void dtr(void *component)
