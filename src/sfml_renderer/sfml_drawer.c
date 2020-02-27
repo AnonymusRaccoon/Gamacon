@@ -47,8 +47,8 @@ struct transform_component *tra, gc_entity *entity, gc_sprite *sprite)
 	}
     sfSprite_setTexture(renderer->sprite, sprite->texture, true);
     sfSprite_setTextureRect(renderer->sprite, (sfIntRect){
-        (int)sprite->rect.left, (int)sprite->rect.top,
-        (int)sprite->rect.width, (int)sprite->rect.height
+        sprite->rect.left, sprite->rect.top,
+        sprite->rect.width, sprite->rect.height
     });
     sfSprite_setPosition(renderer->sprite, pos);
    	sfmlrenderer_setorigin(renderer, entity, sprite, tra);
@@ -85,7 +85,7 @@ struct transform_component *tra, gc_text *txt)
     bounds = sfText_getLocalBounds(renderer->text);
     sfText_setPosition(renderer->text, (sfVector2f){
         tra->position.x - bounds.width / 2,
-        -tra->position.y - bounds.height / 2
+        -tra->position.y - bounds.height
     });
     sfRenderWindow_drawText(renderer->window, renderer->text, NULL);
 }

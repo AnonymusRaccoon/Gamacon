@@ -25,7 +25,7 @@ gc_vector2 sfml_get_text_size(sf_renderer *this, gc_text *text)
 	sfText_setString(this->text, text->text);
 	sfText_setFont(this->text, text->font);
 	bounds = sfText_getLocalBounds(this->text);
-	return (gc_vector2) {bounds.width, bounds.height};
+	return (gc_vector2) {bounds.width * 1.3, bounds.height * 2.5};
 }
 
 void sfml_update_entity(gc_engine *engine, void *system, \
