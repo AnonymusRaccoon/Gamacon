@@ -83,6 +83,7 @@ struct transform_component *tra, gc_text *txt)
     	my_printf("%s has a font not loaded. Rendering impossible.", txt->font);
     sfText_setFont(renderer->text, txt->font);
     bounds = sfText_getLocalBounds(renderer->text);
+    sfText_setColor(renderer->text, *(sfColor*)&txt->color);
     sfText_setPosition(renderer->text, (sfVector2f){
         tra->position.x - bounds.width / 2,
         -tra->position.y - bounds.height

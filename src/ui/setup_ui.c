@@ -24,7 +24,7 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 	entity->add_component(entity, new_component(&renderer_component,
 		GC_TXTREND,
 		xml_getproperty(n, "text"),
-		scene->get_data(scene, "font", NULL)));
+		scene->get_data(scene, "font", NULL), xml_gettempprop(n, "color")));
 	entity->add_component(entity, new_component(&fixed_to_cam,
 		(gc_vector2){
 		xml_getintprop(n, "x"),
