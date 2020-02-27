@@ -21,5 +21,6 @@ void sfml_stop_music(gc_engine *engine)
     if (!engine->scene)
         return;
     music = engine->scene->get_data(engine->scene, "music", NULL);
-    sfMusic_stop(music);
+	if (music)
+    	sfMusic_stop(music);
 }
