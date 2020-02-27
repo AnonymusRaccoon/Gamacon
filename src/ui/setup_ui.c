@@ -30,7 +30,9 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 		xml_getintprop(n, "x"),
 		xml_getintprop(n, "y")
 		},
-		true, true, 0, 0, false, false));
+		xml_propcontains(n, "x", "%"),
+		xml_propcontains(n, "y", "%"),
+		0, 0, false, false));
 	return (entity);
 }
 
