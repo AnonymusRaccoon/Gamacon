@@ -21,6 +21,7 @@ gc_data *sfml_font_loader(gc_engine *engine, gc_scene *scene, node *n);
 
 sfTexture *get_texture(gc_scene *scene, char *name);
 sfVertexArray *sfml_init_verticies(void);
+sfRenderStates *sfml_init_render_state(void);
 
 void sfmlrenderer_draw_texture(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_entity *entity, gc_sprite *sprite);

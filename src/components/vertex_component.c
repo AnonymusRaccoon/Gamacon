@@ -59,6 +59,7 @@ static bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
         }
     }
     this->map[inc].corners[0] = &this->vertices[v_x][vy];
+    my_printf("final value z : %i\n", this->map[inc].corners[0]->z);
     return (true);
 }
 
@@ -73,14 +74,14 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     struct vertex_component *this = (struct vertex_component *)component;
 
     this->vertices = NULL;
+    this->map = NULL;
     n = xml_parse(xml_gettempprop(n, "tilemap"));
     if (!n) {
+    	my_printf("XML parser unable to find property 'tilemap'\n");
     	return;
     }
-    if (!get_vertices(component, n)) {
-        return;
-    }
-    if (!get_tiles(this, scene, n)) {
+    if (!get_vertices(component, n) || !get_tiles(this, scene, n)) {
+		my_printf("Unable to malloc during verticies/tile parsing\n");
         return;
     }
 }

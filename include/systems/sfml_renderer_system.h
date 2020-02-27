@@ -23,6 +23,7 @@ struct sfml_renderer_system
     sfText *text;
     sfView *view;
     sfVertexArray *vertices;
+    sfRenderStates *states;
     gc_vector2 (*get_text_size)(sf_renderer *this, gc_text *text);
 };
 
