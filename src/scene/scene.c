@@ -71,6 +71,7 @@ int change_scene(gc_engine *engine, gc_scene *scene)
     engine->scene = scene;
     if (music)
         engine->play_music(music);
+    engine->on_resize(engine, engine->get_screen_size(engine));
     return (0);
 }
 

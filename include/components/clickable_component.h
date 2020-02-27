@@ -11,6 +11,8 @@
 #include "engine.h"
 #include "component.h"
 
+void clickable_onclick(gc_engine *engine, gc_vector2 position);
+
 struct clickable_component
 {
 	gc_component base;

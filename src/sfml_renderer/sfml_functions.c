@@ -34,33 +34,6 @@ bool sfml_is_keypressed(int key)
     return (sfKeyboard_isKeyPressed(key));
 }
 
-void sfml_handle_events(gc_engine *engine)
-{
-    struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
-    sfEvent event;
-
-    while (sfRenderWindow_pollEvent(renderer->window, &event)) {
-        if (event.type == sfEvtClosed)
-            sfRenderWindow_close(renderer->window);
-        if (event.type == sfEvtResized) {
-            sfView_setSize(renderer->view, (sfVector2f){
-                event.size.width,
-                event.size.height
-            });
-            entities_update_to_cam_size(engine->scene, (gc_vector2) {
-                event.size.width,
-                event.size.height
-            });
-        }
-        if (event.type == sfEvtMouseButtonReleased) {
-			sfVector2i mousePos = sfMouse_getPosition(renderer->window);
-			sfVector2f pos = sfRenderWindow_mapPixelToCoords(renderer->window, mousePos, renderer->view);
-			pos.y *= -1;
-			clickable_onclick(engine, pos);
-		}
-    }
-}
-
 void sfml_draw(gc_engine *engine)
 {
     struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);

@@ -52,6 +52,9 @@ struct gc_engine
 
     gc_list *callbacks;
     void (*add_callback)(gc_engine *this, char *name, callback_t callback);
+
+	void (*on_resize)(gc_engine *this, gc_vector2 size);
+	gc_vector2 (*get_screen_size)(gc_engine *this);
 };
 
 gc_engine *engine_create(void);
@@ -62,6 +65,8 @@ void handle_events(gc_engine *engine);
 void engine_draw(gc_engine *engine);
 void engine_play_music(void *music);
 void engine_stop_music(gc_engine *engine);
+void engine_on_resize(gc_engine *engine, gc_vector2 size);
+gc_vector2 engine_get_screen_size(gc_engine *this);
 
 int change_scene(gc_engine *engine, gc_scene *scene);
 

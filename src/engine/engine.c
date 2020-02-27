@@ -79,6 +79,7 @@ gc_engine *engine_create(void)
     engine->play_music = &engine_play_music;
     engine->stop_music = &engine_stop_music;
     engine->destroy = &engine_destroy;
+    engine->on_resize = &engine_on_resize;
 	engine_add_builtin_systems(engine);
     engine_add_buildin_components(engine);
     engine_init_dataloaders(engine);
