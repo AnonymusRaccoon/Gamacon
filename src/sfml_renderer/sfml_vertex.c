@@ -25,9 +25,9 @@ sfVertexArray *sfml_init_verticies(void)
     sfVertexArray *arr = sfVertexArray_create();
     sfVertex v[4] = {
 		{.position = {0, 0}, .texCoords = {0, 0}, .color = sfWhite},
-		{.position = {0, 0}, .texCoords = {16, 0}, .color = sfWhite},
-		{.position = {0, 0}, .texCoords = {0, 16}, .color = sfWhite},
-		{.position = {0, 0}, .texCoords = {16, 16}, .color = sfWhite}
+		{.position = {0, 0}, .texCoords = {64, 0}, .color = sfWhite},
+		{.position = {0, 0}, .texCoords = {0, 64}, .color = sfWhite},
+		{.position = {0, 0}, .texCoords = {64, 64}, .color = sfWhite}
 	};
 
     for (int i = 0; i < 4; i++)
@@ -55,7 +55,7 @@ void draw_tile(struct sfml_renderer_system *this, struct vertex_component \
 
 	if (tile.corners[0]->z == INT32_MAX || !states)
 		return;
-    if (!tile.corners[1]->y || !tile.corners[2]->y || !tile.corners[3]->y)
+    if (!tile.corners[3]->y)
         return;
 	for (int i = 0; i < 3; i++) {
 		corners[i * 3] = tile.corners[i + 1]->x;
@@ -65,7 +65,7 @@ void draw_tile(struct sfml_renderer_system *this, struct vertex_component \
 	vert1->position = get_tile_coords(corners[0], corners[1], corners[2]);
     vert2->position = get_tile_coords(corners[3], corners[4], corners[5]);
     vert3->position = get_tile_coords(corners[6], corners[7], corners[8]);
-	states->texture = sfTexture_createFromFile("grass_side.png", NULL);
+	states->texture = tile.texture;
 	states->blendMode = sfBlendAlpha;
 	states->shader = NULL;
 	states->transform = sfTransform_Identity;
@@ -96,7 +96,7 @@ struct vertex_component *info)
 
 	for (i = 0; info->map[i].corners[0]->z != INT32_MIN; i++);
 	//my_printf("zdzdzdzd\n");
-    for (i--; i > 0; i--) {
+    for (i--; i >= 0; i--) {
 		//my_printf("mdr %i\n", i);
 		corners[0] = info->map[i].corners[0]->x;
 		corners[1] = info->map[i].corners[0]->y;
