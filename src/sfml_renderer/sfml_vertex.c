@@ -30,6 +30,8 @@ sfVertexArray *sfml_init_verticies(void)
 		{.position = {0, 0}, .texCoords = {64, 64}, .color = sfWhite}
 	};
 
+	if (!arr)
+		return (NULL);
     for (int i = 0; i < 4; i++)
         sfVertexArray_append(arr, v[i]);
     sfVertexArray_setPrimitiveType(arr, sfTriangleStrip);
