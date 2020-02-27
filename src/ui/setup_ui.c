@@ -68,8 +68,22 @@ gc_data *sprite_make(gc_engine *engine, gc_scene *scene, node *n)
 	return (data);
 }
 
+gc_data *text_make(gc_engine *engine, gc_scene *scene, node *n)
+{
+	gc_list *list = NULL;
+	gc_data *data = malloc(sizeof(*data));
+
+	LISTADD(list, new_text(engine, scene, n));
+	data->name = "text";
+	data->type = "ui";
+	data->destroy = NULL;
+	data->custom = list;
+	return (data);
+}
+
 void ui_setup(gc_engine *engine)
 {
 	engine->add_dataloader(engine, "button", &button_make);
 	engine->add_dataloader(engine, "panel", &sprite_make);
+	engine->add_dataloader(engine, "text", &text_make);
 }

@@ -26,7 +26,7 @@ gc_entity *entity, gc_sprite *sprite, struct transform_component *tra)
 	if (entity->has_component(entity, "fixed_to_cam"))
 		sfSprite_setOrigin(renderer->sprite, (sfVector2f) {
 			sprite->rect.width / 2,
-			0
+			sprite->rect.height / 2
 		});
 	else
 		sfSprite_setOrigin(renderer->sprite, (sfVector2f){
