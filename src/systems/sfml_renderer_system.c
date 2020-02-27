@@ -44,7 +44,7 @@ gc_entity *entity, float dt)
         sfmlrenderer_draw_anim(rend, entity, (gc_animholder *)text->data, dt);
         break;
     case GC_TXTREND:
-        sfmlrenderer_draw_txt(rend, pos, (gc_text *)text->data);
+        sfmlrenderer_draw_txt(engine, rend, pos, (gc_text *)text->data);
         break;
     case GC_MAP:
         sfmlrenderer_draw_tilemap(rend, (struct vertex_component *)text->data);
@@ -53,7 +53,6 @@ gc_entity *entity, float dt)
         my_printf("Trying to render a texture with an unknown type.\n");
         break;
     }
-    (void)engine;
 }
 
 void sfml_setup_options(gc_engine *engine)
