@@ -14,7 +14,12 @@
 struct clickable_component
 {
 	gc_component base;
-	void (*onclick)(gc_engine *engine, int entity_id);
+	//! @brief On click callback.
+	//! @param engine The engine.
+	//! @param entity_id The id of the clicked entity.
+	//! @return Return true if this callback catch the event (other listeners after this one won't get the event)
+	//! @return Return false if you want others listener to receive the event.
+	bool (*onclick)(gc_engine *engine, int entity_id);
 };
 
 

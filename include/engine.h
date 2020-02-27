@@ -4,8 +4,10 @@
 ** File description:
 ** engine
 */
+
+#include <stdbool.h>
 typedef struct gc_engine gc_engine;
-typedef void (*callback_t)(gc_engine *engine, int entity_id);
+typedef bool (*callback_t)(gc_engine *engine, int entity_id);
 
 #ifndef ENGINE
 #define ENGINE

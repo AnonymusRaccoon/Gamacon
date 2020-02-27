@@ -27,8 +27,10 @@ void clickable_onclick(gc_engine *engine, gc_vector2 position)
 		&& (tra->position.x + tra->size.x / 2) >= position.x
 		&& (tra->position.y - tra->size.y / 2) <= position.y) {
 			cl = GETCMP(((gc_entity *)ent->data), clickable_component);
-			if (cl->onclick)
-				cl->onclick(engine, ((gc_entity *)ent->data)->id);
+			if (!cl->onclick)
+				continue;
+			if (cl->onclick(engine, ((gc_entity *)ent->data)->id))
+				return;
 		}
 	}
 }
