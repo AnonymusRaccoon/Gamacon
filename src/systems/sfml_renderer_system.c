@@ -82,8 +82,9 @@ void sfmlrend_ctr(void *rend, va_list list)
     renderer->view = sfView_create();
     renderer->text = sfText_create();
     renderer->vertices = sfml_init_verticies();
+    renderer->states = sfml_init_render_state();
     if (!renderer->window || !renderer->sprite || \
-!renderer->view || !renderer->text || !renderer->vertices)
+!renderer->view || !renderer->text || !renderer->vertices || !renderer->states)
         return;
     sfRenderWindow_setFramerateLimit(renderer->window, framerate);
     sfView_setSize(renderer->view, (sfVector2f){800, 600});
