@@ -52,6 +52,8 @@ gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
 
 	if (!background)
 		return (NULL);
+	if (xml_hasproperty(n, "background_id"))
+		background->id = xml_getintprop(n, "background_id");
 	if (xml_getbool(n, "input", false))
 		background->add_component(background, new_component(&input_component));
 	background->add_component(background, new_component(&clickable_component,

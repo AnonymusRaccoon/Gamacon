@@ -55,8 +55,9 @@ gc_entity *entity, float dt)
     }
 }
 
-void sfml_setup_options(gc_engine *engine)
+void sfml_setup_options(struct sfml_renderer_system *this, gc_engine *engine)
 {
+	this->is_fullscreen = false;
     engine->is_open = &sfml_is_open;
     engine->has_focus = &sfml_has_focus;
     engine->is_keypressed = &sfml_is_keypressed;
@@ -90,7 +91,7 @@ void sfmlrend_ctr(void *rend, va_list list)
     sfView_setSize(renderer->view, (sfVector2f){800, 600});
     sfView_setCenter(renderer->view, (sfVector2f){400, -300});
     sfRenderWindow_setView(renderer->window, renderer->view);
-    sfml_setup_options(engine);
+    sfml_setup_options(renderer, engine);
 }
 
 void sfmlrend_dtr(void *system)

@@ -25,6 +25,7 @@ struct sfml_renderer_system
     sfVertexArray *vertices;
     sfRenderStates *states;
     gc_vector2 (*get_text_size)(sf_renderer *this, gc_text *text);
+    bool is_fullscreen;
 };
 
 gc_system *gc_new_sfml_renderer(gc_engine *engine, \
