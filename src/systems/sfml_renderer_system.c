@@ -58,6 +58,7 @@ gc_entity *entity, float dt)
 void sfml_setup_options(struct sfml_renderer_system *this, gc_engine *engine)
 {
 	this->is_fullscreen = false;
+	this->resolution = (gc_vector2i){800, 600};
     engine->is_open = &sfml_is_open;
     engine->has_focus = &sfml_has_focus;
     engine->is_keypressed = &sfml_is_keypressed;

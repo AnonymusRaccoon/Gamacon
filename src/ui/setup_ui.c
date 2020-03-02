@@ -14,8 +14,12 @@
 
 gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 {
-	gc_entity *entity = entity_create();
+	gc_entity *entity;
 
+	if (xml_hasproperty(n, "text_id"))
+		entity = entity_create_with_id(xml_getintprop(n, "text_id"));
+	else
+		entity = entity_create();
 	entity->add_component(entity, new_component(&transform_component,
 		(gc_vector2){0, 0},
 		(gc_vector2){0, 0}));
@@ -26,12 +30,8 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 		xml_getintprop(n, "size"),
 		xml_gettempprop(n, "color"), xml_getbool(n, "resize", true)));
 	entity->add_component(entity, new_component(&fixed_to_cam,
-		(gc_vector2){
-		xml_getintprop(n, "x"),
-		xml_getintprop(n, "y")
-		},
-		xml_propcontains(n, "x", "%"),
-		xml_propcontains(n, "y", "%"),
+		(gc_vector2){xml_getintprop(n, "x"),xml_getintprop(n, "y")},
+		xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
 		0, 0, false, false));
 	return (entity);
 }
