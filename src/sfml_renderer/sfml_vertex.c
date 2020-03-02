@@ -22,8 +22,8 @@
 sfVector2f get_tile_coords(int x, int y, int z)
 {
 	return (sfVector2f){
-		cos(ANGLE_X) * y * 64 - cos (ANGLE_X) * x * 64,
-		(sin(ANGLE_Y) * x  * 64 + sin (ANGLE_Y) * y * 64 - z) + 250
+		cos(ANGLE_X) * y * 64 - cos(ANGLE_X) * x * 64,
+		(sin(ANGLE_Y) * x  * 64 + sin(ANGLE_Y) * y * 64 - z)
 	};
 }
 
@@ -76,10 +76,10 @@ struct vertex_component *info)
 	for (i = 0; info->map[i].corners[0]->z != INT32_MIN; i++);
 	//my_printf("zdzdzdzd\n");
     for (i--; i >= 0; i--) {
-		//my_printf("mdr %i\n", i);
 		corners[0] = info->map[i].corners[0]->x;
 		corners[1] = info->map[i].corners[0]->y;
 		corners[2] = info->map[i].corners[0]->z;
+		//printf("mdr %i %i %i\n", corners[0], corners[1], corners[2]);
         //if (!info->map[i].corners[0]->y)
        //     continue; 
         vert0->position = get_tile_coords(corners[0], corners[1], corners[2]);

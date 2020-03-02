@@ -21,7 +21,8 @@ struct clickable_component
 	//! @param entity_id The id of the clicked entity.
 	//! @return Return true if this callback catch the event (other listeners after this one won't get the event)
 	//! @return Return false if you want others listener to receive the event.
-	bool (*onclick)(gc_engine *engine, int entity_id);
+	callback_t onclick;
+
 };
 
 

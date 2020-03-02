@@ -36,6 +36,12 @@ void sfml_handle_events(gc_engine *engine)
 	}
 }
 
+gc_vector2 engine_get_cursor_pos(gc_engine *engine)
+{
+	sfMouseMoveEvent mouse;
+	sfMouse_getPositionRenderWindow(GETSYS(sfml_renderer_system));
+}
+
 void sfml_resize(gc_engine *engine, gc_vector2 size)
 {
 	struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);

@@ -6,8 +6,10 @@
 */
 
 #include <stdbool.h>
+#include "vector2.h"
+
 typedef struct gc_engine gc_engine;
-typedef bool (*callback_t)(gc_engine *engine, int entity_id);
+typedef bool (*callback_t)(gc_engine *engine, int entity_id, gc_vector2 pos);
 
 #ifndef ENGINE
 #define ENGINE
@@ -55,6 +57,7 @@ struct gc_engine
 
 	void (*on_resize)(gc_engine *this, gc_vector2 size);
 	gc_vector2 (*get_screen_size)(gc_engine *this);
+	gc_vector2  (*get_cursor_pos)(gc_engine *this);
 };
 
 gc_engine *engine_create(void);
@@ -84,6 +87,8 @@ gc_dataloader *engine_get_dataloader(gc_engine *this, const char *type);
 void engine_add_callback(gc_engine *engine, char *name, callback_t func);
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate);
+
+gc_vector2 engine_get_cursor_pos(gc_engine *engine);
 
 #define GETSYS(x) ((struct x *)engine->get_system(engine, #x))
 

@@ -59,7 +59,6 @@ static bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
         }
     }
     this->map[inc].corners[0] = &this->vertices[v_x][vy];
-    my_printf("final value z : %i\n", this->map[inc].corners[0]->z);
     return (true);
 }
 
@@ -72,12 +71,18 @@ static void ctr(void *component, va_list args)
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct vertex_component *this = (struct vertex_component *)component;
+	char *tilemap = xml_gettempprop(n, "tilemap");
+	char *name = n->name;
 
     this->vertices = NULL;
     this->map = NULL;
-    n = xml_parse(xml_gettempprop(n, "tilemap"));
+    if (!tilemap) {
+		my_printf("gamacon: unable to find property 'tilemap' on %s\n", name);
+		return;
+    }
+    n = xml_parse(tilemap);
     if (!n) {
-    	my_printf("XML parser unable to find property 'tilemap'\n");
+    	my_printf("gamacon: unable to find a valid tilemap at %s\n", tilemap);
     	return;
     }
     if (!get_vertices(component, n) || !get_tiles(this, scene, n)) {

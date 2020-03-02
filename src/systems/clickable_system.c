@@ -6,6 +6,7 @@
 */
 
 #include "entity.h"
+#include "engine.h"
 #include "components/clickable_component.h"
 #include "components/transform_component.h"
 #include <stddef.h>
@@ -29,7 +30,7 @@ void clickable_onclick(gc_engine *engine, gc_vector2 position)
 			cl = GETCMP(((gc_entity *)ent->data), clickable_component);
 			if (!cl->onclick)
 				continue;
-			if (cl->onclick(engine, ((gc_entity *)ent->data)->id))
+			if (cl->onclick(engine, ((gc_entity *)ent->data)->id, position))
 				return;
 		}
 	}

@@ -61,6 +61,12 @@ void engine_destroy(gc_engine *engine)
     free(engine);
 }
 
+gc_engine *engine_create_more(gc_engine *engine)
+{
+	engine->get_cursor_pos = &engine_get_cursor_pos;
+	return (engine);
+}
+
 gc_engine *engine_create(void)
 {
     gc_engine *engine = malloc(sizeof(gc_engine));
@@ -83,5 +89,5 @@ gc_engine *engine_create(void)
 	engine_add_builtin_systems(engine);
     engine_add_buildin_components(engine);
     engine_init_dataloaders(engine);
-    return (engine);
+    return (engine_create_more(engine));
 }
