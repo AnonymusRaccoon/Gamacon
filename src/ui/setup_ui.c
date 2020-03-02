@@ -43,21 +43,15 @@ gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
 	sfTexture *texture = scene->get_data(scene, "sprite", src);
 
 	entity->add_component(entity, new_component(&transform_component,
-		(gc_vector2){0, 0}, (gc_vector2){
-		xml_getintprop(n, "width"),
-		xml_getintprop(n, "height")}));
+		(gc_vector2){0, 0},
+		(gc_vector2){xml_getintprop(n, "width"),xml_getintprop(n, "height")}));
 	entity->add_component(entity, new_component(&renderer_component,
-		GC_TEXTUREREND,
-		texture,
-		(sfIntRect){0, 0, -1, -1}));
+		GC_TEXTUREREND, texture, (sfIntRect){0, 0, -1, -1}));
 	entity->add_component(entity, new_component(&fixed_to_cam,
-		(gc_vector2){
-		xml_getintprop(n, "x"),xml_getintprop(n, "y") },
-		xml_propcontains(n, "x", "%"),
-		xml_propcontains(n, "y", "%"),
+		(gc_vector2){xml_getintprop(n, "x"),xml_getintprop(n, "y") },
+		xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
 		xml_getintprop(n, "width"), xml_getintprop(n, "height"),
-		xml_propcontains(n, "width", "%"),
-		xml_propcontains(n, "height", "%")));
+		xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%")));
 	return (entity);
 }
 

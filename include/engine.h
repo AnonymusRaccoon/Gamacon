@@ -85,6 +85,6 @@ void engine_add_callback(gc_engine *engine, char *name, callback_t func);
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate);
 
-#define GETSYS(x) ((struct x *)engine->get_system(engine, #x))
+#define GETSYS(engine, x) ((struct x *)engine->get_system(engine, #x))
 
 #endif

@@ -13,14 +13,14 @@
 
 void sfml_handle_events(gc_engine *engine)
 {
-	struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
+	struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
 	sfEvent event;
 	sfVector2i mousePos;
 	sfVector2f pos;
 
-	while (sfRenderWindow_pollEvent(renderer->window, &event)) {
+	while (sfRenderWindow_pollEvent(rend->window, &event)) {
 		if (event.type == sfEvtClosed)
-			sfRenderWindow_close(renderer->window);
+			sfRenderWindow_close(rend->window);
 		if (event.type == sfEvtResized)
 			engine->on_resize(engine, (gc_vector2)
 			{
@@ -28,8 +28,8 @@ void sfml_handle_events(gc_engine *engine)
 				event.size.height
 			});
 		if (event.type == sfEvtMouseButtonReleased) {
-			mousePos = sfMouse_getPosition(renderer->window);
-			pos = sfRenderWindow_mapPixelToCoords(renderer->window, mousePos, renderer->view);
+			mousePos = sfMouse_getPosition(rend->window);
+			pos = sfRenderWindow_mapPixelToCoords(rend->window, mousePos, rend->view);
 			pos.y *= -1;
 			clickable_onclick(engine, (gc_vector2){pos.x, pos.y});
 		}
@@ -38,9 +38,9 @@ void sfml_handle_events(gc_engine *engine)
 
 void sfml_resize(gc_engine *engine, gc_vector2 size)
 {
-	struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
+	struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
 
-	sfView_setSize(renderer->view, (sfVector2f){
+	sfView_setSize(rend->view, (sfVector2f){
 		size.x,
 		size.y
 	});
@@ -49,8 +49,8 @@ void sfml_resize(gc_engine *engine, gc_vector2 size)
 
 gc_vector2 sfml_get_screen_size(gc_engine *engine)
 {
-	struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
-	sfVector2u size = sfRenderWindow_getSize(renderer->window);
+	struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
+	sfVector2u size = sfRenderWindow_getSize(rend->window);
 
 	return (gc_vector2){size.x, size.y};
 }

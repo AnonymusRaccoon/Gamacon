@@ -20,6 +20,7 @@
 #include "components/collision_component.h"
 #include "components/vertex_component.h"
 #include <stdlib.h>
+#include "components/input_component.h"
 
 void engine_add_component(gc_engine *engine, const void *component)
 {
@@ -43,4 +44,5 @@ void engine_add_buildin_components(gc_engine *engine)
     engine->add_component(engine, &friction_component);
     engine->add_component(engine, &collision_component);
     engine->add_component(engine, &vertex_component);
+    engine->add_component(engine, &input_component);
 }
