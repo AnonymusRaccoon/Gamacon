@@ -5,33 +5,33 @@
 #include "engine.h"
 #include "data.h"
 #include "xml.h"
-#include "my.h"
 #include "components/transform_component.h"
 #include "components/renderer.h"
 #include "components/fixed_to_cam_component.h"
-#include "components/clickable_component.h"
 #include "systems/sfml_renderer_system.h"
 #include "ui.h"
 #include <malloc.h>
 
 gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 {
-	gc_entity *entity = entity_create();
+	gc_entity *entity;
 
+	if (xml_hasproperty(n, "text_id"))
+		entity = entity_create_with_id(xml_getintprop(n, "text_id"));
+	else
+		entity = entity_create();
 	entity->add_component(entity, new_component(&transform_component,
 		(gc_vector2){0, 0},
 		(gc_vector2){0, 0}));
 	entity->add_component(entity, new_component(&renderer_component,
 		GC_TXTREND,
 		xml_getproperty(n, "text"),
-		scene->get_data(scene, "font", NULL), xml_gettempprop(n, "color")));
+		scene->get_data(scene, "font", NULL),
+		xml_getintprop(n, "size"),
+		xml_gettempprop(n, "color"), xml_getbool(n, "resize", true)));
 	entity->add_component(entity, new_component(&fixed_to_cam,
-		(gc_vector2){
-		xml_getintprop(n, "x"),
-		xml_getintprop(n, "y")
-		},
-		xml_propcontains(n, "x", "%"),
-		xml_propcontains(n, "y", "%"),
+		(gc_vector2){xml_getintprop(n, "x"),xml_getintprop(n, "y")},
+		xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
 		0, 0, false, false));
 	return (entity);
 }
@@ -43,21 +43,15 @@ gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
 	sfTexture *texture = scene->get_data(scene, "sprite", src);
 
 	entity->add_component(entity, new_component(&transform_component,
-		(gc_vector2){0, 0}, (gc_vector2){
-		xml_getintprop(n, "width"),
-		xml_getintprop(n, "height")}));
+		(gc_vector2){0, 0},
+		(gc_vector2){xml_getintprop(n, "width"),xml_getintprop(n, "height")}));
 	entity->add_component(entity, new_component(&renderer_component,
-		GC_TEXTUREREND,
-		texture,
-		(sfIntRect){0, 0, -1, -1}));
+		GC_TEXTUREREND, texture, (sfIntRect){0, 0, -1, -1}));
 	entity->add_component(entity, new_component(&fixed_to_cam,
-		(gc_vector2){
-		xml_getintprop(n, "x"),xml_getintprop(n, "y") },
-		xml_propcontains(n, "x", "%"),
-		xml_propcontains(n, "y", "%"),
+		(gc_vector2){xml_getintprop(n, "x"),xml_getintprop(n, "y") },
+		xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
 		xml_getintprop(n, "width"), xml_getintprop(n, "height"),
-		xml_propcontains(n, "width", "%"),
-		xml_propcontains(n, "height", "%")));
+		xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%")));
 	return (entity);
 }
 

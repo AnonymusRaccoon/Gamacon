@@ -44,7 +44,7 @@ gc_entity *entity, float dt)
         sfmlrenderer_draw_anim(rend, entity, (gc_animholder *)text->data, dt);
         break;
     case GC_TXTREND:
-        sfmlrenderer_draw_txt(rend, pos, (gc_text *)text->data);
+        sfmlrenderer_draw_txt(engine, rend, pos, (gc_text *)text->data);
         break;
     case GC_MAP:
         sfmlrenderer_draw_tilemap(rend, (struct vertex_component *)text->data);
@@ -53,11 +53,12 @@ gc_entity *entity, float dt)
         my_printf("Trying to render a texture with an unknown type.\n");
         break;
     }
-    (void)engine;
 }
 
-void sfml_setup_options(gc_engine *engine)
+void sfml_setup_options(struct sfml_renderer_system *this, gc_engine *engine)
 {
+	this->is_fullscreen = false;
+	this->resolution = (gc_vector2i){800, 600};
     engine->is_open = &sfml_is_open;
     engine->has_focus = &sfml_has_focus;
     engine->is_keypressed = &sfml_is_keypressed;
@@ -67,6 +68,7 @@ void sfml_setup_options(gc_engine *engine)
     engine->stop_music = &sfml_stop_music;
     engine->on_resize = &sfml_resize;
     engine->get_screen_size = &sfml_get_screen_size;
+    engine->get_cursor_pos = &sfml_engine_get_cursor_pos;
 }
 
 void sfmlrend_ctr(void *rend, va_list list)
@@ -91,7 +93,7 @@ void sfmlrend_ctr(void *rend, va_list list)
     sfView_setSize(renderer->view, (sfVector2f){800, 600});
     sfView_setCenter(renderer->view, (sfVector2f){400, -300});
     sfRenderWindow_setView(renderer->window, renderer->view);
-    sfml_setup_options(engine);
+    sfml_setup_options(renderer, engine);
 }
 
 void sfmlrend_dtr(void *system)

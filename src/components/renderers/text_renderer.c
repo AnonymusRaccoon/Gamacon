@@ -34,7 +34,12 @@ void text_ctr(struct renderer *cmp, va_list args)
     cmp->data = gctext;
     gctext->text = va_arg(args, char *);
     gctext->font = va_arg(args, sfFont *);
+    gctext->size = va_arg(args, int);
     gctext->color = color_from_text(va_arg(args, char *));
+    gctext->resize = va_arg(args, int);
+
+    if (gctext->size <= 0)
+    	gctext->size = 30;
 }
 
 void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
@@ -48,4 +53,7 @@ void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     if (!gctext->text)
         return;
     gctext->font = scene->get_data(scene, "font", xml_getproperty(n, "src"));
+	gctext->size = 30;
+	gctext->color = *(int *)&sfWhite;
+	gctext->resize = true;
 }

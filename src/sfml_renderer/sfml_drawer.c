@@ -73,15 +73,20 @@ gc_entity *entity, gc_animholder *holder, float dtime)
     sfmlrenderer_draw_texture(renderer, tra, entity, holder->sprite);
 }
 
-void sfmlrenderer_draw_txt(struct sfml_renderer_system *renderer, \
-struct transform_component *tra, gc_text *txt)
+void sfmlrenderer_draw_txt(gc_engine *engine, \
+struct sfml_renderer_system *renderer, struct transform_component *tra, \
+gc_text *txt)
 {
 	sfFloatRect bounds;
+	float size = 1;
 
+	if (txt->resize)
+		size = 800 / engine->get_screen_size(engine).x;
 	sfText_setString(renderer->text, txt->text);
     if (!txt->font)
     	my_printf("%s has a font not loaded. Rendering impossible.", txt->font);
     sfText_setFont(renderer->text, txt->font);
+    sfText_setCharacterSize(renderer->text, txt->size / size);
     bounds = sfText_getLocalBounds(renderer->text);
     sfText_setColor(renderer->text, *(sfColor*)&txt->color);
     sfText_setPosition(renderer->text, (sfVector2f){

@@ -27,8 +27,9 @@ void sfmlrenderer_draw_texture(struct sfml_renderer_system *renderer, \
 struct transform_component *tra, gc_entity *entity, gc_sprite *sprite);
 void sfmlrenderer_draw_anim(struct sfml_renderer_system *renderer, \
 gc_entity *entity, gc_animholder *holder, float dtime);
-void sfmlrenderer_draw_txt(struct sfml_renderer_system *renderer, \
-struct transform_component *tra, gc_text *txt);
+void sfmlrenderer_draw_txt(gc_engine *engine, \
+struct sfml_renderer_system *renderer, struct transform_component *tra, \
+gc_text *txt);
 void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this, \
 struct vertex_component *txt);
 
@@ -45,6 +46,8 @@ void sfml_play_music(void *music);
 void sfml_stop_music(gc_engine *engine);
 void sfml_resize(gc_engine *engine, gc_vector2 size);
 gc_vector2 sfml_get_screen_size(gc_engine *engine);
+gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine);
+
 void entities_update_to_cam(gc_scene *scene, \
 struct sfml_renderer_system *renderer, struct camerafollow_system *cam);
 void entities_update_to_cam_size(gc_scene *scene, gc_vector2 size);

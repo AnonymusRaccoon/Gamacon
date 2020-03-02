@@ -15,18 +15,18 @@
 
 bool sfml_is_open(gc_engine *engine)
 {
-    struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
+    struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
 
     if (engine->should_close)
         return (false);
-    return (sfRenderWindow_isOpen(renderer->window));
+    return (sfRenderWindow_isOpen(rend->window));
 }
 
 bool sfml_has_focus(gc_engine *engine)
 {
-    struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
+    struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
 
-    return (sfRenderWindow_hasFocus(renderer->window));
+    return (sfRenderWindow_hasFocus(rend->window));
 }
 
 bool sfml_is_keypressed(int key)
@@ -36,17 +36,17 @@ bool sfml_is_keypressed(int key)
 
 void sfml_draw(gc_engine *engine)
 {
-    struct sfml_renderer_system *renderer = GETSYS(sfml_renderer_system);
-    struct camerafollow_system *cam = GETSYS(camerafollow_system);
+    struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
+    struct camerafollow_system *cam = GETSYS(engine, camerafollow_system);
 
     if (cam) {
-        sfView_setCenter(renderer->view, (sfVector2f){
+        sfView_setCenter(rend->view, (sfVector2f){
             cam->cam_pos.x,
             -cam->cam_pos.y
         });
-        sfRenderWindow_setView(renderer->window, renderer->view);
-        entities_update_to_cam(engine->scene, renderer, cam);
+        sfRenderWindow_setView(rend->window, rend->view);
+        entities_update_to_cam(engine->scene, rend, cam);
     }
-    sfRenderWindow_display(renderer->window);
-    sfRenderWindow_clear(renderer->window, sfBlack);
+    sfRenderWindow_display(rend->window);
+    sfRenderWindow_clear(rend->window, sfBlack);
 }
