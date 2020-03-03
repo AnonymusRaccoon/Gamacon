@@ -44,6 +44,7 @@ int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene)
             return (-1);
         scene->add_entity(scene, entity);
     }
-
+    if (engine->on_resize && engine->get_screen_size && engine->scene)
+		engine->on_resize(engine, engine->get_screen_size(engine));
     return (0);
 }
