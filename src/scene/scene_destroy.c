@@ -32,7 +32,7 @@ void scene_destroy(gc_scene *scene)
 
     for (gc_list *entity = scene->entities; entity; entity = next) {
         next = entity->next;
-        ((gc_entity *)entity->data)->destroy(entity->data);
+        ((gc_entity *)entity->data)->destroy(entity->data, scene);
         free(entity);
     }
     free_data(scene);

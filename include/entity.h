@@ -23,7 +23,7 @@ struct gc_entity
     void (*remove_component)(const gc_scene *scene, const gc_entity *entity, \
 const char *name);
     char *(*serialize)(gc_entity *entity, int fd);
-    void (*destroy)(gc_entity *entity);
+    void (*destroy)(gc_entity *entity, gc_scene *scene);
 };
 
 gc_entity *entity_create(void);
