@@ -12,6 +12,7 @@
 #include "systems/sfml_renderer_system.h"
 #include "ui.h"
 #include <malloc.h>
+#include "prefab.h"
 
 gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 {
@@ -77,8 +78,14 @@ gc_data *text_make(gc_engine *engine, gc_scene *scene, node *n)
 {
 	gc_list *list = NULL;
 	gc_data *data = malloc(sizeof(*data));
+	gc_component *cmp;
+	gc_entity *txt = new_text(engine, scene, n);
 
-	LISTADD(list, new_text(engine, scene, n));
+	LISTADD(list, txt);
+	for (n = n->child; n; n = n->next) {
+		cmp = deserialize_component(engine, txt, scene, n);
+		txt->add_component(txt, cmp);
+	}
 	data->name = "text";
 	data->type = "ui";
 	data->destroy = NULL;

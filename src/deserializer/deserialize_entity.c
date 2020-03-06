@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include "xml.h"
-#include "read_line.h"
 #include "utility.h"
 #include "entity.h"
 #include "engine.h"
