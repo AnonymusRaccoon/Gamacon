@@ -34,6 +34,6 @@ sfVertexArray *sfml_init_verticies(void)
 
 	for (int i = 0; i < 4; i++)
 		sfVertexArray_append(arr, v[i]);
-	sfVertexArray_setPrimitiveType(arr, sfTriangleStrip);
+	sfVertexArray_setPrimitiveType(arr, sfTrianglesStrip);
 	return (arr);
 }

@@ -36,10 +36,15 @@ void sfml_handle_events(gc_engine *engine)
 	}
 }
 
-gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine)
+gc_vector2i sfml_engine_get_cursor_pos(gc_engine *engine)
 {
-	sfMouseMoveEvent mouse;
-	sfMouse_getPositionRenderWindow(GETSYS(engine, sfml_renderer_system));
+	sfVector2i pos;
+	gc_vector2i ret;
+
+	pos = sfMouse_getPositionRenderWindow(GETSYS(engine, sfml_renderer_system));
+	ret.x = pos.x;
+	ret.y = pos.y;
+	return (ret);
 }
 
 void sfml_resize(gc_engine *engine, gc_vector2 size)

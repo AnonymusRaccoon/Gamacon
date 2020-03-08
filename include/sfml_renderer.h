@@ -46,7 +46,7 @@ void sfml_play_music(void *music);
 void sfml_stop_music(gc_engine *engine);
 void sfml_resize(gc_engine *engine, gc_vector2 size);
 gc_vector2 sfml_get_screen_size(gc_engine *engine);
-gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine);
+gc_vector2i sfml_engine_get_cursor_pos(gc_engine *engine);
 
 void entities_update_to_cam(gc_scene *scene, \
 struct sfml_renderer_system *renderer, struct camerafollow_system *cam);
