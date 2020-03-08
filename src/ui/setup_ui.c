@@ -8,9 +8,11 @@
 #include "components/transform_component.h"
 #include "components/renderer.h"
 #include "components/fixed_to_cam_component.h"
+#include "components/tag_component.h"
 #include "systems/sfml_renderer_system.h"
 #include "ui.h"
 #include <malloc.h>
+#include "prefab.h"
 
 gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 {
@@ -21,11 +23,9 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 	else
 		entity = entity_create();
 	entity->add_component(entity, new_component(&transform_component,
-		(gc_vector2){0, 0},
-		(gc_vector2){0, 0}));
+		(gc_vector2){0, 0}, (gc_vector2){0, 0}));
 	entity->add_component(entity, new_component(&renderer_component,
-		GC_TXTREND,
-		xml_getproperty(n, "text"),
+		GC_TXTREND, xml_getproperty(n, "text"),
 		scene->get_data(scene, "font", NULL),
 		xml_getintprop(n, "size"),
 		xml_gettempprop(n, "color"), xml_getbool(n, "resize", true)));
@@ -33,6 +33,9 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
 		(gc_vector2){xml_getintprop(n, "x"),xml_getintprop(n, "y")},
 		xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
 		0, 0, false, false));
+	if (xml_hasproperty(n, "tag"))
+		entity->add_component(entity, new_component(&tag_component,
+			xml_getproperty(n, "tag")));
 	return (entity);
 }
 
@@ -52,6 +55,9 @@ gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
 		xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
 		xml_getintprop(n, "width"), xml_getintprop(n, "height"),
 		xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%")));
+	if (xml_hasproperty(n, "tag"))
+		entity->add_component(entity, new_component(&tag_component,
+			xml_getproperty(n, "tag")));
 	return (entity);
 }
 
@@ -72,8 +78,14 @@ gc_data *text_make(gc_engine *engine, gc_scene *scene, node *n)
 {
 	gc_list *list = NULL;
 	gc_data *data = malloc(sizeof(*data));
+	gc_component *cmp;
+	gc_entity *txt = new_text(engine, scene, n);
 
-	LISTADD(list, new_text(engine, scene, n));
+	LISTADD(list, txt);
+	for (n = n->child; n; n = n->next) {
+		cmp = deserialize_component(engine, txt, scene, n);
+		txt->add_component(txt, cmp);
+	}
 	data->name = "text";
 	data->type = "ui";
 	data->destroy = NULL;

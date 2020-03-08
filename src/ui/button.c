@@ -14,6 +14,7 @@
 #include "systems/sfml_renderer_system.h"
 #include "ui.h"
 #include <malloc.h>
+#include "components/tag_component.h"
 #include "components/input_component.h"
 
 gc_entity *background_from_text(gc_engine *engine, gc_scene *scene, node *n, \
@@ -58,6 +59,9 @@ gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
 		background->add_component(background, new_component(&input_component));
 	background->add_component(background, new_component(&clickable_component,
 		scene, xml_getproperty(n, "click")));
+	if (xml_hasproperty(n, "tag"))
+		background->add_component(background, new_component(&tag_component,
+			xml_getproperty(n, "tag")));
 	LISTADD(entities, background);
 	LISTADD(entities, new_text(engine, scene, n));
 	return (entities);

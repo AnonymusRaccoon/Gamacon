@@ -15,7 +15,6 @@
 #include "systems/collision_system.h"
 #include "systems/camerafollow_system.h"
 #include "sfml_renderer.h"
-#include <stdlib.h>
 
 void engine_add_system(gc_engine *engine, const void *system)
 {

@@ -27,3 +27,19 @@ gc_list *list_add(gc_list *list, void *obj)
     list->next = NULL;
     return (listconst);
 }
+
+gc_list *list_remove(gc_list *list, void *obj)
+{
+	gc_list *listconst = list;
+
+	if (!list)
+		return (NULL);
+	if (list->data == obj)
+		return (list->next);
+	while (list->next && list->next->data != obj)
+		list = list->next;
+	if (!list->next)
+		return (listconst);
+	list->next = list->next->next;
+	return (listconst);
+}

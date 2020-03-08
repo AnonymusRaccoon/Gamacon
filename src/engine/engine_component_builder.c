@@ -6,7 +6,6 @@
 */
 
 #include "engine.h"
-#include "system.h"
 #include "components/movable_component.h"
 #include "components/parallax_component.h"
 #include "components/fixed_to_cam_component.h"
@@ -21,6 +20,7 @@
 #include "components/vertex_component.h"
 #include <stdlib.h>
 #include "components/clickable_component.h"
+#include "components/tag_component.h"
 #include "components/input_component.h"
 
 void engine_add_component(gc_engine *engine, const void *component)
@@ -47,4 +47,5 @@ void engine_add_buildin_components(gc_engine *engine)
     engine->add_component(engine, &clickable_component);
     engine->add_component(engine, &vertex_component);
     engine->add_component(engine, &input_component);
+    engine->add_component(engine, &tag_component);
 }
