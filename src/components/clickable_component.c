@@ -16,20 +16,28 @@ static void ctr(void *component, va_list args)
 	struct clickable_component *cmp = (struct clickable_component *)component;
 	gc_scene *scene = va_arg(args, gc_scene *);
 	char *onclick = va_arg(args, char *);
+	callback_t callback;
 
 	if (!scene)
 		return;
-	cmp->onclick = scene->get_callback(scene, onclick);
+	callback = scene->get_callback(scene, onclick);
+	if (!callback)
+		my_printf("No callback found with the name: %s\n", onclick);
+	cmp->onclick = callback;
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
 	struct clickable_component *cmp = (struct clickable_component *)component;
 	char *onclick = xml_gettempprop(n, "click");
+	callback_t callback;
 
 	if (!scene)
 		return;
-	cmp->onclick = scene->get_callback(scene, onclick);
+	callback = scene->get_callback(scene, onclick);
+	if (!callback)
+		my_printf("No callback found with the name: %s\n", onclick);
+	cmp->onclick = callback;
 }
 
 static void dtr(void *component)
