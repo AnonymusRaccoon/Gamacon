@@ -77,6 +77,8 @@ int change_scene(gc_engine *engine, gc_scene *scene)
 
 callback_t scene_get_callback(gc_scene *this, char *name)
 {
+	if (!name)
+		return (NULL);
 	for (gc_list *cal = this->callbacks; cal; cal = cal->next) {
 		if (!my_strcmp(((gc_data *)cal->data)->name, name))
 			return (((gc_data *)cal->data)->custom);

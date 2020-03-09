@@ -16,6 +16,7 @@ typedef struct gc_entity gc_entity;
 struct gc_entity
 {
     int id;
+    int prefab_id;
     gc_component *components;
     gc_entity *(*add_component)(gc_entity *entity, void *component);
     void *(*get_component)(const gc_entity *entity, const char *name);

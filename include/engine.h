@@ -90,7 +90,6 @@ int engine_use_sfml(gc_engine *engine, const char *title, int framerate);
 
 gc_vector2 engine_get_cursor_pos(gc_engine *engine);
 
-#define GETSYS(x) ((struct x *)engine->get_system(engine, #x))
 #define GETSYS(engine, x) ((struct x *)engine->get_system(engine, #x))
 
 #endif

@@ -27,7 +27,7 @@ struct gc_scene
     int (*add_entity)(gc_scene *scene, gc_entity *entity);
     gc_entity *(*get_entity)(gc_scene *scene, int id);
     gc_list *(*get_entity_by_cmp)(gc_scene *scene, const char *cmp_name);
-    void (*load_entity)(gc_scene *this, gc_engine *engine, node *xml);
+    void (*load_entity)(gc_scene *this, gc_engine *engine, node *xml, int pref);
 
 	gc_list *callbacks;
 	callback_t (*get_callback)(gc_scene *this, char *name);
@@ -39,4 +39,4 @@ void scene_load_data(gc_engine *engine, gc_scene *scene, node *n);
 void *scene_get_data(gc_scene *scene, const char *type, const char *name);
 void scene_add_callback(gc_scene *scene, const char *name, void *func);
 void scene_destroy(gc_scene *scene);
-void scene_load_entity(gc_scene *this, gc_engine *engine, node *n);
+void scene_load_entity(gc_scene *this, gc_engine *engine, node *n, int prefab);

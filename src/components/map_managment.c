@@ -131,5 +131,5 @@ bool map_manage_click(gc_engine *engine, int id, gc_vector2 pos)
 		ret->corners[3]->z += 10;
 		ret->texture = engine->scene->get_data(scene, "sprite", "command_block");
 	}
-	return (true);
+	return (false);
 }
