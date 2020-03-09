@@ -11,7 +11,8 @@
 #include "engine.h"
 #include "component.h"
 
-void clickable_onclick(gc_engine *engine, gc_vector2 position);
+void clickable_onclick(gc_engine *engine);
+void clickable_manager_init(gc_engine *engine);
 
 struct clickable_component
 {

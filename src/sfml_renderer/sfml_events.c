@@ -15,8 +15,6 @@ void sfml_handle_events(gc_engine *engine)
 {
 	struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
 	sfEvent event;
-	sfVector2i mousePos;
-	sfVector2f pos;
 
 	while (sfRenderWindow_pollEvent(rend->window, &event)) {
 		if (event.type == sfEvtClosed)
@@ -28,22 +26,27 @@ void sfml_handle_events(gc_engine *engine)
 				event.size.height
 			});
 		if (event.type == sfEvtMouseButtonReleased) {
-			mousePos = sfMouse_getPosition(rend->window);
-			pos = sfRenderWindow_mapPixelToCoords(rend->window, mousePos, rend->view);
-			pos.y *= -1;
-			clickable_onclick(engine, (gc_vector2){pos.x, pos.y});
+			if (event.mouseButton.button == sfMouseLeft)
+				engine->trigger_event(engine, "mouse_left_click");
+			if (event.mouseButton.button == sfMouseRight)
+				engine->trigger_event(engine, "mouse_right_click");
+			//clickable_onclick(engine, (gc_vector2){pos.x, pos.y});
 		}
 	}
 }
 
-gc_vector2i sfml_engine_get_cursor_pos(gc_engine *engine)
+gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine)
 {
+	struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
 	sfVector2i pos;
-	gc_vector2i ret;
+	gc_vector2 ret;
+	sfVector2f pos2;
 
-	pos = sfMouse_getPositionRenderWindow(GETSYS(engine, sfml_renderer_system));
-	ret.x = pos.x;
-	ret.y = pos.y;
+	pos = sfMouse_getPosition(rend->window);
+	pos2 = sfRenderWindow_mapPixelToCoords(rend->window, pos, rend->view);
+	ret.x = pos2.x;
+	ret.y = pos2.y;
+	ret.y *= -1;
 	return (ret);
 }
 

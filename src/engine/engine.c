@@ -9,7 +9,7 @@
 #include "system.h"
 #include "utility.h"
 #include <stdlib.h>
-
+#include "event_manager.h"
 void update_system(gc_engine *engine, gc_system *sys, float dtime)
 {
     gc_scene *scene = engine->scene;
@@ -86,6 +86,9 @@ gc_engine *engine_create(void)
     engine->stop_music = &engine_stop_music;
     engine->destroy = &engine_destroy;
     engine->on_resize = &engine_on_resize;
+    engine->event_listeners = NULL;
+    engine->add_event_listener = &engine_add_event_listener;
+    engine->trigger_event = &engine_trigger_event;
 	engine_add_builtin_systems(engine);
     engine_add_buildin_components(engine);
     engine_init_dataloaders(engine);

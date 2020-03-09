@@ -53,9 +53,10 @@ void draw_tile(struct sfml_renderer_system *this, struct vertex_component \
     //printf("mouse is x:%f, y:%f\n", world_pos.x, world_pos.y);
     if (!is_pos_in_tile((gc_vector2){world_pos.x, world_pos.y}, tile))
     	this->states->texture = (sfTexture *)tile->texture;
-    else
-    	this->states->texture = NULL;
-	sfVertexArray_setPrimitiveType(this->vertices, sfTrianglesStrip);
+    else {
+		this->states->texture = NULL;
+	}
+    sfVertexArray_setPrimitiveType(this->vertices, sfTrianglesStrip);
 	sfVertex *vert0 = sfVertexArray_getVertex(this->vertices, 0);
 	vert0->color = sfWhite;
 	vert1->color = sfWhite;

@@ -11,9 +11,10 @@
 #include "components/transform_component.h"
 #include <stddef.h>
 
-void clickable_onclick(gc_engine *engine, gc_vector2 position)
+void clickable_onclick(gc_engine *engine)
 {
 	gc_scene *scene = engine->scene;
+	gc_vector2 position = engine->get_cursor_pos(engine);
 	gc_list *entities = NULL;
 	struct transform_component *tra;
 	struct clickable_component *cl;
@@ -34,4 +35,10 @@ void clickable_onclick(gc_engine *engine, gc_vector2 position)
 				return;
 		}
 	}
+}
+
+void clickable_manager_init(struct gc_engine *engine)
+{
+	engine->add_event_listener(engine, "mouse_left_click", &clickable_onclick);
+	engine->add_event_listener(engine, "mouse_right_click", &clickable_onclick);
 }
