@@ -41,11 +41,10 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     gc_scene *scene = malloc(sizeof(gc_scene));
     node *n = NULL;
 
-    if (!scene)
-        return (NULL);
-    if (xmlpath && !(n = xml_parse(xmlpath)))
+    if (!scene || (xmlpath && !(n = xml_parse(xmlpath))))
         return (NULL);
     scene_load_data(engine, scene, n);
+	scene->is_paused = false;
     scene->entities = NULL;
     scene->entities_by_cmp = NULL;
     scene->add_entity = &entity_add;
@@ -77,6 +76,8 @@ int change_scene(gc_engine *engine, gc_scene *scene)
 
 callback_t scene_get_callback(gc_scene *this, char *name)
 {
+	if (!name)
+		return (NULL);
 	for (gc_list *cal = this->callbacks; cal; cal = cal->next) {
 		if (!my_strcmp(((gc_data *)cal->data)->name, name))
 			return (((gc_data *)cal->data)->custom);

@@ -38,7 +38,7 @@ void scene_load_data(gc_engine *engine, gc_scene *scene, node *n)
     }
 }
 
-void scene_load_entity(gc_scene *this, gc_engine *engine, node *n)
+void scene_load_entity(gc_scene *this, gc_engine *engine, node *n, int prefab)
 {
 	gc_dataloader *loader = engine->get_dataloader(engine, n->name);
 	gc_data *data;
@@ -48,6 +48,8 @@ void scene_load_entity(gc_scene *this, gc_engine *engine, node *n)
 		return;
 	}
 	data = loader->load(engine, this, n);
-	for (gc_list *li = (gc_list *)data->custom; li; li = li->next)
+	for (gc_list *li = (gc_list *)data->custom; li; li = li->next) {
+		((gc_entity *)li->data)->prefab_id = prefab;
 		this->add_entity(this, li->data);
+	}
 }
