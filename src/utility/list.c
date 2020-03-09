@@ -14,11 +14,15 @@ gc_list *list_add(gc_list *list, void *obj)
 
     if (!list) {
         list = malloc(sizeof(gc_list));
+		if (list)
+			list->prev = NULL;
         listconst = list;
     } else {
         while (list->next)
             list = list->next;
         list->next = malloc(sizeof(gc_list));
+		if (list->next)
+			list->next->prev = list;
         list = list->next;
     }
     if (!list)

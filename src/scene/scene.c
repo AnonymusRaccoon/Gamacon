@@ -41,11 +41,10 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     gc_scene *scene = malloc(sizeof(gc_scene));
     node *n = NULL;
 
-    if (!scene)
-        return (NULL);
-    if (xmlpath && !(n = xml_parse(xmlpath)))
+    if (!scene || (xmlpath && !(n = xml_parse(xmlpath))))
         return (NULL);
     scene_load_data(engine, scene, n);
+	scene->is_paused = false;
     scene->entities = NULL;
     scene->entities_by_cmp = NULL;
     scene->add_entity = &entity_add;

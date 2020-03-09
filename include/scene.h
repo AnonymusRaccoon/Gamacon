@@ -30,6 +30,8 @@ struct gc_scene
 
 	gc_list *callbacks;
 	callback_t (*get_callback)(gc_scene *this, char *name);
+
+	bool is_paused;
 };
 
 callback_t scene_get_callback(gc_scene *scene, char *name);

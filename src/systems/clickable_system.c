@@ -21,7 +21,9 @@ void clickable_onclick(gc_engine *engine, gc_vector2 position)
 	if (!scene)
 		return;
 	entities = scene->get_entity_by_cmp(scene, "clickable_component");
-	for (gc_list *ent = entities; ent; ent = ent->next) {
+	while (entities->next)
+		entities = entities->next;
+	for (gc_list *ent = entities; ent; ent = ent->prev) {
 		tra = GETCMP(((gc_entity *)ent->data), transform_component);
 		if ((tra->position.x - tra->size.x / 2) <= position.x
 		&& (tra->position.y + tra->size.y / 2) >= position.y
