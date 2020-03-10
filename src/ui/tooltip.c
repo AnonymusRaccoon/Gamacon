@@ -12,6 +12,18 @@
 #include "components/renderer.h"
 #include "components/transform_component.h"
 
+static void setup_position(gc_entity *entity, gc_scene *scene, node *n)
+{
+	entity->add_component(entity, new_component(&fixed_to_cam,
+		(gc_vector2){
+		xml_getintprop(n, "x") + xml_getintprop(n, "tooltip_x"),
+		xml_getintprop(n, "y") - xml_getintprop(n, "tooltip_y")
+		},
+		xml_propcontains(n, "x", "%"),
+		xml_propcontains(n, "y", "%"),
+		0, 0, false, false));
+}
+
 gc_entity *tooltip_make(gc_engine *engine, gc_scene *scene, node *n, \
 gc_entity *parent)
 {
@@ -25,10 +37,7 @@ gc_entity *parent)
 		GC_TXTREND, xml_getproperty(n, "tooltip"),
 		scene->get_data(scene, "font", NULL), xml_getintprop(n, "size"),
 		xml_gettempprop(n, "color"), xml_getbool(n, "resize", true)));
-	entity->add_component(entity, new_component(&fixed_to_cam,
-		(gc_vector2){xml_getintprop(n, "x") + 10,xml_getintprop(n, "y") - 5},
-		xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
-		0, 0, false, false));
+	setup_position(entity, scene, n);
 	entity->add_component(entity, new_component(&tooltip_component,
 		GETCMP(parent, transform_component), xml_getfloatprop(n, "padding_x"),
 		xml_getfloatprop(n, "padding_y")));

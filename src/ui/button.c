@@ -25,10 +25,11 @@ gc_text *text)
 	char *texture_name = xml_gettmpstring(n, "sprite", "button_background");
 	sfTexture *texture = scene->get_data(scene, "sprite", texture_name);
 	gc_vector2i s = {xml_getintprop(n, "width"), xml_getintprop(n, "height")};
-	gc_vector2 ts = rend->get_text_size(rend, text);
+	gc_vector2 ts;
 
 	if (!rend)
 		return (NULL);
+	ts = rend->get_text_size(rend, text);
 	if (!texture)
 		my_printf("No texture defined for the button_background.\n");
 	entity->add_component(entity, new_component(&transform_component,
@@ -62,6 +63,8 @@ gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
 	if (xml_hasproperty(n, "tag"))
 		background->add_component(background, new_component(&tag_component,
 			xml_getproperty(n, "tag")));
+	if (xml_hasproperty(n, "tooltip"))
+		LISTADD(entities, tooltip_make(engine, scene, n, background));
 	LISTADD(entities, background);
 	LISTADD(entities, new_text(engine, scene, n));
 	return (entities);
@@ -70,10 +73,11 @@ gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
 gc_data *button_make(gc_engine *engine, gc_scene *scene, node *n)
 {
 	gc_data *data = malloc(sizeof(*data));
+	gc_list *list = new_button(engine, scene, n);
 
 	data->name = "button";
 	data->type = "ui";
 	data->destroy = NULL;
-	data->custom = new_button(engine, scene, n);
+	data->custom = list;
 	return (data);
 }
