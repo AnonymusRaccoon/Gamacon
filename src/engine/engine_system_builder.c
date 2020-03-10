@@ -14,6 +14,7 @@
 #include "systems/friction_system.h"
 #include "systems/collision_system.h"
 #include "systems/camerafollow_system.h"
+#include "systems/tooltip_system.h"
 #include "sfml_renderer.h"
 #include "clickable_component.h"
 
@@ -36,6 +37,7 @@ void engine_add_builtin_systems(gc_engine *engine)
     engine->add_system(engine, &parallax_system);
     engine->add_system(engine, &keyboard_controller_system);
     engine->add_system(engine, &friction_system);
+    engine->add_system(engine, new_system(&tooltip_system));
     engine->add_system(engine, new_system(&collision_system, engine->scene));
 	clickable_manager_init(engine);
 }

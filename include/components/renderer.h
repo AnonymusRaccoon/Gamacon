@@ -23,6 +23,7 @@ struct renderer
     gc_component base;
     enum gc_texturetype type;
     void *data;
+    bool is_visible;
 };
 
 void sprite_ctr(struct renderer *cmp, va_list args);

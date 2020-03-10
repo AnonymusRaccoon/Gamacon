@@ -38,12 +38,16 @@ gc_list *list_remove(gc_list *list, void *obj)
 
 	if (!list)
 		return (NULL);
-	if (list->data == obj)
+	if (list->data == obj) {
+		if (list->next)
+			list->next->prev = NULL;
 		return (list->next);
+	}
 	while (list->next && list->next->data != obj)
 		list = list->next;
 	if (!list->next)
 		return (listconst);
 	list->next = list->next->next;
+	list->next->prev = list;
 	return (listconst);
 }
