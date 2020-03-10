@@ -7,9 +7,6 @@
 #include <SFML/Window.h>
 #include "sfml_renderer.h"
 #include "systems/sfml_renderer_system.h"
-#include "systems/camerafollow_system.h"
-#include "components/clickable_component.h"
-#include "components/transform_component.h"
 
 void sfml_handle_events(gc_engine *engine)
 {

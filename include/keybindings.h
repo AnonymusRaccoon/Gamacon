@@ -16,6 +16,6 @@ typedef enum gc_mousekeys
 {
 	GC_LEFT,
 	GC_RIGHT
-};
+} gc_mousekeys;
 
 #endif //_KEYBINDINGS_H_

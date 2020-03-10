@@ -83,7 +83,7 @@ const char *name)
         return;
     for (gc_tupple *tup = scene->entities_by_cmp; tup; tup = tup->next) {
         if (!my_strcmp(tup->name, name))
-            tup_remove(tup, entity->id);
+            LISTREM(tup->entities, entity);
     }
     component_destroy(cmp);
 }
