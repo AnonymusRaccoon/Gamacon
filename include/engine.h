@@ -60,8 +60,9 @@ struct gc_engine
 	gc_vector2  (*get_cursor_pos)(gc_engine *this);
 
 	gc_list *event_listeners;
-	void (*trigger_event)(gc_engine *this, const char *name);
-	bool (*add_event_listener)(gc_engine *this, const char *name, void *func);
+	void (*trigger_event)(gc_engine *this, const char *name, ...);
+	bool (*add_event_listener)(gc_engine *this, const char *name, \
+void (*func)(gc_engine *, va_list));
 };
 
 gc_engine *engine_create(void);

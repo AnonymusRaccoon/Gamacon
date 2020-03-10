@@ -17,20 +17,24 @@ void sfml_handle_events(gc_engine *engine)
 	sfEvent event;
 
 	while (sfRenderWindow_pollEvent(rend->window, &event)) {
-		if (event.type == sfEvtClosed)
+		switch (event.type) {
+		case sfEvtClosed:
 			sfRenderWindow_close(rend->window);
-		if (event.type == sfEvtResized)
-			engine->on_resize(engine, (gc_vector2)
-			{
-				event.size.width,
-				event.size.height
-			});
-		if (event.type == sfEvtMouseButtonReleased) {
+			break;
+		case sfEvtResized:
+			engine->on_resize(engine, (gc_vector2){event.size.width, event.size.height});
+			break;
+		case sfEvtMouseButtonReleased:
 			if (event.mouseButton.button == sfMouseLeft)
 				engine->trigger_event(engine, "mouse_left_click");
 			if (event.mouseButton.button == sfMouseRight)
 				engine->trigger_event(engine, "mouse_right_click");
-			//clickable_onclick(engine, (gc_vector2){pos.x, pos.y});
+			break;
+		case sfEvtKeyReleased:
+			engine->trigger_event(engine, "key_pressed", event.key.code);
+			break;
+		default:
+			break;
 		}
 	}
 }

@@ -12,7 +12,8 @@
 #include "malloc.h"
 #include "event_manager.h"
 
-bool engine_add_event_listener(gc_engine *engine, const char *name, void *func)
+bool engine_add_event_listener(gc_engine *engine, const char *name, \
+void (*func)(gc_engine *, va_list))
 {
 	struct gc_event_listener *node = malloc(sizeof(struct gc_event_listener));
 	char *n_name = my_strdup(name);
@@ -25,13 +26,16 @@ bool engine_add_event_listener(gc_engine *engine, const char *name, void *func)
 	return (true);
 }
 
-void engine_trigger_event(gc_engine *engine, const char *name)
+void engine_trigger_event(gc_engine *engine, const char *name, ...)
 {
 	gc_list *tmp = engine->event_listeners;
+	va_list list;
 
 	while (tmp) {
 		if (!my_strcmp(((struct gc_event_listener *)tmp->data)->name, name)) {
-			((struct gc_event_listener *) tmp->data)->func(engine);
+			va_start(list, name);
+			((struct gc_event_listener *) tmp->data)->func(engine, list);
+			va_end(list);
 		}
 		tmp = tmp->next;
 	}
