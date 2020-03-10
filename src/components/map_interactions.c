@@ -52,7 +52,6 @@ void apply_interaction_to_map(gc_engine *engine, struct tile *ret, bool left_cli
 	if (TILE_MODE) {
 		if (ROTATION) {
 			ret->data = (ret->data + 1) % 4;
-			printf("new tile data %i\n", (int)ret->data);
 			return;
 		}
 		action_click_on_tile(engine, ret, ALL_VERTICES | left_click);
