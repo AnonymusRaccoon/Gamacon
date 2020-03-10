@@ -8,11 +8,31 @@
 #include "engine.h"
 #include "data.h"
 #include "xml.h"
-#include "components/transform_component.h"
-#include "components/renderer.h"
-#include "components/fixed_to_cam_component.h"
-#include "components/tag_component.h"
-#include "systems/sfml_renderer_system.h"
-#include "ui.h"
+#include "my.h"
 #include <malloc.h>
-#include "prefab.h"
+
+gc_data *tile_texture_array_loader(gc_engine *engine, gc_scene *scene, node *n)
+{
+	gc_data *data = malloc(sizeof(*data));
+	int c;
+	char *arr;
+
+	if (!data)
+		return (NULL);
+	data->type = my_strdup(n->name);
+	data->name = data->type;
+	if (!data->type || !data->name)
+		return (NULL);
+	c = xml_getchildcount(n);
+	n = n->child;
+	arr = malloc(sizeof(void *) * (c + 1));
+	if (!arr)
+		return (NULL);
+	for (int i = 0; i < c; i++)
+		arr[i] = xml_getproperty(n, "name");
+	arr[c] = '\0';
+	data->custom = arr;
+	// TODO add a destructor
+	data->destroy = NULL;
+	return (data);
+}
