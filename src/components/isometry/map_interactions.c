@@ -13,43 +13,30 @@
 #include "components/transform_component.h"
 #include "map_managment.h"
 #include <stdlib.h>
-
-#define TILE_MODE true
-#define ROTATION true
-
-void apply_interaction_to_map(gc_engine *engine, struct tile *ret, \
-bool left_click, gc_vector2 pos)
-{
-	int ind;
-
-	if (TILE_MODE) {
-		if (ROTATION) {
-			ret->data = (ret->data + ((left_click) ? 1 : -1U)) % 4;
-			return;
-		}
-		action_click_on_tile(engine, ret, ALL_VERTICES | left_click);
-		return;
-	}
-	ind = get_index_nearest_vertex(ret, pos);
-	action_click_on_tile(engine, ret, ((int)pow(2, ind + 1)) | left_click);
-}
+#include <components/isometry/map_manager_component.h>
 
 bool tile_interact(gc_engine *engine, gc_entity *entity, gc_vector2 pos, \
 enum gc_mousekeys key)
 {
-	struct vertex_component *map;
-	struct tile *ret = NULL;
+	struct vertex_component *map = GETCMP(entity, vertex_component);
+	struct map_manager_component *manager = GETCMP(entity, map_manager_component);
+	struct tile *ret = get_tile_from_pos(map, pos);
+	int ind;
 
-	if (!entity)
-		return (false);
-	map = entity->get_component(entity, "vertex_component");
-	if (!map) {
+	if (!map || !manager) {
 		my_printf("map not found\n");
 		return (false);
 	}
-	ret = get_tile_from_pos(engine, map, pos);
-	if (ret) {
-		apply_interaction_to_map(engine, ret, key == GC_LEFT, pos);
+	if (!ret)
+		return (false);
+	if (manager->tile_mode) {
+		if (manager->brush == ROTATE)
+			ret->data = (ret->data + ((key == GC_LEFT) ? 1 : -1U)) % 4;
+		else
+			tile_click(engine, ret, ALL_VERTICES | (key == GC_LEFT));
+	} else {
+		ind = get_index_nearest_vertex(ret, pos);
+		tile_click(engine, ret, ((int) pow(2, ind + 1)) | (key == GC_LEFT));
 	}
 	return (false);
 }

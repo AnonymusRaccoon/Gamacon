@@ -18,9 +18,9 @@ enum modes_on_tile {
 	INVERT_ADD_VALUE = 1
 };
 
-void action_click_on_tile(gc_engine *engine, struct tile *ret, char mode);
+void tile_click(gc_engine *engine, struct tile *ret, char mode);
 int get_index_nearest_vertex(struct tile *sel, gc_vector2 pos);
-struct tile *get_tile_from_pos(gc_engine *engine, struct vertex_component *map, gc_vector2 pos);
+struct tile *get_tile_from_pos(struct vertex_component *map, gc_vector2 pos);
 bool map_manage_click(gc_engine *engine, int id, gc_vector2 pos);
 gc_vector2 get_tile_coords_to_pixels(float x, float y, float z);
 bool is_pos_in_tile(gc_vector2 pos, struct tile *tile);
