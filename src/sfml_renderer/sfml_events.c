@@ -26,9 +26,9 @@ void sfml_handle_events(gc_engine *engine)
 			break;
 		case sfEvtMouseButtonReleased:
 			if (event.mouseButton.button == sfMouseLeft)
-				engine->trigger_event(engine, "mouse_left_click");
+				engine->trigger_event(engine, "mouse_click", GC_LEFT);
 			if (event.mouseButton.button == sfMouseRight)
-				engine->trigger_event(engine, "mouse_right_click");
+				engine->trigger_event(engine, "mouse_click", GC_RIGHT);
 			break;
 		case sfEvtKeyReleased:
 			engine->trigger_event(engine, "key_pressed", event.key.code);

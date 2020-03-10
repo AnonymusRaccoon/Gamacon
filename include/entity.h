@@ -11,6 +11,7 @@ typedef struct gc_entity gc_entity;
 
 #include "component.h"
 #include "vector2.h"
+#include "scene.h"
 #include <stdbool.h>
 
 struct gc_entity

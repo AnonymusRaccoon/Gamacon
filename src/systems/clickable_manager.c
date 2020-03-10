@@ -11,9 +11,19 @@
 #include "components/transform_component.h"
 #include "map_interactions.h"
 #include <stddef.h>
+#include <keybindings.h>
 
-void clickable_onclick(gc_engine *engine)
+static inline bool collide(struct transform_component *tra, gc_vector2 position)
 {
+	return (tra->position.x - tra->size.x / 2) <= position.x
+		&& (tra->position.y + tra->size.y / 2) >= position.y
+		&& (tra->position.x + tra->size.x / 2) >= position.x
+		&& (tra->position.y - tra->size.y / 2) <= position.y;
+}
+
+void clickable_onclick(gc_engine *engine, va_list list)
+{
+	enum gc_mousekeys key = va_arg(list, enum gc_mousekeys);
 	gc_scene *scene = engine->scene;
 	gc_vector2 position = engine->get_cursor_pos(engine);
 	gc_list *entities = NULL;
@@ -29,22 +39,15 @@ void clickable_onclick(gc_engine *engine)
 		entities = entities->next;
 	for (gc_list *ent = entities; ent; ent = ent->prev) {
 		tra = GETCMP(((gc_entity *)ent->data), transform_component);
-		if ((tra->position.x - tra->size.x / 2) <= position.x
-		&& (tra->position.y + tra->size.y / 2) >= position.y
-		&& (tra->position.x + tra->size.x / 2) >= position.x
-		&& (tra->position.y - tra->size.y / 2) <= position.y) {
-			cl = GETCMP(((gc_entity *)ent->data), clickable_component);
-			if (!cl->onclick)
-				continue;
-			if (cl->onclick(engine, ((gc_entity *)ent->data)->id, position))
-				return;
-		}
+		if (!collide(tra, position))
+			continue;
+		cl = GETCMP(((gc_entity *)ent->data), clickable_component);
+		if (cl->onclick && cl->onclick(engine, ent->data, position, key))
+			return;
 	}
 }
 
 void clickable_manager_init(struct gc_engine *engine)
 {
-	engine->add_event_listener(engine, "mouse_left_click", &clickable_onclick);
-	engine->add_event_listener(engine, "mouse_right_click", &map_manage_right_click);
-	engine->add_event_listener(engine, "mouse_left_click", &map_manage_left_click);
+	engine->add_event_listener(engine, "mouse_click", &clickable_onclick);
 }

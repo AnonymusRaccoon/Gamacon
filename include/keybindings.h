@@ -12,4 +12,10 @@ typedef enum gc_keybindings
 	ESCAPE = sfKeyEscape
 } gc_keybindings;
 
+typedef enum gc_mousekeys
+{
+	GC_LEFT,
+	GC_RIGHT
+};
+
 #endif //_KEYBINDINGS_H_

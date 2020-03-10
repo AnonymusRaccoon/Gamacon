@@ -7,9 +7,12 @@
 
 #include <stdbool.h>
 #include "vector2.h"
+#include "entity.h"
+#include "keybindings.h"
 
 typedef struct gc_engine gc_engine;
-typedef bool (*callback_t)(gc_engine *engine, int entity_id, gc_vector2 pos);
+typedef bool (*callback_t)(gc_engine *engine, gc_entity *entity, \
+gc_vector2 pos, enum gc_mousekeys key);
 
 #ifndef ENGINE
 #define ENGINE

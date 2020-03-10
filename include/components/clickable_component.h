@@ -11,7 +11,7 @@
 #include "engine.h"
 #include "component.h"
 
-void clickable_onclick(gc_engine *engine);
+void clickable_onclick(gc_engine *engine, va_list list);
 void clickable_manager_init(gc_engine *engine);
 
 struct clickable_component
