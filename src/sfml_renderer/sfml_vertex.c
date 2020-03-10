@@ -31,50 +31,60 @@ sfVector2f get_tile_coords(int x, int y, int z)
 void draw_tile(struct sfml_renderer_system *this, struct vertex_component \
 *info, struct tile *tile)
 {
-    sfVertex *vert1 = sfVertexArray_getVertex(this->vertices, 1);
-    sfVertex *vert2 = sfVertexArray_getVertex(this->vertices, 3);
-    sfVertex *vert3 = sfVertexArray_getVertex(this->vertices, 2);
-	int corners[9];
+	sfVertex *vert[4];
+	int corners[12];
+	int vertex_order[4] = {0, 1, 3, 2};
 
 
 	if (tile->corners[0]->z == INT32_MAX || !tile->corners[2]->y)
 		return;
-	for (int i = 0; i < 3; i++) {
-		corners[i * 3] = tile->corners[i + 1]->x;
-		corners[i * 3 + 1] = tile->corners[i + 1]->y;
-		corners[i * 3 + 2] = tile->corners[i + 1]->z;
+	for (int j = 0; j < tile->data & 3; j++) {
+		int tmp = vertex_order[0];
+		for (int i = 0; i < 3; i++) {
+			vertex_order[i] = vertex_order[i + 1];
+		}
+		vertex_order[3] = tmp;
 	}
-	vert1->position = get_tile_coords(corners[0], corners[1], corners[2]);
-    vert2->position = get_tile_coords(corners[3], corners[4], corners[5]);
-    vert3->position = get_tile_coords(corners[6], corners[7], corners[8]);
-    sfVector2i vec = sfMouse_getPosition(this->window);
+	for (int i = 0; i < 4; i++)
+		vert[i] = sfVertexArray_getVertex(this->vertices, vertex_order[i]);
+
+	for (int i = 0; i < 4; i++) {
+		corners[i * 3] = tile->corners[i]->x;
+		corners[i * 3 + 1] = tile->corners[i]->y;
+		corners[i * 3 + 2] = tile->corners[i]->z;
+	}
+	for (int i = 0; i < 4; i++) {
+		vert[i]->position = get_tile_coords(corners[i * 3], corners[i * 3 + 1], corners[i * 3 + 2]);
+	}
+
+    sfVector2i vec = sfMouse_getPosition((const sfWindow *) this->window);
 	sfVector2f world_pos = sfRenderWindow_mapPixelToCoords(this->window, vec, this->view);
 	world_pos.y *= -1;
-    //printf("mouse is x:%f, y:%f\n", world_pos.x, world_pos.y);
-    if (!is_pos_in_tile((gc_vector2){world_pos.x, world_pos.y}, tile))
-    	this->states->texture = (sfTexture *)tile->texture;
+
+    if (!is_pos_in_tile((gc_vector2){world_pos.x, world_pos.y}, tile)) {
+		this->states->texture = (sfTexture *) tile->texture;
+	}
     else {
-		this->states->texture = NULL;
+		this->states->texture = (sfTexture *) tile->texture;
+		//this->states->texture = NULL;
 	}
     sfVertexArray_setPrimitiveType(this->vertices, sfTrianglesStrip);
-	sfVertex *vert0 = sfVertexArray_getVertex(this->vertices, 0);
-	vert0->color = sfWhite;
-	vert1->color = sfWhite;
-	vert2->color = sfWhite;
-	vert3->color = sfWhite;
+
+    for (int i = 0; i < 4; i++)
+    	vert[i]->color = sfWhite;
+
 	sfRenderWindow_drawVertexArray(this->window, this->vertices, this->states);
 	world_pos.y *= -1;
 	sfVertexArray_setPrimitiveType(this->vertices, sfLinesStrip);
-	vert0->position = world_pos;
-	vert1->position = (sfVector2f){world_pos.x, world_pos.y};
-	vert2->position = (sfVector2f){10000, -10000};
-	vert3->position = (sfVector2f){10000, -10000};
+	vert[0]->position = world_pos;
+	vert[1]->position = (sfVector2f){world_pos.x, world_pos.y};
+	vert[2]->position = (sfVector2f){10000, -10000};
+	vert[3]->position = (sfVector2f){10000, -10000};
 	//printf("sfml inf is x:%f, y:%f\n", vert2->position.x, vert2->position.y);
 	this->states->texture = NULL;
-	vert0->color = sfRed;
-	vert1->color = sfRed;
-	vert2->color = sfRed;
-	vert3->color = sfRed;
+
+	for (int i = 0; i < 4; i++)
+		vert[i]->color = sfRed;
 	sfRenderWindow_drawVertexArray(this->window, this->vertices, this->states);
 }
 
@@ -96,22 +106,15 @@ void draw_line(struct sfml_renderer_system *this, struct vertex_component \
 void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this, \
 struct vertex_component *info)
 {
-    sfVertex *vert0 = sfVertexArray_getVertex(this->vertices, 0);
-	int corners[3];
 	int i;
 
 	if (!info || !info->map)
 		return;
 	for (i = 0; info->map[i].corners[0]->z != INT32_MIN; i++);
-	//my_printf("zdzdzdzd\n");
     for (i--; i >= 0; i--) {
-		corners[0] = info->map[i].corners[0]->x;
-		corners[1] = info->map[i].corners[0]->y;
-		corners[2] = info->map[i].corners[0]->z;
 		//printf("mdr %i %i %i\n", corners[0], corners[1], corners[2]);
         //if (!info->map[i].corners[0]->y)
-       //     continue; 
-        vert0->position = get_tile_coords(corners[0], corners[1], corners[2]);
+       //     continue;
         draw_tile(this, info, &info->map[i]);
     }
 }

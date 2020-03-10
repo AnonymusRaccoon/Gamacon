@@ -9,6 +9,7 @@
 #include "engine.h"
 #include "components/clickable_component.h"
 #include "components/transform_component.h"
+#include "map_interactions.h"
 #include <stddef.h>
 
 void clickable_onclick(gc_engine *engine)
@@ -22,6 +23,8 @@ void clickable_onclick(gc_engine *engine)
 	if (!scene)
 		return;
 	entities = scene->get_entity_by_cmp(scene, "clickable_component");
+	if (!entities)
+		return;
 	while (entities->next)
 		entities = entities->next;
 	for (gc_list *ent = entities; ent; ent = ent->prev) {
@@ -42,5 +45,6 @@ void clickable_onclick(gc_engine *engine)
 void clickable_manager_init(struct gc_engine *engine)
 {
 	engine->add_event_listener(engine, "mouse_left_click", &clickable_onclick);
-	engine->add_event_listener(engine, "mouse_right_click", &clickable_onclick);
+	engine->add_event_listener(engine, "mouse_right_click", &map_manage_right_click);
+	engine->add_event_listener(engine, "mouse_left_click", &map_manage_left_click);
 }

@@ -10,21 +10,13 @@
 #include "engine.h"
 #include "map_managment.h"
 #include <math.h>
+#include "my.h"
 #include "vertex_component.h"
 #include "stdint.h"
 
 #define ANGLE_X 45
 #define ANGLE_Y 35
 #define ADD_VALUE 10
-
-enum modes_on_tile {
-	VERTEX_0 = 2,
-	VERTEX_1 = 4,
-	VERTEX_2 = 8,
-	VERTEX_3 = 16,
-	ALL_VERTICES = 30,
-	INVERT_ADD_VALUE = 1
-};
 
 gc_vector2 get_tile_coords_to_pixels(float x, float y, float z)
 {
@@ -46,7 +38,25 @@ struct tile *get_tile_from_pos(gc_engine *engine, struct vertex_component *map, 
 	return (NULL);
 }
 
-void action_click_on_tile(gc_engine *engine, gc_scene *scene, struct tile *ret, char mode)
+int get_index_nearest_vertex(struct tile *sel, gc_vector2 pos)
+{
+	float spacing = INFINITY;
+	gc_vector2 coords;
+	double tmp;
+	int i_stock = 0;
+
+	for (int i = 0; i < 4; i++) {
+		coords = get_tile_coords_to_pixels(sel->corners[i]->x, sel->corners[i]->y, sel->corners[i]->z);
+		tmp = pow(coords.x - pos.x, 2) + pow(coords.y - pos.y, 2);
+		if (tmp < spacing) {
+			spacing = tmp;
+			i_stock = i;
+		}
+	}
+	return (i_stock);
+}
+
+void action_click_on_tile(gc_engine *engine, struct tile *ret, char mode)
 {
 	int val = (mode & 1) ? ADD_VALUE : -ADD_VALUE;
 
@@ -63,6 +73,8 @@ void action_click_on_tile(gc_engine *engine, gc_scene *scene, struct tile *ret, 
 
 bool map_manage_click(gc_engine *engine, int id, gc_vector2 pos)
 {
+	printf("old pass to remove\n");
+	return (false);
 	gc_scene *scene = engine->scene;
 	gc_entity *entity = scene->get_entity(scene, id);
 	struct vertex_component *map = entity->get_component(entity, "vertex_component");
@@ -75,7 +87,7 @@ bool map_manage_click(gc_engine *engine, int id, gc_vector2 pos)
 	}
 	ret = get_tile_from_pos(engine, map, pos);
 	if (ret) {
-		action_click_on_tile(engine, scene, ret, ALL_VERTICES | INVERT_ADD_VALUE);
+		action_click_on_tile(engine, ret, ALL_VERTICES | INVERT_ADD_VALUE);
 	}
 	return (false);
 }

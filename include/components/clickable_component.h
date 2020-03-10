@@ -27,5 +27,6 @@ struct clickable_component
 };
 
 
+
 const struct clickable_component clickable_component;
 #endif //_CLICKABLE_COMPONENT_H_
