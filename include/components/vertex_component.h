@@ -22,6 +22,7 @@ struct tile
     char *texture_name;
     struct vertex *corners[4];
     void *texture;
+    char data;
 };
 
 struct vertex_component
