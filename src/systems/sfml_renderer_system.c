@@ -34,7 +34,7 @@ gc_entity *entity, float dt)
     struct renderer *text = GETCMP(entity, renderer);
     struct sfml_renderer_system *rend = (struct sfml_renderer_system *)system;
 
-    if (!text->data)
+    if (!text->data || !text->is_visible)
         return;
     switch (text->type) {
     case GC_TEXTUREREND:

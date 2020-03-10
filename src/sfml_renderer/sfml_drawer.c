@@ -88,6 +88,8 @@ gc_text *txt)
     sfText_setFont(renderer->text, txt->font);
     sfText_setCharacterSize(renderer->text, txt->size / size);
     bounds = sfText_getLocalBounds(renderer->text);
+    tra->size.x = bounds.width;
+    tra->size.y = bounds.height;
     sfText_setColor(renderer->text, *(sfColor*)&txt->color);
     sfText_setPosition(renderer->text, (sfVector2f){
         tra->position.x - bounds.width / 2,

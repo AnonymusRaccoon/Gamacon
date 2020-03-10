@@ -21,6 +21,7 @@ static void ctr(void *component, va_list args)
 
     cmp->data = NULL;
     cmp->type = type;
+    cmp->is_visible = true;
     if (type == GC_TEXTUREREND)
         sprite_ctr(cmp, args);
     if (type == GC_ANIMREND)
@@ -48,6 +49,7 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     gc_texturetype type = renderer_get_type(n);
 
     cmp->type = type;
+	cmp->is_visible = true;
     if (type == GC_TEXTUREREND)
         sprite_fdctr(scene, cmp, n);
     if (type == GC_ANIMREND)
