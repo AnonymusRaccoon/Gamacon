@@ -29,9 +29,7 @@ gc_vector2 get_tile_coords_to_pixels(float x, float y, float z)
 struct tile *get_tile_from_pos(gc_engine *engine, struct vertex_component *map, gc_vector2 pos)
 {
 	for (int i = 0; map->map[i + 1].corners[0]->z != INT32_MIN; i++) {
-		//printf("map fresh x: %i y: %i z: %i\n", map->map[i].corners[0]->x, map->map[i].corners[0]->y, map->map[i].corners[0]->z);
 		if (is_pos_in_tile(pos, &map->map[i])) {
-			//printf("found \n");
 			return (&map->map[i]);
 		}
 	}
@@ -69,25 +67,4 @@ void action_click_on_tile(gc_engine *engine, struct tile *ret, char mode)
 	if (mode & 16)
 		ret->corners[3]->z += val;
 	ret->texture = engine->scene->get_data(engine->scene, "sprite", "command_block");
-}
-
-bool map_manage_click(gc_engine *engine, int id, gc_vector2 pos)
-{
-	printf("old pass to remove\n");
-	return (false);
-	gc_scene *scene = engine->scene;
-	gc_entity *entity = scene->get_entity(scene, id);
-	struct vertex_component *map = entity->get_component(entity, "vertex_component");
-	struct tile *ret = NULL;
-
-	//printf("map_manage_click called id: %i coords x: %f y:%f\n", id, pos.x, pos.y);
-	if (!map) {
-		my_printf("map not found\n");
-		return (false);
-	}
-	ret = get_tile_from_pos(engine, map, pos);
-	if (ret) {
-		action_click_on_tile(engine, ret, ALL_VERTICES | INVERT_ADD_VALUE);
-	}
-	return (false);
 }

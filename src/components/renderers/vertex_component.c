@@ -55,6 +55,8 @@ static bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
             this->map[inc].corners[2] = &this->vertices[v_x + 1][vy + 1];
             this->map[inc].data = 0;
             this->map[inc++].texture = scene->get_data(scene, "sprite", (inc % 2) ? "cobblestone" : "mossy_cobblestone");
+            if (inc == 60)
+				this->map[inc - 1].texture = scene->get_data(scene, "sprite", "comparator_on");
             if (inc > 31 && inc < 56)
                 this->map[inc - 1].texture = scene->get_data(scene, "sprite", "crafting_table");
         }
