@@ -13,7 +13,7 @@ void sfml_handle_events(gc_engine *engine)
     struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
     sfEvent event;
 
-	while (sfRenderWindow_pollEvent(rend->window, &event)) {
+	while (sfRenderWindow_pollEvent(rend->window, &event))
 		switch (event.type) {
 		case sfEvtClosed:
 			sfRenderWindow_close(rend->window);
@@ -33,7 +33,6 @@ void sfml_handle_events(gc_engine *engine)
 		default:
 			break;
 		}
-	}
 }
 
 gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine)
