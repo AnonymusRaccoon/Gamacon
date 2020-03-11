@@ -21,7 +21,7 @@ gc_vector2 get_tile_coords_to_pixels(float x, float y, float z)
 
 struct tile *get_tile_from_pos(struct vertex_component *map, gc_vector2 pos)
 {
-	if (!map)
+	if (!map || !map->map)
 		return (NULL);
 	for (int i = 0; map->map[i].corners[0]; i++) {
 		if (map->map[i].corners[0]->z == INT32_MAX || !map->map[i].corners[2]->y)
