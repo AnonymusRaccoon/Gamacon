@@ -11,28 +11,32 @@
 #include "my.h"
 #include <malloc.h>
 
+void vertex_data_destroy(gc_data *data)
+{
+	free(data->custom);
+}
+
 gc_data *tile_texture_array_loader(gc_engine *engine, gc_scene *scene, node *n)
 {
-	return (NULL);
 	gc_data *data = malloc(sizeof(*data));
-	int c = 0;
-	char *arr = NULL;
+	void **arr;
+	int count = 0;
 
 	if (!data)
 		return (NULL);
 	data->type = my_strdup(n->name);
-	data->name = data->type;
-	if (!data->type || !data->name)
+	data->name = NULL;
+	if (!data->type)
 		return (NULL);
-	c = xml_getchildcount(n);
-	n = n->child;
-	arr = malloc(sizeof(void *) * (c + 1));
+	count = xml_getchildcount(n);
+	arr = malloc(sizeof(void *) * (count + 1));
 	if (!arr)
 		return (NULL);
-	for (int i = 0; i < c; i++)
-		arr[i] = xml_getproperty(n, "name");
-	arr[c] = '\0';
+	n = n->child;
+	for (int i = 0; n; n = n->next, i++)
+		arr[i] = scene->get_data(scene, "sprite", xml_gettempprop(n, "name"));
+	arr[count - 1] = NULL;
 	data->custom = arr;
-	data->destroy = &free;
+	data->destroy = &vertex_data_destroy;
 	return (data);
 }

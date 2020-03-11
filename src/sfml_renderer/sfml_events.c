@@ -43,7 +43,7 @@ gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine)
 	gc_vector2 ret;
 	sfVector2f pos2;
 
-	pos = sfMouse_getPosition(rend->window);
+	pos = sfMouse_getPositionRenderWindow(rend->window);
 	pos2 = sfRenderWindow_mapPixelToCoords(rend->window, pos, rend->view);
 	ret.x = pos2.x;
 	ret.y = pos2.y;

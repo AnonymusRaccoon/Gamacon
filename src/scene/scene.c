@@ -43,7 +43,6 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
 
     if (!scene || (xmlpath && !(n = xml_parse(xmlpath))))
         return (NULL);
-    scene_load_data(engine, scene, n);
 	scene->is_paused = false;
     scene->entities = NULL;
     scene->entities_by_cmp = NULL;
@@ -55,7 +54,8 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     scene->get_callback = &scene_get_callback;
     scene->load_entity = &scene_load_entity;
     scene->callbacks = engine->callbacks;
-    prefab_loadentities(n, engine, scene);
+	scene_load_data(engine, scene, n);
+	prefab_loadentities(n, engine, scene);
     xml_destroy(n);
     return (scene);
 }
