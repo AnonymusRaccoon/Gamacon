@@ -10,6 +10,7 @@
 #include "utility.h"
 #include <stdlib.h>
 #include "event_manager.h"
+
 void update_system(gc_engine *engine, gc_system *sys, float dtime)
 {
     gc_scene *scene = engine->scene;
