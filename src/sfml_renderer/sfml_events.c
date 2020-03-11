@@ -10,8 +10,8 @@
 
 void sfml_handle_events(gc_engine *engine)
 {
-	struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
-	sfEvent event;
+    struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
+    sfEvent event;
 
 	while (sfRenderWindow_pollEvent(rend->window, &event)) {
 		switch (event.type) {
@@ -19,7 +19,7 @@ void sfml_handle_events(gc_engine *engine)
 			sfRenderWindow_close(rend->window);
 			break;
 		case sfEvtResized:
-			engine->on_resize(engine, (gc_vector2){event.size.width, event.size.height});
+            engine->on_resize(engine, (gc_vector2){event.size.width, event.size.height});
 			break;
 		case sfEvtMouseButtonReleased:
 			if (event.mouseButton.button == sfMouseLeft)
