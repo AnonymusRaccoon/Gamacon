@@ -73,27 +73,27 @@ void sfml_setup_options(struct sfml_renderer_system *this, gc_engine *engine)
 
 void sfmlrend_ctr(void *rend, va_list list)
 {
-    struct sfml_renderer_system *renderer = (struct sfml_renderer_system *)rend;
+    struct sfml_renderer_system *this = (struct sfml_renderer_system *)rend;
     sfVideoMode mode = {800, 600, 32};
     gc_engine *engine = va_arg(list, gc_engine *);
     const char *title = va_arg(list, const char *);
-    int framerate = va_arg(list, int);
+    this->framerate = va_arg(list, int);
 
-    renderer->get_text_size = &sfml_get_text_size;
-    renderer->window = sfRenderWindow_create(mode, title, sfDefaultStyle, NULL);
-    renderer->sprite = sfSprite_create();
-    renderer->view = sfView_create();
-    renderer->text = sfText_create();
-    renderer->vertices = sfml_init_verticies();
-    renderer->states = sfml_init_render_state();
-    if (!renderer->window || !renderer->sprite || \
-!renderer->view || !renderer->text || !renderer->vertices || !renderer->states)
+	this->get_text_size = &sfml_get_text_size;
+	this->window = sfRenderWindow_create(mode, title, sfDefaultStyle, NULL);
+	this->sprite = sfSprite_create();
+	this->view = sfView_create();
+	this->text = sfText_create();
+	this->vertices = sfml_init_verticies();
+	this->states = sfml_init_render_state();
+    if (!this->window || !this->sprite || \
+!this->view || !this->text || !this->vertices || !this->states)
         return;
-    sfRenderWindow_setFramerateLimit(renderer->window, framerate);
-    sfView_setSize(renderer->view, (sfVector2f){800, 600});
-    sfView_setCenter(renderer->view, (sfVector2f){400, -300});
-    sfRenderWindow_setView(renderer->window, renderer->view);
-    sfml_setup_options(renderer, engine);
+    sfRenderWindow_setFramerateLimit(this->window, this->framerate);
+    sfView_setSize(this->view, (sfVector2f){800, 600});
+    sfView_setCenter(this->view, (sfVector2f){400, -300});
+    sfRenderWindow_setView(this->window, this->view);
+    sfml_setup_options(this, engine);
 }
 
 void sfmlrend_dtr(void *system)

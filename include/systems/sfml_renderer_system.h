@@ -27,6 +27,7 @@ struct sfml_renderer_system
     gc_vector2 (*get_text_size)(sf_renderer *this, gc_text *text);
     bool is_fullscreen;
     gc_vector2i resolution;
+    int framerate;
 };
 
 gc_system *gc_new_sfml_renderer(gc_engine *engine, \
