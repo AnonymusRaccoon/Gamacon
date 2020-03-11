@@ -10,6 +10,7 @@
 #include "my.h"
 #include <malloc.h>
 #include "ui.h"
+#include "vertex_data_loader.h"
 
 void engine_add_dataloader(gc_engine *engine, char *type, gc_loader loader)
 {
@@ -41,6 +42,7 @@ void engine_init_dataloaders(gc_engine *this)
 	this->add_dataloader = &engine_add_dataloader;
 	this->get_dataloader = &engine_get_dataloader;
 	this->add_callback = &engine_add_callback;
+	this->add_dataloader(this, "tiles", &tile_texture_array_loader);
 	ui_setup(this);
 }
 

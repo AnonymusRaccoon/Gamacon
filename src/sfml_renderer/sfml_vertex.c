@@ -110,7 +110,7 @@ struct vertex_component *info)
 
 	if (!info || !info->map)
 		return;
-	for (i = 0; info->map[i].corners[0]->z != INT32_MIN; i++);
+	for (i = 0; info->map[i].corners[0]; i++);
     for (i--; i >= 0; i--) {
 		//printf("mdr %i %i %i\n", corners[0], corners[1], corners[2]);
         //if (!info->map[i].corners[0]->y)

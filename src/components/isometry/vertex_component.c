@@ -24,7 +24,7 @@ static bool get_vertices(void *component, node *n)
     if (!this->vertices)
         return (false);
     for (node *line = n->child; line; line = line->next) {
-        this->vertices[i] = malloc(size[0] * (xml_getchildcount(n->child) + 1));
+        this->vertices[i] = malloc(size[0] * (xml_getchildcount(line) + 1));
         if (!this->vertices[i])
             return (false);
         for (node *row = line->child; row; row = row->next) {
@@ -44,11 +44,18 @@ static bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
     int v_x = xml_getchildcount(n);
     int vy = xml_getchildcount(n->child);
 
+	for (node *line = n->child; line; line = line->next)
+		vy = (xml_getchildcount(line) > vy) ? xml_getchildcount(line) : vy;
     this->map = malloc(sizeof(struct tile) * (v_x * vy + 1));
     if (!this->map)
         return (false);
     for (v_x = 0; this->vertices[v_x + 1]; v_x++) {
         for (vy = 0; this->vertices[v_x][vy].z != INT32_MIN; vy++) {
+			if (this->vertices[v_x][vy].z == INT32_MIN || \
+			this->vertices[v_x][vy + 1].z == INT32_MIN || \
+			this->vertices[v_x + 1][vy].z == INT32_MIN || \
+			this->vertices[v_x + 1][vy + 1].z == INT32_MIN)
+				break;
             this->map[inc].corners[0] = &this->vertices[v_x][vy];
             this->map[inc].corners[1] = &this->vertices[v_x][vy + 1];
             this->map[inc].corners[3] = &this->vertices[v_x + 1][vy];
@@ -61,7 +68,7 @@ static bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
                 this->map[inc - 1].texture = scene->get_data(scene, "sprite", "crafting_table");
         }
     }
-    this->map[inc].corners[0] = &this->vertices[v_x][vy];
+    this->map[inc].corners[0] = NULL;
     return (true);
 }
 
