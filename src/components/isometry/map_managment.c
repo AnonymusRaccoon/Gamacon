@@ -71,5 +71,4 @@ void tile_click(gc_engine *engine, struct tile *ret, char mode, bool r)
 		ret->corners[2]->z += (r) ? -ret->corners[2]->z : val;
 	if (mode & VERTEX_3)
 		ret->corners[3]->z += (r) ? -ret->corners[3]->z : val;
-	ret->texture = engine->scene->get_data(engine->scene, "sprite", "command_block");
 }
