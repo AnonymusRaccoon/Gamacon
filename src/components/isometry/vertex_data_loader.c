@@ -13,9 +13,10 @@
 
 gc_data *tile_texture_array_loader(gc_engine *engine, gc_scene *scene, node *n)
 {
+	return (NULL);
 	gc_data *data = malloc(sizeof(*data));
-	int c;
-	char *arr;
+	int c = 0;
+	char *arr = NULL;
 
 	if (!data)
 		return (NULL);
@@ -32,7 +33,6 @@ gc_data *tile_texture_array_loader(gc_engine *engine, gc_scene *scene, node *n)
 		arr[i] = xml_getproperty(n, "name");
 	arr[c] = '\0';
 	data->custom = arr;
-	// TODO add a destructor
-	data->destroy = NULL;
+	data->destroy = &free;
 	return (data);
 }

@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 #define TILE_MODE true
-#define ROTATION true
+#define ROTATION false
 
 void apply_interaction_to_map(gc_engine *engine, struct tile *ret, \
 bool left_click, gc_vector2 pos)
