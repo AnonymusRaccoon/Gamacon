@@ -10,7 +10,7 @@
 struct callback
 {
 	const char *name;
-	const callback_t func;
+	callback_t func;
 };
 
 #endif //_CALLBACKS_H_

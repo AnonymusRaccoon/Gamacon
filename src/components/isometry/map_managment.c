@@ -5,19 +5,11 @@
 ** map_managment
 */
 
-#include <SFML/Audio.h>
-#include "systems/sfml_renderer_system.h"
 #include "engine.h"
 #include "map_managment.h"
 #include <math.h>
-#include "my.h"
 #include "vertex_component.h"
-#include <components/isometry/map_manager_component.h>
 #include "stdint.h"
-
-#define ANGLE_X 45
-#define ANGLE_Y 35
-#define ADD_VALUE 10
 
 gc_vector2 get_tile_coords_to_pixels(float x, float y, float z)
 {
@@ -57,18 +49,4 @@ int get_index_nearest_vertex(struct tile *sel, gc_vector2 pos)
 		}
 	}
 	return (i_stock);
-}
-
-void tile_click(gc_engine *engine, struct tile *ret, char mode, bool r)
-{
-	int val = (mode & INVERT_ADD_VALUE) ? ADD_VALUE : -ADD_VALUE;
-
-	if (mode & VERTEX_0)
-		ret->corners[0]->z += (r) ? -ret->corners[0]->z : val;
-	if (mode & VERTEX_1)
-		ret->corners[1]->z += (r) ? -ret->corners[1]->z : val;
-	if (mode & VERTEX_2)
-		ret->corners[2]->z += (r) ? -ret->corners[2]->z : val;
-	if (mode & VERTEX_3)
-		ret->corners[3]->z += (r) ? -ret->corners[3]->z : val;
 }
