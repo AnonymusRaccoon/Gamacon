@@ -14,6 +14,7 @@
 #include "systems/sfml_renderer_system.h"
 #include "ui.h"
 #include <malloc.h>
+#include "prefab.h"
 #include "components/tag_component.h"
 #include "components/input_component.h"
 
@@ -63,10 +64,10 @@ gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
 	if (xml_hasproperty(n, "tag"))
 		background->add_component(background, new_component(&tag_component,
 			xml_getproperty(n, "tag")));
-	if (xml_hasproperty(n, "tooltip"))
-		LISTADD(entities, tooltip_make(engine, scene, n, background));
 	LISTADD(entities, background);
 	LISTADD(entities, new_text(engine, scene, n));
+	if (xml_hasproperty(n, "tooltip"))
+		LISTADD(entities, tooltip_make(engine, scene, n, background));
 	return (entities);
 }
 
@@ -74,10 +75,17 @@ gc_data *button_make(gc_engine *engine, gc_scene *scene, node *n)
 {
 	gc_data *data = malloc(sizeof(*data));
 	gc_list *list = new_button(engine, scene, n);
+	gc_component *cmp;
 
+	if (!list)
+		return (NULL);
 	data->name = "button";
 	data->type = "ui";
 	data->destroy = NULL;
 	data->custom = list;
+	for (n = n->child; n; n = n->next) {
+		cmp = deserialize_component(engine, list->data, scene, n);
+		((gc_entity *)list->data)->add_component(list->data, cmp);
+	}
 	return (data);
 }

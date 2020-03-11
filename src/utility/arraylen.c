@@ -5,7 +5,9 @@
 ** arraylen
 */
 
-int arraylen(const char **array)
+#include <stdbool.h>
+
+int arraylen(const bool *array)
 {
     int i = 0;
 

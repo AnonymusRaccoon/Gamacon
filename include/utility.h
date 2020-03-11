@@ -8,11 +8,12 @@
 #pragma once
 
 #include <stddef.h>
+#include <stdbool.h>
 
 char *my_strdup(const char *src);
 int my_printf(const char *fmt, ...);
 int my_strlen(const char *str);
-int arraylen(const char **array);
+int arraylen(const bool *array);
 char *tostr(int n);
 int my_atoi(const char *str);
 int my_strcmp(const char *str1, const char *str2);
