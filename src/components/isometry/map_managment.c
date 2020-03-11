@@ -12,6 +12,7 @@
 #include <math.h>
 #include "my.h"
 #include "vertex_component.h"
+#include <components/isometry/map_manager_component.h>
 #include "stdint.h"
 
 #define ANGLE_X 45
@@ -58,17 +59,17 @@ int get_index_nearest_vertex(struct tile *sel, gc_vector2 pos)
 	return (i_stock);
 }
 
-void tile_click(gc_engine *engine, struct tile *ret, char mode)
+void tile_click(gc_engine *engine, struct tile *ret, char mode, bool r)
 {
-	int val = (mode & 1) ? ADD_VALUE : -ADD_VALUE;
+	int val = (mode & INVERT_ADD_VALUE) ? ADD_VALUE : -ADD_VALUE;
 
-	if (mode & 2)
-		ret->corners[0]->z += val;
-	if (mode & 4)
-		ret->corners[1]->z += val;
-	if (mode & 8)
-		ret->corners[2]->z += val;
-	if (mode & 16)
-		ret->corners[3]->z += val;
+	if (mode & VERTEX_0)
+		ret->corners[0]->z += (r) ? -ret->corners[0]->z : val;
+	if (mode & VERTEX_1)
+		ret->corners[1]->z += (r) ? -ret->corners[1]->z : val;
+	if (mode & VERTEX_2)
+		ret->corners[2]->z += (r) ? -ret->corners[2]->z : val;
+	if (mode & VERTEX_3)
+		ret->corners[3]->z += (r) ? -ret->corners[3]->z : val;
 	ret->texture = engine->scene->get_data(engine->scene, "sprite", "command_block");
 }

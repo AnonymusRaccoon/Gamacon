@@ -22,6 +22,7 @@ enum gc_mousekeys key)
 	struct map_manager_component *manager = GETCMP(entity, map_manager_component);
 	struct tile *ret = get_tile_from_pos(map, pos);
 	int ind;
+	bool r = manager->brush == RESET;
 
 	if (!map || !manager) {
 		my_printf("map not found\n");
@@ -33,10 +34,10 @@ enum gc_mousekeys key)
 		if (manager->brush == ROTATE)
 			ret->data = (ret->data + ((key == GC_LEFT) ? 1 : -1U)) % 4;
 		else
-			tile_click(engine, ret, ALL_VERTICES | (key == GC_LEFT));
+			tile_click(engine, ret, ALL_VERTICES | (key == GC_LEFT), r);
 	} else {
 		ind = get_index_nearest_vertex(ret, pos);
-		tile_click(engine, ret, ((int) pow(2, ind + 1)) | (key == GC_LEFT));
+		tile_click(engine, ret, ((int) pow(2, ind + 1)) | (key == GC_LEFT), r);
 	}
 	return (false);
 }
