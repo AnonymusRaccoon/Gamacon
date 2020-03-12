@@ -22,7 +22,9 @@ SRC = src/engine/engine.c \
 	src/components/controllable_component.c \
 	src/components/friction_component.c \
 	src/components/friction_giver.c \
+	src/components/clickable_component.c \
 	src/components/input_component.c \
+	src/components/tag_component.c \
 	src/components/tooltip_component.c \
 	src/components/controllers/keyboard_controller.c \
 	src/components/renderers/sprite_renderer.c \
