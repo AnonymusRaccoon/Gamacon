@@ -6,9 +6,9 @@
 */
 
 #include "engine.h"
-#include "map_managment.h"
+#include "map_utils.h"
 #include <math.h>
-#include "vertex_component.h"
+#include "components/vertex_component.h"
 #include "stdint.h"
 
 gc_vector2 get_tile_coords_to_pixels(float x, float y, float z)
