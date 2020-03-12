@@ -11,12 +11,12 @@
 #include "vertex_component.h"
 #include "stdint.h"
 
-gc_vector2 get_tile_coords_to_pixels(float x, float y, float z)
+gc_vector2 gc_vector2_from_coords(float x, float y, float z)
 {
-	return (gc_vector2){
+	return ((gc_vector2){
 		cos(ANGLE_X) * y * 64 - cos(ANGLE_X) * x * 64,
-		-(sin(ANGLE_Y) * x * 64 + sin(ANGLE_Y) * y * 64 - z)
-	};
+		(sin(ANGLE_Y) * x * 64 + sin(ANGLE_Y) * y * 64 - z)
+	});
 }
 
 struct tile *get_tile_from_pos(struct vertex_component *map, gc_vector2 pos)
@@ -40,8 +40,9 @@ int get_index_nearest_vertex(struct tile *sel, gc_vector2 pos)
 	double tmp;
 	int i_stock = 0;
 
+	pos.y *= -1;
 	for (int i = 0; i < 4; i++) {
-		coords = get_tile_coords_to_pixels(sel->corners[i]->x, sel->corners[i]->y, sel->corners[i]->z);
+		coords = gc_vector2_from_coords(sel->corners[i]->x, sel->corners[i]->y, sel->corners[i]->z);
 		tmp = pow(coords.x - pos.x, 2) + pow(coords.y - pos.y, 2);
 		if (tmp < spacing) {
 			spacing = tmp;

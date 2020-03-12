@@ -17,18 +17,25 @@
 #include <stdint.h>
 #include <SFML/Graphics.h>
 
-#define ANGLE_X 45
-#define ANGLE_Y 35
-
-sfVector2f get_tile_coords(int x, int y, int z)
+sfVector2f sfvector2f(gc_vector2 vector)
 {
-	return (sfVector2f){
-		cos(ANGLE_X) * y * 64 - cos(ANGLE_X) * x * 64,
-		(sin(ANGLE_Y) * x  * 64 + sin(ANGLE_Y) * y * 64 - z)
-	};
+	return ((sfVector2f){
+		vector.x,
+		vector.y
+	});
 }
 
-void draw_tile(struct sfml_renderer_system *this, gc_vector2 offset, \
+static void tile_rotate(struct tile *tile, int **vertex_order)
+{
+	for (int j = 0; j < (tile->data & 3); j++) {
+		int tmp = vertex_order[0];
+		for (int i = 0; i < 3; i++)
+			vertex_order[i] = vertex_order[i + 1];
+		vertex_order[3] = tmp;
+	}
+}
+
+void sfr_draw_tile(struct sfml_renderer_system *this, gc_vector2 offset, \
 struct tile *tile, bool hovered)
 {
 	sfVertex *v[4];
@@ -37,18 +44,13 @@ struct tile *tile, bool hovered)
 
 	if (tile->corners[0]->z == INT32_MAX || !tile->corners[2]->y)
 		return;
-	for (int j = 0; j < (tile->data & 3); j++) {
-		int tmp = vertex_order[0];
-		for (int i = 0; i < 3; i++)
-			vertex_order[i] = vertex_order[i + 1];
-		vertex_order[3] = tmp;
-	}
+	//TODO re integrate tile rotate
 	for (int i = 0; i < 4; i++) {
 		v[i] = sfVertexArray_getVertex(this->vertices, vertex_order[i]);
 		c[0] = tile->corners[i]->x;
 		c[1] = tile->corners[i]->y;
 		c[2] = tile->corners[i]->z;
-		v[i]->position = get_tile_coords(c[0], c[1], c[2]);
+		v[i]->position = sfvector2f(gc_vector2_from_coords(c[0], c[1], c[2]));
 		v[i]->position.x += offset.x;
 		v[i]->position.y += offset.y;
 		if (hovered)
@@ -76,6 +78,6 @@ struct transform_component *pos, struct vertex_component *info)
 	tl = get_tile_from_pos(info, (gc_vector2){wp.x - pos->position.x, wp.y + pos->position.y});
 	for (i = 0; info->map[i].corners[0]; i++);
     for (i--; i >= 0; i--) {
-		draw_tile(this, pos->position, &info->map[i], &info->map[i] == tl);
+		sfr_draw_tile(this, pos->position, &info->map[i], &info->map[i] == tl);
     }
 }

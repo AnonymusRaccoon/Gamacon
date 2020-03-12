@@ -74,12 +74,10 @@ bool is_pos_in_tile(gc_vector2 pos, struct tile *tile)
 	struct vertex **c = tile->corners;
 	gc_vector2 corners[4];
 
+	pos.y *= -1;
 	for (int i = 0; i < 4; i++)
-		corners[i] = get_tile_coords_to_pixels(c[i]->x, c[i]->y, c[i]->z);
+		corners[i] = gc_vector2_from_coords(c[i]->x, c[i]->y, c[i]->z);
 	if (is_point_in_polygon(corners, 4, pos)) {
-		//for (int i = 0; i < 4; i ++)
-		//	printf("%i :(x:%f, y:%f)\n", i + 1, corners[i].x, corners[i].y);
-		//	printf("\n");
 		return (true);
 	}
 	return (false);
