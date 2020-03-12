@@ -24,5 +24,5 @@ gc_vector2 gcvector2_normilize(gc_vector2 vec);
 
 static inline gc_vector2 gc_vector2_add(gc_vector2 first, gc_vector2 second)
 {
-	return (gc_vector2){first.x + second.x, first.y + second.y};
+    return (gc_vector2){first.x + second.x, first.y + second.y};
 }
