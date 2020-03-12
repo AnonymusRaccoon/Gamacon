@@ -18,6 +18,7 @@
 gc_data *sfml_music_loader(gc_engine *engine, gc_scene *scene, node *n);
 gc_data *sfml_sprite_loader(gc_engine *engine, gc_scene *scene, node *n);
 gc_data *sfml_font_loader(gc_engine *engine, gc_scene *scene, node *n);
+gc_data *sfml_camera(gc_engine *engine, gc_scene *scene, node *n);
 
 sfTexture *get_texture(gc_scene *scene, char *name);
 sfVertexArray *sfml_init_verticies(void);
@@ -49,5 +50,5 @@ gc_vector2 sfml_get_screen_size(gc_engine *engine);
 gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine);
 
 void entities_update_to_cam(gc_scene *scene, \
-struct sfml_renderer_system *renderer, struct camerafollow_system *cam);
+struct sfml_renderer_system *renderer);
 void entities_update_to_cam_size(gc_scene *scene, gc_vector2 size);

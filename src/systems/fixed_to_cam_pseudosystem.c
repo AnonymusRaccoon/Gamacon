@@ -16,7 +16,7 @@
 #include <SFML/Graphics.h>
 
 void entities_update_to_cam(gc_scene *scene, \
-struct sfml_renderer_system *renderer, struct camerafollow_system *cam)
+struct sfml_renderer_system *renderer)
 {
     gc_list *list = scene->get_entity_by_cmp(scene, "fixed_to_cam");
 
@@ -25,8 +25,9 @@ struct sfml_renderer_system *renderer, struct camerafollow_system *cam)
 		struct transform_component *tra = GETCMP(entity, transform_component);
 		struct fixed_to_cam *fc = GETCMP(entity, fixed_to_cam);
 		sfVector2f size = sfView_getSize(renderer->view);
-		float x = (cam->cam_pos.x - size.x / 2);
-		float y = (cam->cam_pos.y + size.y / 2);
+		sfVector2f pos = sfView_getCenter(renderer->view);
+		float x = pos.x - size.x / 2;
+		float y = -pos.y + size.y / 2;
 
 		if (!tra)
 			continue;
