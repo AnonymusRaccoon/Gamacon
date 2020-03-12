@@ -30,8 +30,8 @@ gc_entity *entity, gc_animholder *holder, float dtime);
 void sfmlrenderer_draw_txt(gc_engine *engine, \
 struct sfml_renderer_system *renderer, struct transform_component *tra, \
 gc_text *txt);
-void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this, \
-struct vertex_component *txt);
+void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this,
+struct transform_component *pos, struct vertex_component *txt);
 
 void sfml_texture_destroy(gc_data *data);
 void sfml_music_destroy(gc_data *data);
