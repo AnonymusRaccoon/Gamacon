@@ -22,7 +22,7 @@ void sfml_handle_events(gc_engine *engine)
             sfRenderWindow_close(rend->window);
             break;
         case sfEvtResized:
-            engine->on_resize(engine, (gc_vector2){event.size.width, event.size.height});
+            engine->on_resize(engine, *(gc_vector2 *)&event.size);
             break;
         case sfEvtMouseButtonReleased:
             if (event.mouseButton.button == sfMouseLeft)
