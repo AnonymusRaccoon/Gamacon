@@ -75,7 +75,7 @@ struct vertex_component *info, float dt)
 
     if (!info || !info->map)
         return;
-    tl = get_tile_from_pos(info, (gc_vector2){w.x, wp.y});
+    tl = get_tile_from_pos(info, (gc_vector2){w.x - pos->position.x, wp.y + pos->position.y});
     for (i = 0; info->map[i].corners[0]; i++);
     for (i--; i >= 0; i--) {
         draw_tile(this, pos->position, &info->map[i], &info->map[i] == tl);
