@@ -12,7 +12,6 @@
 #include "components/transform_component.h"
 #include "systems/sfml_renderer_system.h"
 #include "components/vertex_component.h"
-#include "map_managment.h"
 #include <math.h>
 #include <stdint.h>
 #include <SFML/Graphics.h>

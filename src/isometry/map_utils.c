@@ -6,9 +6,9 @@
 */
 
 #include "engine.h"
-#include "map_managment.h"
+#include "map_utils.h"
 #include <math.h>
-#include "vertex_component.h"
+#include "components/vertex_component.h"
 #include "stdint.h"
 
 gc_vector2 gc_vector2_from_coords(float x, float y, float z)

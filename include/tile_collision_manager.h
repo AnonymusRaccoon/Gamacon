@@ -9,7 +9,7 @@
 #define MY3D_TILE_COLLISION_MANAGER_H
 
 #include <stdbool.h>
-#include "vertex_component.h"
+#include "components/vertex_component.h"
 
 //! @brief Checks if a point q is on the segment pr
 bool is_on_segment(gc_vector2 p, gc_vector2 q, gc_vector2 r);

@@ -8,7 +8,7 @@
 #include "xml.h"
 #include "component.h"
 #include "components/vertex_component.h"
-#include "create_map_functions.h"
+#include "isometry.h"
 #include "utility.h"
 #include <stddef.h>
 

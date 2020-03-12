@@ -8,7 +8,7 @@
 #include "xml.h"
 #include <malloc.h>
 #include <stdint.h>
-#include "create_map_functions.h"
+#include "isometry.h"
 
 bool get_vertices(struct vertex_component *this, node *n)
 {

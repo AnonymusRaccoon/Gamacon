@@ -9,7 +9,6 @@
 #include "engine.h"
 #include "components/clickable_component.h"
 #include "components/transform_component.h"
-#include "map_interactions.h"
 #include <stddef.h>
 #include <keybindings.h>
 

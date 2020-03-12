@@ -7,7 +7,7 @@
 
 #include "engine.h"
 #include <stdbool.h>
-#include "vertex_component.h"
+#include "components/vertex_component.h"
 
 #define ANGLE_X 45
 #define ANGLE_Y 35

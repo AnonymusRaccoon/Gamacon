@@ -16,7 +16,7 @@
 #include "systems/camerafollow_system.h"
 #include "systems/tooltip_system.h"
 #include "sfml_renderer.h"
-#include "clickable_component.h"
+#include "components/clickable_component.h"
 
 void engine_add_system(gc_engine *engine, const void *system)
 {
