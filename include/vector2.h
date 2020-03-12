@@ -15,8 +15,8 @@ typedef struct gc_vector2
 
 typedef struct gc_vector2i
 {
-	int x;
-	int y;
+    int x;
+    int y;
 } gc_vector2i;
 
 float gcvector_magnitude(gc_vector2 vec);

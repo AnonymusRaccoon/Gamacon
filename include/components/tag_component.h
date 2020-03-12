@@ -1,6 +1,9 @@
-//
-// Created by anonymus-raccoon on 3/3/20.
-//
+/*
+** EPITECH PROJECT, 2020
+** My3D
+** File description:
+** tag_component
+*/
 
 #ifndef _TAG_COMPONENT_H_
 #define _TAG_COMPONENT_H_
@@ -9,8 +12,8 @@
 
 struct tag_component
 {
-	gc_component base;
-	char *tag;
+    gc_component base;
+    char *tag;
 };
 
 const struct tag_component tag_component;

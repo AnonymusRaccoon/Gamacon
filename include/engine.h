@@ -58,13 +58,13 @@ struct gc_engine
     gc_list *callbacks;
     void (*add_callback)(gc_engine *this, char *name, callback_t callback);
 
-	void (*on_resize)(gc_engine *this, gc_vector2 size);
-	gc_vector2 (*get_screen_size)(gc_engine *this);
-	gc_vector2  (*get_cursor_pos)(gc_engine *this);
+    void (*on_resize)(gc_engine *this, gc_vector2 size);
+    gc_vector2 (*get_screen_size)(gc_engine *this);
+    gc_vector2 (*get_cursor_pos)(gc_engine *this);
 
-	gc_list *event_listeners;
-	void (*trigger_event)(gc_engine *this, const char *name, ...);
-	bool (*add_event_listener)(gc_engine *this, const char *name, \
+    gc_list *event_listeners;
+    void (*trigger_event)(gc_engine *this, const char *name, ...);
+    bool (*add_event_listener)(gc_engine *this, const char *name, \
 void (*func)(gc_engine *, va_list));
 };
 
@@ -89,6 +89,7 @@ void engine_add_buildin_components(gc_engine *engine);
 const void *engine_get_component(gc_engine *engine, const char *name);
 void engine_add_component(gc_engine *engine, const void *component);
 
+void engine_setup_event(gc_engine *engine);
 void engine_init_dataloaders(gc_engine *this);
 void engine_add_dataloader(gc_engine *engine, char *type, gc_loader loader);
 gc_dataloader *engine_get_dataloader(gc_engine *this, const char *type);

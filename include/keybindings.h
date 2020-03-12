@@ -1,6 +1,9 @@
-//
-// Created by anonymus-raccoon on 3/9/20.
-//
+/*
+** EPITECH PROJECT, 2020
+** My3D
+** File description:
+** keybindings
+*/
 
 #ifndef _KEYBINDINGS_H_
 #define _KEYBINDINGS_H_
@@ -9,13 +12,13 @@
 
 typedef enum gc_keybindings
 {
-	ESCAPE = sfKeyEscape
+    ESCAPE = sfKeyEscape
 } gc_keybindings;
 
 typedef enum gc_mousekeys
 {
-	GC_LEFT,
-	GC_RIGHT
+    GC_LEFT,
+    GC_RIGHT
 } gc_mousekeys;
 
 #endif //_KEYBINDINGS_H_

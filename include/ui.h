@@ -1,6 +1,9 @@
-//
-// Created by anonymus-raccoon on 2/21/20.
-//
+/*
+** EPITECH PROJECT, 2020
+** My3D
+** File description:
+** ui
+*/
 
 #ifndef _UI_H_
 #define _UI_H_

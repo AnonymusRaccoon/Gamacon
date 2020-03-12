@@ -21,22 +21,22 @@ static void ctr(void *component, va_list args)
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct vertex_component *this = (struct vertex_component *)component;
-	char *tilemap = xml_gettempprop(n, "tilemap");
-	char *name = n->name;
+    char *tilemap = xml_gettempprop(n, "tilemap");
+    char *name = n->name;
 
     this->vertices = NULL;
     this->map = NULL;
     if (!tilemap) {
-		my_printf("gamacon: unable to find property 'tilemap' on %s\n", name);
-		return;
+        my_printf("gamacon: unable to find property 'tilemap' on %s\n", name);
+        return;
     }
     n = xml_parse(tilemap);
     if (!n) {
-    	my_printf("gamacon: unable to find a valid tilemap at %s\n", tilemap);
-    	return;
+        my_printf("gamacon: unable to find a valid tilemap at %s\n", tilemap);
+        return;
     }
     if (!get_vertices(this, n->child) || !get_tiles(this, scene, n->child)) {
-		my_printf("Unable to malloc during verticies/tile parsing\n");
+        my_printf("Unable to malloc during verticies/tile parsing\n");
         return;
     }
 }

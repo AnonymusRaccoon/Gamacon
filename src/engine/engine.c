@@ -64,8 +64,8 @@ void engine_destroy(gc_engine *engine)
 
 gc_engine *engine_create_more(gc_engine *engine)
 {
-	engine->get_cursor_pos = &engine_get_cursor_pos;
-	return (engine);
+    engine->get_cursor_pos = &engine_get_cursor_pos;
+    return (engine);
 }
 
 gc_engine *engine_create(void)
@@ -86,11 +86,8 @@ gc_engine *engine_create(void)
     engine->play_music = &engine_play_music;
     engine->stop_music = &engine_stop_music;
     engine->destroy = &engine_destroy;
-    engine->on_resize = &engine_on_resize;
-    engine->event_listeners = NULL;
-    engine->add_event_listener = &engine_add_event_listener;
-    engine->trigger_event = &engine_trigger_event;
-	engine_add_builtin_systems(engine);
+    engine_setup_event(engine);
+    engine_add_builtin_systems(engine);
     engine_add_buildin_components(engine);
     engine_init_dataloaders(engine);
     return (engine_create_more(engine));

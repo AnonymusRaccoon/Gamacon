@@ -43,7 +43,7 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
 
     if (!scene || (xmlpath && !(n = xml_parse(xmlpath))))
         return (NULL);
-	scene->is_paused = false;
+    scene->is_paused = false;
     scene->entities = NULL;
     scene->entities_by_cmp = NULL;
     scene->add_entity = &entity_add;
@@ -54,8 +54,8 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     scene->get_callback = &scene_get_callback;
     scene->load_entity = &scene_load_entity;
     scene->callbacks = engine->callbacks;
-	scene_load_data(engine, scene, n);
-	prefab_loadentities(n, engine, scene);
+    scene_load_data(engine, scene, n);
+    prefab_loadentities(n, engine, scene);
     xml_destroy(n);
     return (scene);
 }
@@ -76,11 +76,11 @@ int change_scene(gc_engine *engine, gc_scene *scene)
 
 callback_t scene_get_callback(gc_scene *this, char *name)
 {
-	if (!name)
-		return (NULL);
-	for (gc_list *cal = this->callbacks; cal; cal = cal->next) {
-		if (!my_strcmp(((gc_data *)cal->data)->name, name))
-			return (((gc_data *)cal->data)->custom);
-	}
-	return (NULL);
+    if (!name)
+        return (NULL);
+    for (gc_list *cal = this->callbacks; cal; cal = cal->next) {
+        if (!my_strcmp(((gc_data *)cal->data)->name, name))
+            return (((gc_data *)cal->data)->custom);
+    }
+    return (NULL);
 }

@@ -24,15 +24,14 @@ sfTexture *get_texture(gc_scene *scene, char *name);
 sfVertexArray *sfml_init_verticies(void);
 sfRenderStates *sfml_init_render_state(void);
 
-void sfmlrenderer_draw_texture(struct sfml_renderer_system *renderer, \
-struct transform_component *tra, gc_entity *entity, gc_sprite *sprite);
-void sfmlrenderer_draw_anim(struct sfml_renderer_system *renderer, \
+void sfmlrenderer_draw_texture(gc_engine *engine, \
+gc_entity *entity, gc_sprite *sprite, float dt);
+void sfmlrenderer_draw_anim(gc_engine *engine, \
 gc_entity *entity, gc_animholder *holder, float dtime);
-void sfmlrenderer_draw_txt(gc_engine *engine, \
-struct sfml_renderer_system *renderer, struct transform_component *tra, \
-gc_text *txt);
-void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this,
-struct transform_component *pos, struct vertex_component *txt);
+void sfmlrenderer_draw_txt(gc_engine *engine, gc_entity *entity, \
+gc_text *txt, float dt);
+void sfmlrenderer_draw_tilemap(gc_engine *engine, gc_entity *entity, \
+struct vertex_component *txt, float dt);
 
 void sfml_texture_destroy(gc_data *data);
 void sfml_music_destroy(gc_data *data);

@@ -16,13 +16,13 @@
 
 int color_from_text(char *txt)
 {
-	if (txt == NULL)
-		return (*(int *)&sfWhite);
-	if (!my_strcmp(txt, "black"))
-		return (*(int *)&sfBlack);
-	if (!my_strcmp(txt, "white"))
-		return (*(int *)&sfWhite);
-	return (*(int *)&sfWhite);
+    if (txt == NULL)
+        return (*(int *)&sfWhite);
+    if (!my_strcmp(txt, "black"))
+        return (*(int *)&sfBlack);
+    if (!my_strcmp(txt, "white"))
+        return (*(int *)&sfWhite);
+    return (*(int *)&sfWhite);
 }
 
 void text_ctr(struct renderer *cmp, va_list args)
@@ -39,7 +39,7 @@ void text_ctr(struct renderer *cmp, va_list args)
     gctext->resize = va_arg(args, int);
 
     if (gctext->size <= 0)
-    	gctext->size = 30;
+        gctext->size = 30;
 }
 
 void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
@@ -53,7 +53,7 @@ void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     if (!gctext->text)
         return;
     gctext->font = scene->get_data(scene, "font", xml_getproperty(n, "src"));
-	gctext->size = 30;
-	gctext->color = *(int *)&sfWhite;
-	gctext->resize = true;
+    gctext->size = 30;
+    gctext->color = *(int *)&sfWhite;
+    gctext->resize = true;
 }

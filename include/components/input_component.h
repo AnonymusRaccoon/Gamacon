@@ -1,6 +1,9 @@
-//
-// Created by anonymus-raccoon on 3/2/20.
-//
+/*
+** EPITECH PROJECT, 2020
+** My3D
+** File description:
+** input_component
+*/
 
 #ifndef _INPUT_COMPONENT_H_
 #define _INPUT_COMPONENT_H_
@@ -9,8 +12,8 @@
 
 struct input_component
 {
-	gc_component base;
-	int value;
+    gc_component base;
+    int value;
 };
 
 extern const struct input_component input_component;

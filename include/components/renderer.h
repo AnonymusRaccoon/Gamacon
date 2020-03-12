@@ -11,11 +11,11 @@
 #include "vector2.h"
 
 typedef enum gc_texturetype {
-    GC_NONE,
     GC_TEXTUREREND,
     GC_ANIMREND,
     GC_TXTREND,
-    GC_MAP
+    GC_MAP,
+    GC_NONE
 } gc_texturetype;
 
 struct renderer

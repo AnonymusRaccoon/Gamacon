@@ -23,7 +23,7 @@ gc_entity *entity, float dtime)
 
     sys->cam_pos.x = (sys->cam_pos.x + tra->position.x) / 2;
     sys->cam_pos.y = (sys->cam_pos.y + tra->position.y) / 2;
-	sys->enabled = true;
+    sys->enabled = true;
     (void)engine;
     (void)dtime;
 }

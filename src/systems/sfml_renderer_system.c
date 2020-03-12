@@ -19,46 +19,40 @@
 
 gc_vector2 sfml_get_text_size(sf_renderer *this, gc_text *text)
 {
-	sfFloatRect bounds;
+    sfFloatRect bounds;
 
-	sfText_setString(this->text, text->text);
-	sfText_setFont(this->text, text->font);
-	bounds = sfText_getLocalBounds(this->text);
-	return (gc_vector2) {bounds.width * 1.3, bounds.height * 2.5};
+    sfText_setString(this->text, text->text);
+    sfText_setFont(this->text, text->font);
+    bounds = sfText_getLocalBounds(this->text);
+    return (gc_vector2) {bounds.width * 1.3, bounds.height * 2.5};
 }
+
+static const void (*drawers[])(gc_engine *, gc_entity *, void *, float) = {
+    &sfmlrenderer_draw_texture,
+    &sfmlrenderer_draw_anim,
+    &sfmlrenderer_draw_txt,
+    &sfmlrenderer_draw_tilemap,
+    NULL
+};
 
 void sfml_update_entity(gc_engine *engine, void *system, \
 gc_entity *entity, float dt)
 {
-    struct transform_component *pos = GETCMP(entity, transform_component);
     struct renderer *text = GETCMP(entity, renderer);
-    struct sfml_renderer_system *rend = (struct sfml_renderer_system *)system;
 
     if (!text->data || !text->is_visible)
         return;
-    switch (text->type) {
-    case GC_TEXTUREREND:
-        sfmlrenderer_draw_texture(rend, pos, entity, (gc_sprite *)text->data);
-        break;
-    case GC_ANIMREND:
-        sfmlrenderer_draw_anim(rend, entity, (gc_animholder *)text->data, dt);
-        break;
-    case GC_TXTREND:
-        sfmlrenderer_draw_txt(engine, rend, pos, (gc_text *)text->data);
-        break;
-    case GC_MAP:
-        sfmlrenderer_draw_tilemap(rend, pos, text->data);
-        break;
-    default:
+    if (text->type > 3) {
         my_printf("Trying to render a texture with an unknown type.\n");
-        break;
+        return;
     }
+    drawers[text->type](engine, entity, text->data, dt);
 }
 
 void sfml_setup_options(struct sfml_renderer_system *this, gc_engine *engine)
 {
-	this->is_fullscreen = false;
-	this->resolution = (gc_vector2i){800, 600};
+    this->is_fullscreen = false;
+    this->resolution = (gc_vector2i){800, 600};
     engine->is_open = &sfml_is_open;
     engine->has_focus = &sfml_has_focus;
     engine->is_keypressed = &sfml_is_keypressed;
@@ -79,13 +73,13 @@ void sfmlrend_ctr(void *rend, va_list list)
     const char *title = va_arg(list, const char *);
     this->framerate = va_arg(list, int);
 
-	this->get_text_size = &sfml_get_text_size;
-	this->window = sfRenderWindow_create(mode, title, sfDefaultStyle, NULL);
-	this->sprite = sfSprite_create();
-	this->view = sfView_create();
-	this->text = sfText_create();
-	this->vertices = sfml_init_verticies();
-	this->states = sfml_init_render_state();
+    this->get_text_size = &sfml_get_text_size;
+    this->window = sfRenderWindow_create(mode, title, sfDefaultStyle, NULL);
+    this->sprite = sfSprite_create();
+    this->view = sfView_create();
+    this->text = sfText_create();
+    this->vertices = sfml_init_verticies();
+    this->states = sfml_init_render_state();
     if (!this->window || !this->sprite || \
 !this->view || !this->text || !this->vertices || !this->states)
         return;

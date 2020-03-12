@@ -14,15 +14,15 @@ gc_list *list_add(gc_list *list, void *obj)
 
     if (!list) {
         list = malloc(sizeof(gc_list));
-		if (list)
-			list->prev = NULL;
+        if (list)
+            list->prev = NULL;
         listconst = list;
     } else {
         while (list->next)
             list = list->next;
         list->next = malloc(sizeof(gc_list));
-		if (list->next)
-			list->next->prev = list;
+        if (list->next)
+            list->next->prev = list;
         list = list->next;
     }
     if (!list)
@@ -34,21 +34,21 @@ gc_list *list_add(gc_list *list, void *obj)
 
 gc_list *list_remove(gc_list *list, void *obj)
 {
-	gc_list *listconst = list;
+    gc_list *listconst = list;
 
-	if (!list)
-		return (NULL);
-	if (list->data == obj) {
-		if (list->next)
-			list->next->prev = NULL;
-		return (list->next);
-	}
-	while (list->next && list->next->data != obj)
-		list = list->next;
-	if (!list->next)
-		return (listconst);
-	list->next = list->next->next;
-	if (list->next)
-		list->next->prev = list;
-	return (listconst);
+    if (!list)
+        return (NULL);
+    if (list->data == obj) {
+        if (list->next)
+            list->next->prev = NULL;
+        return (list->next);
+    }
+    while (list->next && list->next->data != obj)
+        list = list->next;
+    if (!list->next)
+        return (listconst);
+    list->next = list->next->next;
+    if (list->next)
+        list->next->prev = list;
+    return (listconst);
 }
