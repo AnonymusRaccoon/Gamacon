@@ -10,6 +10,8 @@
 #include "component.h"
 #include <stdbool.h>
 
+#define ROTATION_INFO 3
+
 struct vertex
 {
     int x;

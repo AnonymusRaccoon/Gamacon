@@ -27,7 +27,7 @@ sfVector2f sfvector2f(gc_vector2 vector)
 
 static void tile_rotate(struct tile *tile, int **vertex_order)
 {
-	for (int j = 0; j < (tile->data & 3); j++) {
+	for (int j = 0; j < (tile->data & ROTATION_INFO); j++) {
 		int tmp = vertex_order[0];
 		for (int i = 0; i < 3; i++)
 			vertex_order[i] = vertex_order[i + 1];
