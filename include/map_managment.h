@@ -9,15 +9,6 @@
 #include <stdbool.h>
 #include "vertex_component.h"
 
-enum modes_on_tile {
-	VERTEX_0 = 2,
-	VERTEX_1 = 4,
-	VERTEX_2 = 8,
-	VERTEX_3 = 16,
-	ALL_VERTICES = 30,
-	INVERT_ADD_VALUE = 1
-};
-
 #define ANGLE_X 45
 #define ANGLE_Y 35
 #define ADD_VALUE 10

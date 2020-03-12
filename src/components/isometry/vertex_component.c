@@ -15,6 +15,7 @@
 
 static bool get_vertices(void *component, node *n)
 {
+	n = n->child;
     struct vertex_component *this = (struct vertex_component *)component;
     int i = 0;
     int j = 0;
@@ -38,10 +39,27 @@ static bool get_vertices(void *component, node *n)
     return (true);
 }
 
+char *get_texture_for_coords(gc_vector2i coords, node *n)
+{
+	char *texture = NULL;
+
+	for (node *text = n->child; text; text = text->next) {
+		if (xml_getintprop(text, "x") != coords.x)
+			continue;
+		if (xml_getintprop(text, "y") != coords.y)
+			continue;
+		texture =  xml_getproperty(n, "name");
+		break;
+	}
+	return (texture);
+}
+
 static bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
 {
     int inc = 0;
+    n = n->child;
     int v_x = xml_getchildcount(n);
+    char *texture;
     int vy = xml_getchildcount(n->child);
 
 	for (node *line = n->child; line; line = line->next)
@@ -61,11 +79,13 @@ static bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
             this->map[inc].corners[3] = &this->vertices[v_x + 1][vy];
             this->map[inc].corners[2] = &this->vertices[v_x + 1][vy + 1];
             this->map[inc].data = 0;
-            this->map[inc++].texture = scene->get_data(scene, "sprite", (inc % 2) ? "cobblestone" : "mossy_cobblestone");
-            if (inc == 60)
+            texture = get_texture_for_coords((gc_vector2i){v_x, vy}, n->next);
+            this->map[inc++].texture = scene->get_data(scene, "sprite", texture);
+           // this->map[inc++].texture = scene->get_data(scene, "sprite", (inc % 2) ? "cobblestone" : "mossy_cobblestone");
+            /*if (inc == 60)
 				this->map[inc - 1].texture = scene->get_data(scene, "sprite", "comparator_on");
             if (inc > 31 && inc < 56)
-                this->map[inc - 1].texture = scene->get_data(scene, "sprite", "crafting_table");
+                this->map[inc - 1].texture = scene->get_data(scene, "sprite", "crafting_table");*/
         }
     }
     this->map[inc].corners[0] = NULL;
