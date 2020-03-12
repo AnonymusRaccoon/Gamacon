@@ -62,5 +62,11 @@ const struct fixed_to_cam fixed_to_cam = {
         serialize: &serialize,
         destroy: &component_destroy
     },
-    pos: (gc_vector2){0, 0}
+    pos: (gc_vector2){0, 0},
+    per_x: false,
+    per_y: false,
+    per_w: false,
+    size_x: 0,
+    size_y: 0,
+    per_h: false
 };

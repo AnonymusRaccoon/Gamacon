@@ -15,14 +15,14 @@
 bool engine_add_event_listener(gc_engine *engine, const char *name, \
 void (*func)(gc_engine *, va_list))
 {
-    struct gc_event_listener *node = malloc(sizeof(struct gc_event_listener));
+    struct gc_event_listener *n = malloc(sizeof(struct gc_event_listener));
     char *n_name = my_strdup(name);
 
-    if (!name || !node || !n_name)
+    if (!name || !n || !n_name)
         return (false);
-    node->name = n_name;
-    node->func = func;
-    LISTADD(engine->event_listeners, node);
+    n->name = n_name;
+    n->func = func;
+    LISTADD(engine->event_listeners, n);
     return (true);
 }
 

@@ -17,7 +17,7 @@ struct gc_list
 };
 
 gc_list *list_add(gc_list *list, void *obj);
-gc_list *list_remove(gc_list *list, void *obj);
+gc_list *list_remove(gc_list *list, const void *obj);
 
 #define LISTADD(list, obj) (list = list_add(list, obj))
 #define LISTREM(list, obj) (list = list_remove(list, obj))

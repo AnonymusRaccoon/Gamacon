@@ -31,5 +31,5 @@ gc_vector2 gc_vector2_add(gc_vector2 first, gc_vector2 second)
 
 gc_vector2 gc_vector2_from_sf(sfVector2f sf_vector)
 {
-	return (gc_vector2){sf_vector.x, sf_vector.y};
+    return (gc_vector2){sf_vector.x, sf_vector.y};
 }

@@ -60,7 +60,6 @@ gc_sprite *sprite, float dt)
 void sfmlrenderer_draw_anim(gc_engine *engine, gc_entity *entity, \
 gc_animholder *holder, float dtime)
 {
-    struct transform_component *tra = GETCMP(entity, transform_component);
     gc_int_rect *rec = &holder->sprite->rect;
     gc_anim *curr = holder->current;
 

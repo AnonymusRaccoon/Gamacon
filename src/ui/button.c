@@ -51,7 +51,7 @@ gc_list *new_button(gc_engine *engine, gc_scene *scene, node *n)
 {
     gc_list *entities = NULL;
     gc_text text = (gc_text){xml_gettempprop(n, "text"),
-        scene->get_data(scene, "font", NULL)};
+        scene->get_data(scene, "font", NULL), 30, 0x000, false};
     gc_entity *background = background_from_text(engine, scene, n, &text);
 
     if (!background)

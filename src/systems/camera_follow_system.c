@@ -48,5 +48,6 @@ const struct camerafollow_system camerafollow_system = {
         update_entity: &update_entity,
         destroy: &system_destroy
     },
-    cam_pos: (gc_vector2){0, 0}
+    cam_pos: (gc_vector2){0, 0},
+    enabled: false
 };

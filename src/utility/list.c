@@ -32,7 +32,7 @@ gc_list *list_add(gc_list *list, void *obj)
     return (listconst);
 }
 
-gc_list *list_remove(gc_list *list, void *obj)
+gc_list *list_remove(gc_list *list, const void *obj)
 {
     gc_list *listconst = list;
 

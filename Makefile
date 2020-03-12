@@ -82,7 +82,7 @@ TESTS = tests/deserializations.c \
 
 INCLUDE = -I ./include
 
-CFLAGS = $(INCLUDE) -Wall -Wshadow -Wextra
+CFLAGS = $(INCLUDE) -Wall -Wshadow -Wextra -Wno-unused-parameter
 
 LDFLAGS = -L ../my -L ../xmlparser -L ../quadtree\
 -lxmlparser -lquadtree -lmy -lcsfml-system -lcsfml-graphics -lcsfml-window -lm
