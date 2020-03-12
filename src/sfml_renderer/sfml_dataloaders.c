@@ -66,3 +66,17 @@ gc_data *sfml_font_loader(gc_engine *engine, gc_scene *scene, node *n)
     data->destroy = &sfml_font_destroy;
     return (data);
 }
+
+gc_data *sfml_camera(gc_engine *engine, gc_scene *scene, node *n)
+{
+	struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
+
+	if (!rend)
+		my_printf("The sfml is not found. Could not change the position\
+ of the camera.\n");
+	sfView_setCenter(rend->view, (sfVector2f){
+		xml_getfloatprop(n, "x"),
+		-xml_getfloatprop(n, "y")
+	});
+	return (NULL);
+}

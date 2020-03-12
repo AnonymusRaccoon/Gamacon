@@ -23,6 +23,7 @@ gc_entity *entity, float dtime)
 
     sys->cam_pos.x = (sys->cam_pos.x + tra->position.x) / 2;
     sys->cam_pos.y = (sys->cam_pos.y + tra->position.y) / 2;
+	sys->enabled = true;
     (void)engine;
     (void)dtime;
 }
@@ -32,6 +33,7 @@ static void ctr(void *system, va_list args)
     struct camerafollow_system *sys = (struct camerafollow_system *)system;
 
     sys->cam_pos = (gc_vector2){0, 0};
+    sys->enabled = false;
     (void)args;
 }
 

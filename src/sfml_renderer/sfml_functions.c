@@ -39,14 +39,14 @@ void sfml_draw(gc_engine *engine)
     struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
     struct camerafollow_system *cam = GETSYS(engine, camerafollow_system);
 
-    if (cam) {
+    if (cam && cam->enabled) {
         sfView_setCenter(rend->view, (sfVector2f){
             cam->cam_pos.x,
             -cam->cam_pos.y
         });
-        sfRenderWindow_setView(rend->window, rend->view);
-        entities_update_to_cam(engine->scene, rend, cam);
     }
+	entities_update_to_cam(engine->scene, rend);
+	sfRenderWindow_setView(rend->window, rend->view);
     sfRenderWindow_display(rend->window);
     sfRenderWindow_clear(rend->window, sfBlack);
 }

@@ -13,6 +13,7 @@ struct camerafollow_system
 {
     gc_system base;
     gc_vector2 cam_pos;
+    bool enabled;
 };
 
 extern const struct camerafollow_system camerafollow_system;

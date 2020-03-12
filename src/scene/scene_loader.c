@@ -48,6 +48,8 @@ void scene_load_entity(gc_scene *this, gc_engine *engine, node *n, int prefab)
 		return;
 	}
 	data = loader->load(engine, this, n);
+	if (!data)
+		return;
 	for (gc_list *li = (gc_list *)data->custom; li; li = li->next) {
 		((gc_entity *)li->data)->prefab_id = prefab;
 		this->add_entity(this, li->data);
