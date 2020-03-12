@@ -1,6 +1,9 @@
-//
-// Created by anonymus-raccoon on 2/21/20.
-//
+/*
+** EPITECH PROJECT, 2020
+** My3D
+** File description:
+** errors
+*/
 
 #ifndef _ERRORS_H_
 #define _ERRORS_H_

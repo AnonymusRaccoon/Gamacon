@@ -1,6 +1,9 @@
-//
-// Created by anonymus-raccoon on 3/11/20.
-//
+/*
+** EPITECH PROJECT, 2020
+** My3D
+** File description:
+** callbacks
+*/
 
 #ifndef _CALLBACKS_H_
 #define _CALLBACKS_H_
@@ -9,8 +12,8 @@
 
 struct callback
 {
-	const char *name;
-	callback_t func;
+    const char *name;
+    callback_t func;
 };
 
 #endif //_CALLBACKS_H_

@@ -13,9 +13,9 @@
 typedef struct gc_int_rect
 {
     int height;
-	int width;
-	int top;
-	int left;
+    int width;
+    int top;
+    int left;
 } gc_int_rect;
 
 typedef struct gc_sprite {

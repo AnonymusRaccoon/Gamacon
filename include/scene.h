@@ -28,10 +28,10 @@ struct gc_scene
     gc_list *(*get_entity_by_cmp)(gc_scene *scene, const char *cmp_name);
     void (*load_entity)(gc_scene *this, gc_engine *engine, node *xml, int pref);
 
-	gc_list *callbacks;
-	callback_t (*get_callback)(gc_scene *this, char *name);
+    gc_list *callbacks;
+    callback_t (*get_callback)(gc_scene *this, char *name);
 
-	bool is_paused;
+    bool is_paused;
 };
 
 callback_t scene_get_callback(gc_scene *scene, char *name);

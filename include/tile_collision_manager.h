@@ -21,7 +21,8 @@ bool is_on_segment(gc_vector2 p, gc_vector2 q, gc_vector2 r);
 int orientation(gc_vector2 p, gc_vector2 q, gc_vector2 r);
 
 //! @brief Checks if segments p1q1 and p2q2 intersects
-bool gc_vector2_do_intersect(gc_vector2 p1, gc_vector2 q1, gc_vector2 p2, gc_vector2 q2);
+bool gc_vector2_do_intersect(gc_vector2 p1, gc_vector2 q1, \
+gc_vector2 p2, gc_vector2 q2);
 
 //! @brief Checks if a point is in a polygon
 //! @note The segment created to check is [10000, p.x] so beware when checking with large coordinates

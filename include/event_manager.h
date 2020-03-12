@@ -1,6 +1,9 @@
-//
-// Created by cbihan on 3/9/20.
-//
+/*
+** EPITECH PROJECT, 2020
+** My3D
+** File description:
+** event_manager
+*/
 
 #ifndef MY3D_EVENT_MANAGER_H
 #define MY3D_EVENT_MANAGER_H
@@ -11,8 +14,8 @@ typedef struct gc_event_manager gc_event_manager;
 
 struct gc_event_listener
 {
-	void (*func)(gc_engine *, va_list);
-	const char *name;
+    void (*func)(gc_engine *, va_list);
+    const char *name;
 };
 
 void engine_trigger_event(gc_engine *engine, const char *name, ...);

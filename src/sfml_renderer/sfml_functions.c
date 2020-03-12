@@ -45,8 +45,8 @@ void sfml_draw(gc_engine *engine)
             -cam->cam_pos.y
         });
     }
-	entities_update_to_cam(engine->scene, rend);
-	sfRenderWindow_setView(rend->window, rend->view);
+    entities_update_to_cam(engine->scene, rend);
+    sfRenderWindow_setView(rend->window, rend->view);
     sfRenderWindow_display(rend->window);
     sfRenderWindow_clear(rend->window, sfBlack);
 }

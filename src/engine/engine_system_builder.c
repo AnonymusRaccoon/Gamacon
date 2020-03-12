@@ -39,7 +39,7 @@ void engine_add_builtin_systems(gc_engine *engine)
     engine->add_system(engine, &friction_system);
     engine->add_system(engine, new_system(&tooltip_system));
     engine->add_system(engine, new_system(&collision_system, engine->scene));
-	clickable_manager_init(engine);
+    clickable_manager_init(engine);
 }
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate)

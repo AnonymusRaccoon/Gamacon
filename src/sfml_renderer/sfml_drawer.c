@@ -17,48 +17,50 @@
 void sfmlrenderer_setorigin(struct sfml_renderer_system *renderer, \
 gc_entity *entity, gc_sprite *sprite, struct transform_component *tra)
 {
-	sfVector2f scale = (sfVector2f){
-		tra->size.x * sprite->scale.x / sprite->rect.width,
-		tra->size.y * sprite->scale.y / sprite->rect.height
-	};
+    sfVector2f scale = (sfVector2f){
+        tra->size.x * sprite->scale.x / sprite->rect.width,
+        tra->size.y * sprite->scale.y / sprite->rect.height
+    };
 
-	sfSprite_setScale(renderer->sprite, scale);
-	if (entity->has_component(entity, "fixed_to_cam"))
-		sfSprite_setOrigin(renderer->sprite, (sfVector2f) {
-			sprite->rect.width / 2,
-			sprite->rect.height / 2
-		});
-	else
-		sfSprite_setOrigin(renderer->sprite, (sfVector2f){
-			scale.x < 0 ? sprite->rect.width : 0,
-			scale.y < 0 ? sprite->rect.height : 0
-		});
+    sfSprite_setScale(renderer->sprite, scale);
+    if (entity->has_component(entity, "fixed_to_cam"))
+        sfSprite_setOrigin(renderer->sprite, (sfVector2f) {
+            sprite->rect.width / 2,
+            sprite->rect.height / 2
+        });
+    else
+        sfSprite_setOrigin(renderer->sprite, (sfVector2f){
+            scale.x < 0 ? sprite->rect.width : 0,
+            scale.y < 0 ? sprite->rect.height : 0
+        });
 }
 
-void sfmlrenderer_draw_texture(struct sfml_renderer_system *renderer, \
-struct transform_component *tra, gc_entity *entity, gc_sprite *sprite)
+void sfmlrenderer_draw_texture(gc_engine *engine, gc_entity *entity, \
+gc_sprite *sprite, float dt)
 {
+    struct transform_component *tra = GETCMP(entity, transform_component);
     sfVector2f pos = (sfVector2f){tra->position.x, -tra->position.y};
+    struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
 
     sprite->pos = tra->position;
     if (!sprite->texture) {
-		my_printf("Trying to render a sprite without texture.\n");
-		return;
-	}
-    sfSprite_setTexture(renderer->sprite, sprite->texture, true);
-    sfSprite_setTextureRect(renderer->sprite, (sfIntRect){
+        my_printf("Trying to render a sprite without texture.\n");
+        return;
+    }
+    sfSprite_setTexture(rend->sprite, sprite->texture, true);
+    sfSprite_setTextureRect(rend->sprite, (sfIntRect){
         sprite->rect.left, sprite->rect.top,
         sprite->rect.width, sprite->rect.height
     });
-    sfSprite_setPosition(renderer->sprite, pos);
-   	sfmlrenderer_setorigin(renderer, entity, sprite, tra);
-    sfRenderWindow_drawSprite(renderer->window, renderer->sprite, NULL);
+    sfSprite_setPosition(rend->sprite, pos);
+       sfmlrenderer_setorigin(rend, entity, sprite, tra);
+    sfRenderWindow_drawSprite(rend->window, rend->sprite, NULL);
 }
 
-void sfmlrenderer_draw_anim(struct sfml_renderer_system *renderer, \
-gc_entity *entity, gc_animholder *holder, float dtime)
+void sfmlrenderer_draw_anim(gc_engine *engine, gc_entity *entity, \
+gc_animholder *holder, float dtime)
 {
-	struct transform_component *tra = GETCMP(entity, transform_component);
+    struct transform_component *tra = GETCMP(entity, transform_component);
     gc_int_rect *rec = &holder->sprite->rect;
     gc_anim *curr = holder->current;
 
@@ -70,30 +72,31 @@ gc_entity *entity, gc_animholder *holder, float dtime)
         if (rec->left > curr->rect.left + rec->width * (curr->frame_count - 1))
             rec->left = curr->rect.left;
     }
-    sfmlrenderer_draw_texture(renderer, tra, entity, holder->sprite);
+    sfmlrenderer_draw_texture(engine, entity, holder->sprite, dtime);
 }
 
-void sfmlrenderer_draw_txt(gc_engine *engine, \
-struct sfml_renderer_system *renderer, struct transform_component *tra, \
-gc_text *txt)
+void sfmlrenderer_draw_txt(gc_engine *engine, gc_entity *entity, \
+gc_text *txt, float dt)
 {
-	sfFloatRect bounds;
-	float size = 1;
+    struct sfml_renderer_system *this = GETSYS(engine, sfml_renderer_system);
+    struct transform_component *tra = GETCMP(entity, transform_component);
+    sfFloatRect bounds;
+    float size = 1;
 
-	if (txt->resize)
-		size = 800 / engine->get_screen_size(engine).x;
-	sfText_setString(renderer->text, txt->text);
+    if (txt->resize)
+        size = 800 / engine->get_screen_size(engine).x;
+    sfText_setString(this->text, txt->text);
     if (!txt->font)
-    	my_printf("%s has a font not loaded. Rendering impossible.", txt->font);
-    sfText_setFont(renderer->text, txt->font);
-    sfText_setCharacterSize(renderer->text, txt->size / size);
-    bounds = sfText_getLocalBounds(renderer->text);
+        my_printf("%s has a font not loaded. Rendering impossible.", txt->font);
+    sfText_setFont(this->text, txt->font);
+    sfText_setCharacterSize(this->text, txt->size / size);
+    bounds = sfText_getLocalBounds(this->text);
     tra->size.x = bounds.width;
     tra->size.y = bounds.height;
-    sfText_setColor(renderer->text, *(sfColor*)&txt->color);
-    sfText_setPosition(renderer->text, (sfVector2f){
+    sfText_setColor(this->text, *(sfColor*)&txt->color);
+    sfText_setPosition(this->text, (sfVector2f){
         tra->position.x - bounds.width / 2,
         -tra->position.y - bounds.height
     });
-    sfRenderWindow_drawText(renderer->window, renderer->text, NULL);
+    sfRenderWindow_drawText(this->window, this->text, NULL);
 }

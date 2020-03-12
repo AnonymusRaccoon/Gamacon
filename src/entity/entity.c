@@ -58,10 +58,10 @@ static void destroy(gc_entity *entity, gc_scene *scene)
     gc_component *next = NULL;
 
     for (gc_component *cmp = entity->components; cmp; cmp = next) {
-		for (gc_tupple *tup = scene->entities_by_cmp; tup; tup = tup->next)
-			if (!my_strcmp(tup->name, cmp->name))
-				LISTREM(tup->entities, entity);
-		LISTREM(scene->entities, entity);
+        for (gc_tupple *tup = scene->entities_by_cmp; tup; tup = tup->next)
+            if (!my_strcmp(tup->name, cmp->name))
+                LISTREM(tup->entities, entity);
+        LISTREM(scene->entities, entity);
         next = cmp->next;
         cmp->destroy(cmp);
     }

@@ -11,29 +11,29 @@
 
 sfRenderStates *sfml_init_render_state(void)
 {
-	sfRenderStates *states = malloc(sizeof(sfRenderStates));
+    sfRenderStates *states = malloc(sizeof(sfRenderStates));
 
-	if (!states)
-		return (NULL);
-	states->texture = NULL;
-	states->blendMode = sfBlendAlpha;
-	states->shader = NULL;
-	states->transform = sfTransform_Identity;
-	return (states);
+    if (!states)
+        return (NULL);
+    states->texture = NULL;
+    states->blendMode = sfBlendAlpha;
+    states->shader = NULL;
+    states->transform = sfTransform_Identity;
+    return (states);
 }
 
 sfVertexArray *sfml_init_verticies(void)
 {
-	sfVertexArray *arr = sfVertexArray_create();
-	sfVertex v[4] = {
-		{.position = {0, 0}, .texCoords = {0, 0}, .color = sfWhite},
-		{.position = {0, 0}, .texCoords = {64, 0}, .color = sfWhite},
-		{.position = {0, 0}, .texCoords = {0, 64}, .color = sfWhite},
-		{.position = {0, 0}, .texCoords = {64, 64}, .color = sfWhite}
-	};
+    sfVertexArray *arr = sfVertexArray_create();
+    sfVertex v[4] = {
+        {.position = {0, 0}, .texCoords = {0, 0}, .color = sfWhite},
+        {.position = {0, 0}, .texCoords = {64, 0}, .color = sfWhite},
+        {.position = {0, 0}, .texCoords = {0, 64}, .color = sfWhite},
+        {.position = {0, 0}, .texCoords = {64, 64}, .color = sfWhite}
+    };
 
-	for (int i = 0; i < 4; i++)
-		sfVertexArray_append(arr, v[i]);
-	sfVertexArray_setPrimitiveType(arr, sfTrianglesStrip);
-	return (arr);
+    for (int i = 0; i < 4; i++)
+        sfVertexArray_append(arr, v[i]);
+    sfVertexArray_setPrimitiveType(arr, sfTrianglesStrip);
+    return (arr);
 }

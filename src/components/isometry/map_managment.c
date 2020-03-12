@@ -21,24 +21,24 @@ gc_vector2 gc_vector2_from_coords(float x, float y, float z)
 
 struct tile *get_tile_from_pos(struct vertex_component *map, gc_vector2 pos)
 {
-	if (!map || !map->map)
-		return (NULL);
-	for (int i = 0; map->map[i].corners[0]; i++) {
-		if (map->map[i].corners[0]->z == INT32_MAX || !map->map[i].corners[2]->y)
-			continue;
-		if (is_pos_in_tile(pos, &map->map[i])) {
-			return (&map->map[i]);
-		}
-	}
-	return (NULL);
+    if (!map || !map->map)
+        return (NULL);
+    for (int i = 0; map->map[i].corners[0]; i++) {
+        if (map->map[i].corners[0]->z == INT32_MAX || !map->map[i].corners[2]->y)
+            continue;
+        if (is_pos_in_tile(pos, &map->map[i])) {
+            return (&map->map[i]);
+        }
+    }
+    return (NULL);
 }
 
 int get_index_nearest_vertex(struct tile *sel, gc_vector2 pos)
 {
-	float spacing = INFINITY;
-	gc_vector2 coords;
-	double tmp;
-	int i_stock = 0;
+    float spacing = INFINITY;
+    gc_vector2 coords;
+    double tmp;
+    int i_stock = 0;
 
 	pos.y *= -1;
 	for (int i = 0; i < 4; i++) {

@@ -33,18 +33,18 @@ int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene)
     if (!n)
         return (-1);
     for (node *ent_n = n->child; ent_n; ent_n = ent_n->next) {
-		if (my_strcmp(ent_n->name, "gc_entity")) {
-			scene->load_entity(scene, engine, ent_n, prefab_id);
-			continue;
-		}
-		entity = deserialize_entity(engine, scene, ent_n);
+        if (my_strcmp(ent_n->name, "gc_entity")) {
+            scene->load_entity(scene, engine, ent_n, prefab_id);
+            continue;
+        }
+        entity = deserialize_entity(engine, scene, ent_n);
         if (!entity)
             return (-1);
         entity->prefab_id = prefab_id;
         scene->add_entity(scene, entity);
     }
-	prefab_id++;
+    prefab_id++;
     if (engine->on_resize && engine->get_screen_size && engine->scene)
-		engine->on_resize(engine, engine->get_screen_size(engine));
+        engine->on_resize(engine, engine->get_screen_size(engine));
     return (0);
 }

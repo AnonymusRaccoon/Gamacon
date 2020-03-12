@@ -38,9 +38,9 @@ static void tile_rotate(struct tile *tile, int **vertex_order)
 void sfr_draw_tile(struct sfml_renderer_system *this, gc_vector2 offset, \
 struct tile *tile, bool hovered)
 {
-	sfVertex *v[4];
-	int c[3];
-	int vertex_order[4] = {0, 1, 3, 2};
+    sfVertex *v[4];
+    int c[3];
+    int vertex_order[4] = {0, 1, 3, 2};
 
 	if (tile->corners[0]->z == INT32_MAX || !tile->corners[2]->y)
 		return;
@@ -64,19 +64,21 @@ struct tile *tile, bool hovered)
 	this->states->texture = NULL;
 }
 
-void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this, \
-struct transform_component *pos, struct vertex_component *info)
+void sfmlrenderer_draw_tilemap(gc_engine *engine, gc_entity *entity, \
+struct vertex_component *info, float dt)
 {
-	sfVector2i vec = sfMouse_getPosition((const sfWindow *) this->window);
-	sfVector2f wp = sfRenderWindow_mapPixelToCoords(this->window, vec, this->view);
-	wp.y *= -1;
-	int i;
-	struct tile *tl;
+    struct sfml_renderer_system *this = GETSYS(engine, sfml_renderer_system);
+    struct transform_component *pos = GETCMP(entity, transform_component);
+    sfVector2i v = sfMouse_getPosition((const sfWindow *) this->window);
+    sfVector2f w = sfRenderWindow_mapPixelToCoords(this->window, v, this->view);
+    w.y *= -1;
+    int i;
+    struct tile *tl;
 
-	if (!info || !info->map)
-		return;
-	tl = get_tile_from_pos(info, (gc_vector2){wp.x - pos->position.x, wp.y + pos->position.y});
-	for (i = 0; info->map[i].corners[0]; i++);
+    if (!info || !info->map)
+        return;
+    tl = get_tile_from_pos(info, (gc_vector2){w.x - pos->position.x, w.y + pos->position.y});
+    for (i = 0; info->map[i].corners[0]; i++);
     for (i--; i >= 0; i--) {
 		sfr_draw_tile(this, pos->position, &info->map[i], &info->map[i] == tl);
     }

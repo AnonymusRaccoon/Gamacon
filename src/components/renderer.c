@@ -49,7 +49,7 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     gc_texturetype type = renderer_get_type(n);
 
     cmp->type = type;
-	cmp->is_visible = true;
+    cmp->is_visible = true;
     if (type == GC_TEXTUREREND)
         sprite_fdctr(scene, cmp, n);
     if (type == GC_ANIMREND)
@@ -81,8 +81,6 @@ static void dtr(void *component)
         break;
     case GC_TEXTUREREND:
         free(cmp->data);
-        break;
-    default:
         break;
     }
 }
