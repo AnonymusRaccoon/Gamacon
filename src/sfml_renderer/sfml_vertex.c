@@ -28,8 +28,8 @@ sfVector2f get_tile_coords(int x, int y, int z)
 	};
 }
 
-void draw_tile(struct sfml_renderer_system *this, struct vertex_component \
-*info, struct tile *tile, bool hovered)
+void draw_tile(struct sfml_renderer_system *this, gc_vector2 offset, \
+struct tile *tile, bool hovered)
 {
 	sfVertex *v[4];
 	int c[3];
@@ -37,7 +37,7 @@ void draw_tile(struct sfml_renderer_system *this, struct vertex_component \
 
 	if (tile->corners[0]->z == INT32_MAX || !tile->corners[2]->y)
 		return;
-	for (int j = 0; j < tile->data & 3; j++) {
+	for (int j = 0; j < (tile->data & 3); j++) {
 		int tmp = vertex_order[0];
 		for (int i = 0; i < 3; i++)
 			vertex_order[i] = vertex_order[i + 1];
@@ -49,6 +49,8 @@ void draw_tile(struct sfml_renderer_system *this, struct vertex_component \
 		c[1] = tile->corners[i]->y;
 		c[2] = tile->corners[i]->z;
 		v[i]->position = get_tile_coords(c[0], c[1], c[2]);
+		v[i]->position.x += offset.x;
+		v[i]->position.y += offset.y;
 		if (hovered)
 			v[i]->color = (sfColor) {180, 180, 180, 255};
 	}
@@ -60,35 +62,20 @@ void draw_tile(struct sfml_renderer_system *this, struct vertex_component \
 	this->states->texture = NULL;
 }
 
-void draw_line(struct sfml_renderer_system *this, struct vertex_component \
-*info, int x, int y)
-{
-	sfVertex *vert1 = sfVertexArray_getVertex(this->vertices, 1);
-
-	if (y < 0 || x < 0)
-		return;
-	if (!info->vertices[y] || info->vertices[y][x].z == INT32_MAX)
-		return;
-	//printf("Drawing line for vertex at %d, %d\n", x, y);
-	vert1->position = get_tile_coords(info->vertices[y][x].x, info->vertices[y][x].y, info->vertices[y][x].z);
-	sfRenderWindow_drawVertexArray(this->window, this->vertices, NULL);
-}
-
-
 void sfmlrenderer_draw_tilemap(struct sfml_renderer_system *this, \
-struct vertex_component *info)
+struct transform_component *pos, struct vertex_component *info)
 {
 	sfVector2i vec = sfMouse_getPosition((const sfWindow *) this->window);
-	sfVector2f world_pos = sfRenderWindow_mapPixelToCoords(this->window, vec, this->view);
-	world_pos.y *= -1;
+	sfVector2f wp = sfRenderWindow_mapPixelToCoords(this->window, vec, this->view);
+	wp.y *= -1;
 	int i;
 	struct tile *tl;
 
 	if (!info || !info->map)
 		return;
-	tl = get_tile_from_pos(info, (gc_vector2){world_pos.x, world_pos.y});
+	tl = get_tile_from_pos(info, (gc_vector2){wp.x, wp.y});
 	for (i = 0; info->map[i].corners[0]; i++);
     for (i--; i >= 0; i--) {
-        draw_tile(this, info, &info->map[i], &info->map[i] == tl);
+		draw_tile(this, pos->position, &info->map[i], &info->map[i] == tl);
     }
 }

@@ -47,7 +47,7 @@ gc_entity *entity, float dt)
         sfmlrenderer_draw_txt(engine, rend, pos, (gc_text *)text->data);
         break;
     case GC_MAP:
-        sfmlrenderer_draw_tilemap(rend, (struct vertex_component *)text->data);
+        sfmlrenderer_draw_tilemap(rend, pos, text->data);
         break;
     default:
         my_printf("Trying to render a texture with an unknown type.\n");
