@@ -9,8 +9,6 @@
 #include "map_utils.h"
 #include <math.h>
 
-#define INF 10000
-
 bool is_on_segment(gc_vector2 p, gc_vector2 q, gc_vector2 r)
 {
     if (q.x <= fmaxf(p.x, r.x) && q.x >= fminf(p.x, r.x) && \

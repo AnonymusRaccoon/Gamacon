@@ -33,4 +33,6 @@ gc_vector2 p2, gc_vector2 q2);
 //! @param p Position of the point to check
 bool is_point_in_polygon(gc_vector2 *polygon, int n, gc_vector2 p);
 
+#define INF 10000
+
 #endif //MY3D_TILE_COLLISION_MANAGER_H
