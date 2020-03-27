@@ -13,6 +13,11 @@
 #include <malloc.h>
 #include <SFML/Graphics.h>
 
+void destroy_sprite(struct renderer *cmp)
+{
+    free(cmp->data);
+}
+
 void sprite_ctr(struct renderer *cmp, va_list args)
 {
     sfVector2u size;
@@ -22,7 +27,7 @@ void sprite_ctr(struct renderer *cmp, va_list args)
     if (!sprite)
         return;
     cmp->data = sprite;
-    cmp->destroy = (void (*)(struct renderer *))&free;
+    cmp->destroy = &destroy_sprite;
     sprite->texture = va_arg(args, sfTexture *);
     sprite->rect = va_arg(args, gc_int_rect);
     if (sprite->texture && sprite->rect.height <= 0) {
@@ -42,7 +47,7 @@ void sprite_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     if (!sprite)
         return;
     cmp->data = sprite;
-    cmp->destroy = (void (*)(struct renderer *))&free;
+    cmp->destroy = &destroy_sprite;
     sprite->texture = get_texture(scene, xml_gettempprop(n, "src"));
     sprite->rect.height = xml_getintprop(rect, "height");
     sprite->rect.width = xml_getintprop(rect, "width");

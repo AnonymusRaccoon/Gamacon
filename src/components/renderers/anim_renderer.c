@@ -36,8 +36,8 @@ void anim_ctr(struct renderer *cmp, va_list args)
     sprite->rect = va_arg(args, gc_int_rect);
     if (sprite->texture && sprite->rect.height < 0) {
         size = sfTexture_getSize(sprite->texture);
-        sprite->rect.height = (float)size.y;
-        sprite->rect.width = (float)size.x;
+        sprite->rect.height = (int)size.y;
+        sprite->rect.width = (int)size.x;
     }
 }
 
