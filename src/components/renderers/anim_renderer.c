@@ -12,20 +12,15 @@
 #include "my.h"
 #include <malloc.h>
 
-void rend_set_anim(struct renderer *rend, const char *name)
+void destroy_anim_renderer(struct renderer *cmp)
 {
-    gc_animholder *holder = (gc_animholder *)rend->data;
-
-    if (holder->current && !my_strcmp(holder->current->name, name))
-        return;
-    for (int i = 0; i < holder->animcount; i++) {
-        if (!my_strcmp(holder->anims[i].name, name)) {
-            holder->current = &holder->anims[i];
-            holder->sprite->rect = holder->anims[i].rect;
-            return;
-        }
+    for (int i = 0; i < ((gc_animholder *)cmp->data)->animcount; i++) {
+        if (my_strcmp(((gc_animholder *)cmp->data)->anims[i].name, "none"))
+            free(((gc_animholder *)cmp->data)->anims[i].name);
     }
-    my_printf("Gamacon: unknown animation %s.\n", name);
+    free(((gc_animholder *)cmp->data)->sprite);
+    free(((gc_animholder *)cmp->data)->anims);
+    free(cmp->data);
 }
 
 void anim_ctr(struct renderer *cmp, va_list args)
@@ -36,6 +31,7 @@ void anim_ctr(struct renderer *cmp, va_list args)
     if (!sprite)
         return;
     cmp->data = sprite;
+    cmp->destroy = &destroy_anim_renderer;
     sprite->texture = va_arg(args, sfTexture *);
     sprite->rect = va_arg(args, gc_int_rect);
     if (sprite->texture && sprite->rect.height < 0) {
@@ -57,13 +53,13 @@ void animation_fdctr(gc_anim *anim, gc_sprite *sprite, node *n)
     anim->rect.width = sprite->rect.width;
     anim->rect.top = sprite->rect.top;
     anim->rect.left = sprite->rect.left;
-    if ((tmp = xml_getfloatprop(rect, "height")) != 0)
+    if ((tmp = xml_getintprop(rect, "height")) != 0)
         anim->rect.height = tmp;
-    if ((tmp = xml_getfloatprop(rect, "width")) != 0)
+    if ((tmp = xml_getintprop(rect, "width")) != 0)
         anim->rect.width = tmp;
-    if ((tmp = xml_getfloatprop(rect, "top")) != 0)
+    if ((tmp = xml_getintprop(rect, "top")) != 0)
         anim->rect.top = tmp;
-    if ((tmp = xml_getfloatprop(rect, "left")) != 0)
+    if ((tmp = xml_getintprop(rect, "left")) != 0)
         anim->rect.left = tmp;
 }
 
@@ -81,8 +77,7 @@ void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     int animcount = xml_getchildcount_filtered(n, "animation") + 1;
     int i = 1;
 
-    hold->anims = malloc(sizeof(gc_anim) * animcount);
-    if (!hold || !hold->anims)
+    if (!hold || !(hold->anims = malloc(sizeof(gc_anim) * animcount)))
         return;
     sprite_fdctr(scene, cmp, n);
     hold->sprite = (gc_sprite *)cmp->data;
@@ -90,6 +85,7 @@ void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     hold->animcount = animcount;
     hold->timesince_up = 0;
     cmp->data = hold;
+    cmp->destroy = &destroy_anim_renderer;
     animation_setnone(&hold->anims[0], hold->sprite);
     for (n = n->child; n; n = n->next) {
         if (my_strcmp(n->name, "animation"))

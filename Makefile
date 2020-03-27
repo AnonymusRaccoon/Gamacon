@@ -68,6 +68,7 @@ SRC = src/engine/engine.c \
 	src/ui/tooltip.c \
 	src/isometry/isometry.c \
 	src/isometry/map_utils.c \
+	src/isometry/tile_collisions.c \
 	src/components/vertex_component.c \
 	src/isometry/vertex_data_loader.c
 

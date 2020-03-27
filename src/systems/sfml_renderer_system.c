@@ -27,11 +27,11 @@ gc_vector2 sfml_get_text_size(sf_renderer *this, gc_text *text)
     return (gc_vector2) {bounds.width * 1.3, bounds.height * 2.5};
 }
 
-static void (* const drawers[])(gc_engine *, gc_entity *, void *, float) = {
-    &sfmlrenderer_draw_texture,
-    &sfmlrenderer_draw_anim,
-    &sfmlrenderer_draw_txt,
-    &sfmlrenderer_draw_tilemap,
+static drawer drawers[] = {
+    (drawer)&sfmlrenderer_draw_texture,
+    (drawer)&sfmlrenderer_draw_anim,
+    (drawer)&sfmlrenderer_draw_txt,
+    (drawer)&sfmlrenderer_draw_tilemap,
     NULL
 };
 

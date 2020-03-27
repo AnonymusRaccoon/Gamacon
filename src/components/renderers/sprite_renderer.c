@@ -22,6 +22,7 @@ void sprite_ctr(struct renderer *cmp, va_list args)
     if (!sprite)
         return;
     cmp->data = sprite;
+    cmp->destroy = (void (*)(struct renderer *))&free;
     sprite->texture = va_arg(args, sfTexture *);
     sprite->rect = va_arg(args, gc_int_rect);
     if (sprite->texture && sprite->rect.height <= 0) {
@@ -38,18 +39,19 @@ void sprite_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     sfVector2u size;
     gc_sprite *sprite = malloc(sizeof(gc_sprite));
 
-    cmp->data = sprite;
-    if (!cmp->data)
+    if (!sprite)
         return;
+    cmp->data = sprite;
+    cmp->destroy = (void (*)(struct renderer *))&free;
     sprite->texture = get_texture(scene, xml_gettempprop(n, "src"));
-    sprite->rect.height = xml_getfloatprop(rect, "height");
-    sprite->rect.width = xml_getfloatprop(rect, "width");
-    sprite->rect.top = xml_getfloatprop(rect, "top");
-    sprite->rect.left = xml_getfloatprop(rect, "left");
+    sprite->rect.height = xml_getintprop(rect, "height");
+    sprite->rect.width = xml_getintprop(rect, "width");
+    sprite->rect.top = xml_getintprop(rect, "top");
+    sprite->rect.left = xml_getintprop(rect, "left");
     if (sprite->texture && sprite->rect.height <= 0) {
         size = sfTexture_getSize(sprite->texture);
-        sprite->rect.height = (float)size.y;
-        sprite->rect.width = (float)size.x;
+        sprite->rect.height = (int)size.y;
+        sprite->rect.width = (int)size.x;
     }
     sprite->scale = (gc_vector2){1, 1};
 }

@@ -11,29 +11,38 @@
 #include "sfml_renderer.h"
 #include "systems/sfml_renderer_system.h"
 
-void sfml_handle_events(gc_engine *engine)
+void sfml_handle_event(gc_engine *eng, sfEvent e)
 {
-    struct sfml_renderer_system *rend = GETSYS(engine, sfml_renderer_system);
-    sfEvent event;
-
-    while (sfRenderWindow_pollEvent(rend->window, &event))
-        switch (event.type) {
-        case sfEvtClosed:
-            sfRenderWindow_close(rend->window);
-            break;
+    switch (e.type) {
         case sfEvtResized:
-            engine->on_resize(engine, (gc_vector2){event.size.width, \
-event.size.height});
+            eng->on_resize(eng, (gc_vector2){e.size.width, e.size.height});
             break;
         case sfEvtMouseButtonReleased:
-            if (event.mouseButton.button == sfMouseLeft)
-                engine->trigger_event(engine, "mouse_click", GC_LEFT);
-            if (event.mouseButton.button == sfMouseRight)
-                engine->trigger_event(engine, "mouse_click", GC_RIGHT);
+            if (e.mouseButton.button == sfMouseLeft)
+                eng->trigger_event(eng, "mouse_click", GC_LEFT);
+            if (e.mouseButton.button == sfMouseRight)
+                eng->trigger_event(eng, "mouse_click", GC_RIGHT);
             break;
         case sfEvtKeyReleased:
-            engine->trigger_event(engine, "key_pressed", event.key.code);
+            eng->trigger_event(eng, "key_pressed", e.key.code);
+            break;
+        default:
+            break;
+    }
+}
+
+void sfml_handle_events(gc_engine *eng)
+{
+    struct sfml_renderer_system *rend = GETSYS(eng, sfml_renderer_system);
+    sfEvent e;
+
+    while (sfRenderWindow_pollEvent(rend->window, &e)) {
+        if (e.type == sfEvtClosed) {
+            sfRenderWindow_close(rend->window);
+            continue;
         }
+        sfml_handle_event(eng, e);
+    }
 }
 
 gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine)

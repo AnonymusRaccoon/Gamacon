@@ -24,6 +24,7 @@ struct renderer
     enum gc_texturetype type;
     void *data;
     bool is_visible;
+    void (*destroy)(struct renderer *);
 };
 
 void sprite_ctr(struct renderer *cmp, va_list args);

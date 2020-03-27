@@ -51,3 +51,5 @@ gc_vector2 sfml_engine_get_cursor_pos(gc_engine *engine);
 void entities_update_to_cam(gc_scene *scene, \
 struct sfml_renderer_system *renderer);
 void entities_update_to_cam_size(gc_scene *scene, gc_vector2 size);
+
+typedef void (*drawer)(gc_engine *, gc_entity *, void *, float);

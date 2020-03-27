@@ -14,6 +14,12 @@
 #include <malloc.h>
 #include <SFML/Graphics.h>
 
+void destroy_text_renderer(struct renderer *cmp)
+{
+    free(((gc_text *)cmp->data)->text);
+    free(cmp->data);
+}
+
 int color_from_text(char *txt)
 {
     if (txt == NULL)
@@ -32,6 +38,7 @@ void text_ctr(struct renderer *cmp, va_list args)
     if (!gctext)
         return;
     cmp->data = gctext;
+    cmp->destroy = &destroy_text_renderer;
     gctext->text = va_arg(args, char *);
     gctext->font = va_arg(args, sfFont *);
     gctext->size = va_arg(args, int);
@@ -52,6 +59,7 @@ void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
     gctext->text = xml_getproperty(n, "text");
     if (!gctext->text)
         return;
+    cmp->destroy = &destroy_text_renderer;
     gctext->font = scene->get_data(scene, "font", xml_getproperty(n, "src"));
     gctext->size = 30;
     gctext->color = *(int *)&sfWhite;
