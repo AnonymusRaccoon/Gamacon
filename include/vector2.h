@@ -23,6 +23,14 @@ typedef struct gc_vector2i
     int y;
 } gc_vector2i;
 
+typedef struct gc_vector3
+{
+    int x;
+    int y;
+    int z;
+} gc_vector3;
+
+
 float gcvector_magnitude(gc_vector2 vec);
 gc_vector2 gcvector2_normilize(gc_vector2 vec);
 

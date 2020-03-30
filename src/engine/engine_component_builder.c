@@ -12,8 +12,6 @@
 #include "components/renderer.h"
 #include "components/camerafollow_component.h"
 #include "components/transform_component.h"
-#include "components/controllable_component.h"
-#include "components/controllers/keyboard_controller.h"
 #include "components/friction_component.h"
 #include "components/friction_giver.h"
 #include "components/collision_component.h"
@@ -39,8 +37,6 @@ void engine_add_buildin_components(gc_engine *engine)
     engine->add_component(engine, &camerafollow_component);
     engine->add_component(engine, &fixed_to_cam);
     engine->add_component(engine, &parallax_component);
-    engine->add_component(engine, &controllable_component);
-    engine->add_component(engine, &keyboard_controller);
     engine->add_component(engine, &friction_giver);
     engine->add_component(engine, &friction_component);
     engine->add_component(engine, &collision_component);

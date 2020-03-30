@@ -7,16 +7,10 @@
 
 #include "entity.h"
 #include "system.h"
-#include "vector2.h"
 #include "utility.h"
 #include "components/movable_component.h"
 #include "components/collision_component.h"
 #include "components/transform_component.h"
-#include "components/renderer.h"
-#include "systems/movable_system.h"
-#include <stddef.h>
-
-#include "components/controllable_component.h"
 
 void clamp_vel(struct movable_component *mov, struct collision_component *col)
 {
