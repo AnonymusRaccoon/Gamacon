@@ -54,21 +54,15 @@ struct tile *tile, gc_vector2 offset, sfVertex **v)
 }
 
 void sfmlrenderer_draw_tile(struct sfml_renderer_system *this, \
-gc_vector2 offset, struct tile *tile, bool hovered)
+gc_vector2 offset, struct tile *tile)
 {
     sfVertex *v[4];
 
     if (tile->corners[0]->z == INT32_MAX || !tile->corners[2]->y)
         return;
     tile_prepare_for_draw(this, tile, offset, v);
-    if (hovered)
-        for (int i = 0; i < 4; i++)
-            v[i]->color = (sfColor) {180, 180, 180, 255};
     this->states->texture = (sfTexture *) tile->texture;
     sfRenderWindow_drawVertexArray(this->window, this->vertices, this->states);
-    if (hovered)
-        for (int i = 0; i < 4; i++)
-            v[i]->color = sfWhite;
     this->states->texture = NULL;
 }
 
@@ -89,6 +83,14 @@ struct vertex_component *info, float dt)
     tl = get_tile_from_pos(info, gc_vector2_add(pos, *(gc_vector2 *)&w));
     for (i = 0; info->map[i].corners[0]; i++);
     for (i--; i >= 0; i--) {
-        sfmlrenderer_draw_tile(this, pos, &info->map[i], &info->map[i] == tl);
+        if (&info->map[i] == tl) {
+            for (int j = 0; j < 4; j++)
+                sfVertexArray_getVertex(this->vertices, j)->color = (sfColor) {180, 180, 180, 255};
+        }
+        sfmlrenderer_draw_tile(this, pos, &info->map[i]);
+        if (&info->map[i] == tl) {
+            for (int j = 0; j < 4; j++)
+                sfVertexArray_getVertex(this->vertices, j)->color = sfWhite;
+        }
     }
 }
