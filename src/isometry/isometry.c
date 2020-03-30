@@ -48,7 +48,7 @@ node *tile_get_data(gc_vector2i coords, node *n)
     return (NULL);
 }
 
-bool init_tile(struct tile *tile, gc_vector2i c, struct vertex **vertices, node *n, gc_scene *scene)
+bool init_tile(struct tile *tile, gc_vector2i c, struct vertex **vertices)
 {
     gc_vector2i arr[4] = {
         c,
@@ -56,7 +56,6 @@ bool init_tile(struct tile *tile, gc_vector2i c, struct vertex **vertices, node 
         (gc_vector2i){c.x + 1, c.y + 1},
         (gc_vector2i){c.x + 1, c.y}
     };
-    char *tmp;
 
     for (int i = 0; i < 4; i++)
         if (vertices[arr[i].x][arr[i].y].z == INT32_MIN)
@@ -65,6 +64,13 @@ bool init_tile(struct tile *tile, gc_vector2i c, struct vertex **vertices, node 
         tile->corners[i] = &vertices[arr[i].x][arr[i].y];
     tile->data = 0;
     tile->entity = NULL;
+    return (true);
+}
+
+bool init_data(struct tile *tile, gc_vector2i c, node *n, gc_scene *scene)
+{
+    char *tmp;
+
     n = tile_get_data(c, n);
     tmp = xml_gettmpstring(n, "texture", NULL);
     tile->texture = scene->get_data(scene, "sprite", tmp);
@@ -77,7 +83,7 @@ bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
     node *tiles_data = xml_getnode(n, "tiles_data");
     int w = xml_getchildcount(vertex_data);
     int h = 0;
-    int count = 0;
+    int c = 0;
 
     if (!vertex_data)
         return (false);
@@ -88,8 +94,9 @@ bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
         return (false);
     for (int x = 0; this->vertices[x + 1]; x++)
         for (int y = 0; this->vertices[x][y].z != INT32_MIN; y++)
-            if (init_tile(&this->map[count], (gc_vector2i){x, y}, this->vertices, tiles_data, scene))
-                count++;
-    this->map[count].corners[0] = NULL;
+            if (init_tile(&this->map[c], (gc_vector2i){x, y}, this->vertices) \
+&& init_data(&this->map[c], (struct gc_vector2i){x, y}, tiles_data, scene))
+                c++;
+    this->map[c].corners[0] = NULL;
     return (true);
 }
