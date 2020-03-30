@@ -19,14 +19,12 @@ SRC = src/engine/engine.c \
 	src/components/camera_follow.c \
 	src/components/fixed_to_cam.c \
 	src/components/parallax_component.c \
-	src/components/controllable_component.c \
 	src/components/friction_component.c \
 	src/components/friction_giver.c \
 	src/components/clickable_component.c \
 	src/components/input_component.c \
 	src/components/tag_component.c \
 	src/components/tooltip_component.c \
-	src/components/controllers/keyboard_controller.c \
 	src/components/renderers/sprite_renderer.c \
 	src/components/renderers/anim_renderer.c \
 	src/components/renderers/text_renderer.c \
@@ -45,7 +43,6 @@ SRC = src/engine/engine.c \
 	src/systems/camera_follow_system.c \
 	src/systems/collision_system.c \
 	src/systems/parallax_system.c \
-	src/systems/controllers/keyboard_controller_system.c \
 	src/systems/friction_system.c \
 	src/systems/tooltip_system.c \
 	src/systems/clickable_system.c \

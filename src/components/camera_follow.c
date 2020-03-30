@@ -7,10 +7,6 @@
 
 #include "xml.h"
 #include "component.h"
-#include "components/controllable_component.h"
-#include "components/camerafollow_component.h"
-#include "utility.h"
-#include <stdlib.h>
 
 static void ctr(void *component, va_list args)
 {
