@@ -9,7 +9,7 @@
 #include <stdbool.h>
 #include "components/vertex_component.h"
 
-#define ANGLE_X 45
+#define ANGLE_X 25
 #define ANGLE_Y 35
 #define ADD_VALUE 10
 
