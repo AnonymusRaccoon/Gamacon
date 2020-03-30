@@ -8,6 +8,7 @@
 #include "xml.h"
 #include <malloc.h>
 #include <stdint.h>
+#include <utility.h>
 #include "isometry.h"
 
 bool get_vertices(struct vertex_component *this, node *n)
@@ -16,6 +17,7 @@ bool get_vertices(struct vertex_component *this, node *n)
     int j = 0;
     int size[3] = {sizeof(struct vertex), sizeof(struct vertex *), 0};
 
+    n = xml_getnode(n, "vertex_data");
     this->vertices = malloc(size[1] * (xml_getchildcount(n) + 1));
     if (!this->vertices)
         return (false);
@@ -34,64 +36,59 @@ bool get_vertices(struct vertex_component *this, node *n)
     return (true);
 }
 
-char *get_texture_for_coords(gc_vector2i coords, node *n)
+node *tile_get_data(gc_vector2i coords, node *n)
 {
-    char *texture = NULL;
-
-    for (node *text = n->child; text; text = text->next) {
-        if (xml_getintprop(text, "x") != coords.x)
+    for (n = n->child; n; n = n->next) {
+        if (xml_getintprop(n, "x") != coords.x)
             continue;
-        if (xml_getintprop(text, "y") != coords.y)
+        if (xml_getintprop(n, "y") != coords.y)
             continue;
-        texture = xml_getproperty(text, "name");
-        break;
+        return n;
     }
-    return (texture);
+    return (NULL);
 }
 
-bool init_tile(struct vertex_component *this, int *inc, void **d, \
-gc_vector2i c)
+bool init_tile(struct tile *tile, gc_vector2i c, struct vertex **vertices, node *n, gc_scene *scene)
 {
-    char *t;
-    void *tmp;
-    gc_vector2i arr[4] = {c, (gc_vector2i){c.x, c.y + 1}, \
-(gc_vector2i){c.x + 1, c.y + 1}, (gc_vector2i){c.x + 1, c.y}};
+    gc_vector2i arr[4] = {
+        c,
+        (gc_vector2i){c.x, c.y + 1}, \
+        (gc_vector2i){c.x + 1, c.y + 1},
+        (gc_vector2i){c.x + 1, c.y}
+    };
+    char *tmp;
 
     for (int i = 0; i < 4; i++)
-        if (this->vertices[arr[i].x][arr[i].y].z == INT32_MIN)
+        if (vertices[arr[i].x][arr[i].y].z == INT32_MIN)
             return (false);
     for (int i = 0; i < 4; i++)
-        this->map[*inc].corners[i] = &this->vertices[arr[i].x][arr[i].y];
-    this->map[*inc].data = 0;
-    t = get_texture_for_coords(c, d[0]);
-    if (t) {
-        tmp = ((gc_scene *)d[1])->get_data(d[1], "sprite", t);
-        this->map[*inc].texture = tmp;
-        free(t);
-    }
-    else
-        this->map[*inc].texture = NULL;
+        tile->corners[i] = &vertices[arr[i].x][arr[i].y];
+    tile->data = 0;
+    n = tile_get_data(c, n);
+    tmp = xml_gettmpstring(n, "texture", NULL);
+    tile->texture = scene->get_data(scene, "sprite", tmp);
     return (true);
 }
 
 bool get_tiles(struct vertex_component *this, gc_scene *scene, node *n)
 {
-    int inc = 0;
-    int v_x = xml_getchildcount(n);
-    void *dodge[2] = {n->next, scene};
-    int vy = xml_getchildcount(n->child->child);
+    node *vertex_data = xml_getnode(n, "vertex_data");
+    node *tiles_data = xml_getnode(n, "tiles_data");
+    int w = xml_getchildcount(vertex_data);
+    int h = 0;
+    int count = 0;
 
-    for (node *line = n->child; line; line = line->next)
-        vy = (xml_getchildcount(line) > vy) ? xml_getchildcount(line) : vy;
-    this->map = malloc(sizeof(struct tile) * (v_x * vy + 1));
+    if (!vertex_data)
+        return (false);
+    for (node *line = vertex_data->child; line; line = line->next)
+        h = MAX(xml_getchildcount(line), h);
+    this->map = malloc(sizeof(struct tile) * (w * h + 1));
     if (!this->map)
         return (false);
-    for (v_x = 0; this->vertices[v_x + 1]; v_x++) {
-        for (vy = 0; this->vertices[v_x][vy].z != INT32_MIN; vy++) {
-            if (init_tile(this, &inc, dodge, (gc_vector2i){v_x, vy}))
-                inc++;
-        }
-    }
-    this->map[inc].corners[0] = NULL;
+    for (int x = 0; this->vertices[x + 1]; x++)
+        for (int y = 0; this->vertices[x][y].z != INT32_MIN; y++)
+            if (init_tile(&this->map[count], (gc_vector2i){x, y}, this->vertices, tiles_data, scene))
+                count++;
+    this->map[count].corners[0] = NULL;
     return (true);
 }

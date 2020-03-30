@@ -35,7 +35,7 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
         my_printf("gamacon: unable to find a valid tilemap at %s\n", tilemap);
         return;
     }
-    if (!get_vertices(this, n->child) || !get_tiles(this, scene, n->child)) {
+    if (!get_vertices(this, n) || !get_tiles(this, scene, n)) {
         my_printf("Unable to malloc during verticies/tile parsing\n");
         return;
     }
