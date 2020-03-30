@@ -64,6 +64,7 @@ bool init_tile(struct tile *tile, gc_vector2i c, struct vertex **vertices, node 
     for (int i = 0; i < 4; i++)
         tile->corners[i] = &vertices[arr[i].x][arr[i].y];
     tile->data = 0;
+    tile->entity = NULL;
     n = tile_get_data(c, n);
     tmp = xml_gettmpstring(n, "texture", NULL);
     tile->texture = scene->get_data(scene, "sprite", tmp);

@@ -67,7 +67,8 @@ SRC = src/engine/engine.c \
 	src/isometry/map_utils.c \
 	src/isometry/tile_collisions.c \
 	src/components/vertex_component.c \
-	src/isometry/vertex_data_loader.c
+	src/isometry/vertex_data_loader.c \
+	src/sfml_renderer/sfml_utilities.c
 
 OBJ = $(SRC:%.c=%.o)
 

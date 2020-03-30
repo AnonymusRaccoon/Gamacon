@@ -35,3 +35,5 @@ struct vertex_component
 };
 
 extern const struct vertex_component vertex_component;
+
+sfVector2f sfvector2f(gc_vector2 vector);

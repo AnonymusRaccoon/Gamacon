@@ -17,14 +17,6 @@
 #include <stdint.h>
 #include <SFML/Graphics.h>
 
-sfVector2f sfvector2f(gc_vector2 vector)
-{
-    return ((sfVector2f){
-        vector.x,
-        vector.y
-    });
-}
-
 static void tile_rotate(struct tile *tile, int *vertex_order)
 {
     for (int j = 0; j < (tile->data & ROTATION_INFO); j++) {
@@ -53,9 +45,10 @@ struct tile *tile, gc_vector2 offset, sfVertex **v)
     }
 }
 
-void sfmlrenderer_draw_tile(struct sfml_renderer_system *this, \
-gc_vector2 offset, struct tile *tile)
+void sfmlrenderer_draw_tile(gc_engine *engine, \
+gc_vector2 offset, struct tile *tile, float dt)
 {
+    struct sfml_renderer_system *this = GETSYS(engine, sfml_renderer_system);
     sfVertex *v[4];
 
     if (tile->corners[0]->z == INT32_MAX || !tile->corners[2]->y)
@@ -64,6 +57,20 @@ gc_vector2 offset, struct tile *tile)
     this->states->texture = (sfTexture *) tile->texture;
     sfRenderWindow_drawVertexArray(this->window, this->vertices, this->states);
     this->states->texture = NULL;
+    if (tile->entity)
+        this->system.update_entity(engine, this, tile->entity, dt);
+}
+
+void sfmlrenderer_manage_hovered_tile(struct sfml_renderer_system *this, \
+bool hovered)
+{
+    sfColor colors[2] = {sfWhite, {180, 180, 180, 255}};
+    int sel = 0;
+
+    if (hovered)
+        sel = 1;
+    for (int j = 0; j < 4; j++)
+        sfVertexArray_getVertex(this->vertices, j)->color = colors[sel];
 }
 
 void sfmlrenderer_draw_tilemap(gc_engine *engine, gc_entity *entity, \
@@ -81,16 +88,8 @@ struct vertex_component *info, float dt)
     if (!info || !info->map)
         return;
     tl = get_tile_from_pos(info, gc_vector2_add(pos, *(gc_vector2 *)&w));
-    for (i = 0; info->map[i].corners[0]; i++);
-    for (i--; i >= 0; i--) {
-        if (&info->map[i] == tl) {
-            for (int j = 0; j < 4; j++)
-                sfVertexArray_getVertex(this->vertices, j)->color = (sfColor) {180, 180, 180, 255};
-        }
-        sfmlrenderer_draw_tile(this, pos, &info->map[i]);
-        if (&info->map[i] == tl) {
-            for (int j = 0; j < 4; j++)
-                sfVertexArray_getVertex(this->vertices, j)->color = sfWhite;
-        }
+    for (i = 0; info->map[i].corners[0]; i++) {
+        sfmlrenderer_manage_hovered_tile(this, &info->map[i] == tl);
+        sfmlrenderer_draw_tile(engine, pos, &info->map[i], dt);
     }
 }
