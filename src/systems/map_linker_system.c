@@ -21,7 +21,8 @@ struct tile *tile, gc_vector2 map_offset) {
     link->tile = tile;
     if (!tra)
         return;
-    tra->position = gc_vector2_from_coords(c->x - .5, c->y - .5, c->z);
+    tra->position = gc_vector2_from_coords(c->x, c->y, c->z);
     tra->position.x += map_offset.x;
     tra->position.y += map_offset.y;
+    tra->position.y *= -1;
 }
