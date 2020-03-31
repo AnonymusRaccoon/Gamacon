@@ -16,6 +16,7 @@
 #include <math.h>
 #include <stdint.h>
 #include <SFML/Graphics.h>
+#include <components/renderer.h>
 
 static void tile_rotate(struct tile *tile, int *vertex_order)
 {
@@ -48,6 +49,7 @@ struct tile *tile, gc_vector2 offset, sfVertex **v)
 void sfmlrenderer_draw_tile(gc_engine *engine, \
 gc_vector2 offset, struct tile *tile, float dt)
 {
+    struct renderer *renderer;
     struct sfml_renderer_system *this = GETSYS(engine, sfml_renderer_system);
     sfVertex *v[4];
 
@@ -57,8 +59,12 @@ gc_vector2 offset, struct tile *tile, float dt)
     this->states->texture = (sfTexture *) tile->texture;
     sfRenderWindow_drawVertexArray(this->window, this->vertices, this->states);
     this->states->texture = NULL;
-    if (tile->entity)
+    if (tile->entity) {
+        renderer = GETCMP(tile->entity, renderer);
+        renderer->is_visible = true;
         this->system.update_entity(engine, this, tile->entity, dt);
+        renderer->is_visible = false;
+    }
 }
 
 void sfmlrenderer_manage_hovered_tile(struct sfml_renderer_system *this, \
