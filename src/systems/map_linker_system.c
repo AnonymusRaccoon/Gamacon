@@ -24,7 +24,7 @@ struct tile *tile, gc_vector2 map_offset) {
         return;
     for (int i = 0; i < 4; i++)
         z += tile->corners[i]->z;
-    tra->position = gc_vector2_from_coords(c->x + 1.2, c->y + 1.2, z / 4);
+    tra->position = gc_vector2_from_coords(c->x + .5, c->y + .5, z / 4);
     tra->position.x += map_offset.x;
     tra->position.y += map_offset.y;
     tra->position.y *= -1;
