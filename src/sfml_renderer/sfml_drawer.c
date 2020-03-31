@@ -27,14 +27,15 @@ gc_entity *entity, gc_sprite *sprite, struct transform_component *tra)
     int ori_y = scale.y < 0 ? sprite->rect.height : 0;
 
     sfSprite_setScale(renderer->sprite, scale);
-    ori_x = rend->is_centered_x ? sprite->rect.width / 2 : ori_x;
-    ori_y = rend->is_centered_y ? sprite->rect.height / 2 : ori_y;
-    if (entity->has_component(entity, "fixed_to_cam")) {
+    if (rend->render_mode_x == RENDER_MODE_CENTERED)
         ori_x = sprite->rect.width / 2;
+    if (rend->render_mode_y == RENDER_MODE_CENTERED)
         ori_y = sprite->rect.height / 2;
-    }
+    if (rend->render_mode_x == RENDER_MODE_REVERSED)
+        ori_x = ori_x == 0 ? sprite->rect.width : 0;
+    if (rend->render_mode_y == RENDER_MODE_REVERSED)
+        ori_y = ori_y == 0 ? sprite->rect.height : 0;
     sfSprite_setOrigin(renderer->sprite, (sfVector2f){ori_x, ori_y});
-
 }
 
 void sfmlrenderer_draw_texture(gc_engine *engine, gc_entity *entity, \

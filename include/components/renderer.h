@@ -18,14 +18,20 @@ typedef enum gc_texturetype {
     GC_NONE
 } gc_texturetype;
 
+typedef enum render_mode {
+    RENDER_MODE_NORMAL,
+    RENDER_MODE_CENTERED,
+    RENDER_MODE_REVERSED
+} render_mode;
+
 struct renderer
 {
     gc_component base;
     enum gc_texturetype type;
     void *data;
     bool is_visible;
-    bool is_centered_x;
-    bool is_centered_y;
+    render_mode render_mode_x;
+    render_mode render_mode_y;
     void (*destroy)(struct renderer *);
 };
 

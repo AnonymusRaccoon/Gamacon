@@ -26,7 +26,8 @@ static void init(gc_entity *entity, struct vertex_component *vert, int x, int y)
     rend = GETCMP(entity, renderer);
     if (rend) {
         rend->is_visible = false;
-        rend->is_centered_x = true;
+        rend->render_mode_x = RENDER_MODE_CENTERED;
+        rend->render_mode_y = RENDER_MODE_REVERSED;
     }
 }
 

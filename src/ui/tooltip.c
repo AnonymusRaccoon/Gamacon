@@ -19,6 +19,7 @@
 static void setup_position(gc_entity *entity, gc_scene *scene, node *n)
 {
     entity->add_component(entity, new_component(&fixed_to_cam,
+        entity,
         (gc_vector2){
         xml_getintprop(n, "x") + xml_getintprop(n, "tooltip_x"),
         xml_getintprop(n, "y") - xml_getintprop(n, "tooltip_y")

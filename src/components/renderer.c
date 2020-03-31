@@ -20,8 +20,8 @@ static void ctr(void *component, va_list args)
     cmp->data = NULL;
     cmp->type = type;
     cmp->is_visible = true;
-    cmp->is_centered_x = false;
-    cmp->is_centered_y = false;
+    cmp->render_mode_x = RENDER_MODE_NORMAL;
+    cmp->render_mode_y = RENDER_MODE_NORMAL;
     if (type == GC_TEXTUREREND)
         sprite_ctr(cmp, args);
     if (type == GC_ANIMREND)

@@ -41,7 +41,7 @@ gc_text *text)
     entity->add_component(entity, new_component(&renderer_component,
         GC_TEXTUREREND, texture, (gc_int_rect){-1, -1, 0, 0}));
     entity->add_component(entity, new_component(&fixed_to_cam,
-        (gc_vector2){xml_getintprop(n, "x"),xml_getintprop(n, "y")},
+        entity, (gc_vector2){xml_getintprop(n, "x"),xml_getintprop(n, "y")},
         true, true, s.x, s.y,
         xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%")));
     return (entity);

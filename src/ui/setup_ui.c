@@ -33,7 +33,7 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
         xml_getintprop(n, "size"),
         xml_gettempprop(n, "color"), xml_getbool(n, "resize", true)));
     entity->add_component(entity, new_component(&fixed_to_cam,
-        (gc_vector2){xml_getintprop(n, "x"), xml_getintprop(n, "y")},
+        entity, (gc_vector2){xml_getintprop(n, "x"), xml_getintprop(n, "y")},
         xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
         0, 0, false, false));
     if (xml_hasproperty(n, "tag"))
@@ -54,7 +54,7 @@ gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
     entity->add_component(entity, new_component(&renderer_component,
         GC_TEXTUREREND, texture, (sfIntRect){0, 0, -1, -1}));
     entity->add_component(entity, new_component(&fixed_to_cam,
-        (gc_vector2){xml_getintprop(n, "x"), xml_getintprop(n, "y") },
+        entity, (gc_vector2){xml_getintprop(n, "x"), xml_getintprop(n, "y") },
         xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
         xml_getintprop(n, "width"), xml_getintprop(n, "height"),
         xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%")));
