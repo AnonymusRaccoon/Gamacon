@@ -96,7 +96,8 @@ struct vertex_component *info, float dt)
     if (!info || !info->map)
         return;
     tl = get_tile_from_pos(info, gc_vector2_add(pos, *(gc_vector2 *)&w));
-    for (i = 0; info->map[i].corners[0]; i++) {
+    for (i = 0; info->map[i].corners[0]; i++);
+    for (i--; i >= 0; i--) {
         sfmlrenderer_manage_hovered_tile(this, &info->map[i] == tl || info->map[i].entity);
         sfmlrenderer_draw_tile(engine, pos, &info->map[i], dt);
     }
