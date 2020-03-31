@@ -13,16 +13,19 @@
 #include "my.h"
 
 
-static void init(gc_entity *entity, struct vertex_component *vert, int x, int y)
+static void init(gc_entity *entity, struct vertex_component *vert, \
+gc_vector2i pos, bool solid)
 {
     struct renderer *rend;
-    struct tile *tile = get_tile_at(vert, (gc_vector2i){x, y});
+    struct tile *tile = get_tile_at(vert, pos);
 
     if (!tile) {
-        my_printf("No tile found at %d, %d. Can't link entity to it.\n", x, y);
+        my_printf("No tile found at %d, %d. Can't link entity to it.\n", \
+pos.x, pos.y);
         return;
     }
     tile->entity = entity;
+    tile->solid = solid;
     rend = GETCMP(entity, renderer);
     if (rend) {
         rend->is_visible = false;
@@ -39,11 +42,12 @@ static void ctr(void *component, va_list args)
     struct vertex_component *vert;
     int x = va_arg(args, int);
     int y = va_arg(args, int);
+    bool solid = va_arg(args, int);
 
     if (!scene || !(maps = scene->get_entity_by_cmp(scene, "vertex_component")))
         return;
     vert = GETCMP(maps->data, vertex_component);
-    init(entity, vert, x, y);
+    init(entity, vert, (gc_vector2i){x, y}, solid);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
@@ -52,11 +56,12 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     struct vertex_component *vert;
     int x = xml_getintprop(n, "x");
     int y = xml_getintprop(n, "y");
+    bool solid = xml_getbool(n, "solid", true);
 
     if (!maps)
         return;
     vert = GETCMP(maps->data, vertex_component);
-    init(entity, vert, x, y);
+    init(entity, vert, (gc_vector2i){x, y}, solid);
 }
 
 static void dtr(void *component)
