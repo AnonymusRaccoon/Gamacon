@@ -6,6 +6,7 @@
 */
 
 #include "engine.h"
+#include "components/map_linker.h"
 #include "components/movable_component.h"
 #include "components/parallax_component.h"
 #include "components/fixed_to_cam_component.h"
@@ -45,4 +46,5 @@ void engine_add_buildin_components(gc_engine *engine)
     engine->add_component(engine, &input_component);
     engine->add_component(engine, &tag_component);
     engine->add_component(engine, &tooltip_component);
+    engine->add_component(engine, &map_linker);
 }

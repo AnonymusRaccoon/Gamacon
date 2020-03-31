@@ -5,15 +5,11 @@
 ** sfml_vertex
 */
 
-#include "sfml_renderer.h"
 #include "vector2.h"
-#include "sprite.h"
-#include "text.h"
 #include "components/transform_component.h"
 #include "systems/sfml_renderer_system.h"
 #include "components/vertex_component.h"
 #include "map_utils.h"
-#include <math.h>
 #include <stdint.h>
 #include <SFML/Graphics.h>
 
