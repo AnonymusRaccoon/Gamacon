@@ -60,7 +60,7 @@ gc_vector2 offset, struct tile *tile, float dt)
     if (tile->entity) {
         map_linker_update_entity(engine, tile->entity, tile, offset);
         renderer = GETCMP(tile->entity, renderer);
-        if (!renderer)
+        if (!renderer || !this->system.check_dependencies(this, tile->entity))
             return;
         renderer->is_visible = true;
         this->system.update_entity(engine, this, tile->entity, dt);
