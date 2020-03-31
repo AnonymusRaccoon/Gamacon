@@ -5,18 +5,16 @@
 ** sfml_vertex
 */
 
-#include "sfml_renderer.h"
 #include "vector2.h"
-#include "sprite.h"
-#include "text.h"
 #include "components/transform_component.h"
 #include "systems/sfml_renderer_system.h"
 #include "components/vertex_component.h"
 #include "map_utils.h"
-#include <math.h>
 #include <stdint.h>
 #include <SFML/Graphics.h>
-#include <components/renderer.h>
+#include "isometry.h"
+#include "components/map_linker.h"
+#include "components/renderer.h"
 
 static void tile_rotate(struct tile *tile, int *vertex_order)
 {
@@ -60,11 +58,15 @@ gc_vector2 offset, struct tile *tile, float dt)
     sfRenderWindow_drawVertexArray(this->window, this->vertices, this->states);
     this->states->texture = NULL;
     if (tile->entity) {
+        map_linker_update_entity(engine, tile->entity, tile, offset);
         renderer = GETCMP(tile->entity, renderer);
+        if (!renderer)
+            return;
         renderer->is_visible = true;
         this->system.update_entity(engine, this, tile->entity, dt);
         renderer->is_visible = false;
     }
+//    printf("Drawing at %d, %d\n", tile->corners[0]->x, tile->corners[0]->y);
 }
 
 void sfmlrenderer_manage_hovered_tile(struct sfml_renderer_system *this, \
@@ -99,4 +101,5 @@ struct vertex_component *info, float dt)
         sfmlrenderer_manage_hovered_tile(this, &info->map[i] == tl || info->map[i].entity);
         sfmlrenderer_draw_tile(engine, pos, &info->map[i], dt);
     }
+//    printf("-----------------------------------------------------------\n");
 }

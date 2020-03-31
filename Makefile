@@ -25,6 +25,7 @@ SRC = src/engine/engine.c \
 	src/components/input_component.c \
 	src/components/tag_component.c \
 	src/components/tooltip_component.c \
+	src/components/map_linker.c \
 	src/components/renderers/sprite_renderer.c \
 	src/components/renderers/anim_renderer.c \
 	src/components/renderers/text_renderer.c \
@@ -47,6 +48,7 @@ SRC = src/engine/engine.c \
 	src/systems/tooltip_system.c \
 	src/systems/clickable_system.c \
 	src/systems/fixed_to_cam_pseudosystem.c \
+	src/systems/map_linker_system.c \
 	src/engine/engine_system_builder.c \
 	src/engine/engine_component_builder.c \
 	src/engine/event_manager.c \

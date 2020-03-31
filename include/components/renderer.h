@@ -24,6 +24,8 @@ struct renderer
     enum gc_texturetype type;
     void *data;
     bool is_visible;
+    bool is_centered_x;
+    bool is_centered_y;
     void (*destroy)(struct renderer *);
 };
 

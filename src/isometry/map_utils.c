@@ -35,6 +35,17 @@ struct tile *get_tile_from_pos(struct vertex_component *map, gc_vector2 pos)
     return (NULL);
 }
 
+struct tile *get_tile_at(struct vertex_component *v, gc_vector2i p)
+{
+    if (!v || !v->map)
+        return (NULL);
+    for (int i = 0; v->map[i].corners[0]; i++) {
+        if (v->map[i].corners[0]->x == p.x && v->map[i].corners[0]->y == p.y)
+            return (&v->map[i]);
+    }
+    return (NULL);
+}
+
 int get_index_nearest_vertex(struct tile *sel, gc_vector2 pos)
 {
     float spacing = INFINITY;

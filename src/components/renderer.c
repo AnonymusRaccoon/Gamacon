@@ -7,12 +7,9 @@
 
 #include "engine.h"
 #include "xml.h"
-#include "utility.h"
-#include "sprite.h"
-#include "text.h"
-#include "components/transform_component.h"
 #include "components/renderer.h"
-#include <stdlib.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 static void ctr(void *component, va_list args)
 {
@@ -23,6 +20,8 @@ static void ctr(void *component, va_list args)
     cmp->data = NULL;
     cmp->type = type;
     cmp->is_visible = true;
+    cmp->is_centered_x = false;
+    cmp->is_centered_y = false;
     if (type == GC_TEXTUREREND)
         sprite_ctr(cmp, args);
     if (type == GC_ANIMREND)

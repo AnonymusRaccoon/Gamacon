@@ -25,6 +25,7 @@ struct tile
     void *texture;
     char data;
     struct gc_entity *entity;
+    bool solid;
 };
 
 struct vertex_component
