@@ -10,6 +10,7 @@
 #include "sprite.h"
 #include "text.h"
 #include "components/transform_component.h"
+#include "components/renderer.h"
 #include "systems/sfml_renderer_system.h"
 #include "my.h"
 #include <SFML/Graphics.h>
@@ -21,18 +22,19 @@ gc_entity *entity, gc_sprite *sprite, struct transform_component *tra)
         tra->size.x * sprite->scale.x / sprite->rect.width,
         tra->size.y * sprite->scale.y / sprite->rect.height
     };
+    struct renderer *rend = GETCMP(entity, renderer);
+    int ori_x = scale.x < 0 ? sprite->rect.width : 0;
+    int ori_y = scale.y < 0 ? sprite->rect.height : 0;
 
     sfSprite_setScale(renderer->sprite, scale);
-    if (entity->has_component(entity, "fixed_to_cam"))
-        sfSprite_setOrigin(renderer->sprite, (sfVector2f) {
-            sprite->rect.width / 2,
-            sprite->rect.height / 2
-        });
-    else
-        sfSprite_setOrigin(renderer->sprite, (sfVector2f){
-            scale.x < 0 ? sprite->rect.width : 0,
-            scale.y < 0 ? sprite->rect.height : 0
-        });
+    ori_x = rend->is_centered_x ? sprite->rect.width / 2 : ori_x;
+    ori_y = rend->is_centered_y ? sprite->rect.height / 2 : ori_y;
+    if (entity->has_component(entity, "fixed_to_cam")) {
+        ori_x = sprite->rect.width / 2;
+        ori_y = sprite->rect.height / 2;
+    }
+    sfSprite_setOrigin(renderer->sprite, (sfVector2f){ori_x, ori_y});
+
 }
 
 void sfmlrenderer_draw_texture(gc_engine *engine, gc_entity *entity, \

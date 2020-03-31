@@ -13,6 +13,23 @@
 #include "my.h"
 
 
+static void init(gc_entity *entity, struct vertex_component *vert, int x, int y)
+{
+    struct renderer *rend;
+    struct tile *tile = get_tile_at(vert, (gc_vector2i){x, y});
+
+    if (!tile) {
+        my_printf("No tile found at %d, %d. Can't link entity to it.\n", x, y);
+        return;
+    }
+    tile->entity = entity;
+    rend = GETCMP(entity, renderer);
+    if (rend) {
+        rend->is_visible = false;
+        rend->is_centered_x = true;
+    }
+}
+
 static void ctr(void *component, va_list args)
 {
     gc_entity *entity = va_arg(args, gc_entity *);
@@ -21,21 +38,11 @@ static void ctr(void *component, va_list args)
     struct vertex_component *vert;
     int x = va_arg(args, int);
     int y = va_arg(args, int);
-    struct tile *tile;
-    struct renderer *rend;
 
     if (!scene || !(maps = scene->get_entity_by_cmp(scene, "vertex_component")))
         return;
     vert = GETCMP(maps->data, vertex_component);
-    tile = get_tile_at(vert, (gc_vector2i){x, y});
-    if (!tile) {
-        my_printf("No tile found at %d, %d. Can't link entity to it.\n", x, y);
-        return;
-    }
-    tile->entity = entity;
-    rend = GETCMP(entity, renderer);
-    if (rend)
-        rend->is_visible = false;
+    init(entity, vert, x, y);
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
@@ -44,21 +51,11 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     struct vertex_component *vert;
     int x = xml_getintprop(n, "x");
     int y = xml_getintprop(n, "y");
-    struct tile *tile;
-    struct renderer *rend;
 
     if (!maps)
         return;
     vert = GETCMP(maps->data, vertex_component);
-    tile = get_tile_at(vert, (gc_vector2i){x, y});
-    if (!tile) {
-        my_printf("No tile found at %d, %d. Can't link entity to it.\n", x, y);
-        return;
-    }
-    tile->entity = entity;
-    rend = GETCMP(entity, renderer);
-    if (rend)
-        rend->is_visible = false;
+    init(entity, vert, x, y);
 }
 
 static void dtr(void *component)
