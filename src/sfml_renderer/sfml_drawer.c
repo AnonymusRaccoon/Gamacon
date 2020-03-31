@@ -53,7 +53,7 @@ gc_sprite *sprite, float dt)
         sprite->rect.width, sprite->rect.height
     });
     sfSprite_setPosition(rend->sprite, pos);
-       sfmlrenderer_setorigin(rend, entity, sprite, tra);
+    sfmlrenderer_setorigin(rend, entity, sprite, tra);
     sfRenderWindow_drawSprite(rend->window, rend->sprite, NULL);
 }
 

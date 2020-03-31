@@ -12,7 +12,9 @@
 #include "map_utils.h"
 #include <stdint.h>
 #include <SFML/Graphics.h>
-#include <components/renderer.h>
+#include "isometry.h"
+#include "components/map_linker.h"
+#include "components/renderer.h"
 
 static void tile_rotate(struct tile *tile, int *vertex_order)
 {
@@ -56,7 +58,10 @@ gc_vector2 offset, struct tile *tile, float dt)
     sfRenderWindow_drawVertexArray(this->window, this->vertices, this->states);
     this->states->texture = NULL;
     if (tile->entity) {
+        map_linker_update_entity(engine, tile->entity, tile, offset);
         renderer = GETCMP(tile->entity, renderer);
+        if (!renderer)
+            return;
         renderer->is_visible = true;
         this->system.update_entity(engine, this, tile->entity, dt);
         renderer->is_visible = false;

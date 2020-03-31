@@ -5,15 +5,37 @@
 ** map_linker.c
 */
 
-#include <components/renderer.h>
+#include "components/renderer.h"
 #include "component.h"
 #include "components/vertex_component.h"
+#include "components/map_linker.h"
 #include "map_utils.h"
 #include "my.h"
 
 
 static void ctr(void *component, va_list args)
 {
+    gc_entity *entity = va_arg(args, gc_entity *);
+    gc_scene *scene = va_arg(args, gc_scene *);
+    gc_list *maps;
+    struct vertex_component *vert;
+    int x = va_arg(args, int);
+    int y = va_arg(args, int);
+    struct tile *tile;
+    struct renderer *rend;
+
+    if (!scene || !(maps = scene->get_entity_by_cmp(scene, "vertex_component")))
+        return;
+    vert = GETCMP(maps->data, vertex_component);
+    tile = get_tile_at(vert, (gc_vector2i){x, y});
+    if (!tile) {
+        my_printf("No tile found at %d, %d. Can't link entity to it.\n", x, y);
+        return;
+    }
+    tile->entity = entity;
+    rend = GETCMP(entity, renderer);
+    if (rend)
+        rend->is_visible = false;
 }
 
 static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
@@ -50,15 +72,17 @@ static char *serialize(void *component)
     return (NULL);
 }
 
-const gc_component map_linker = {
-    name: "map_linker",
-    size: sizeof(gc_component),
-    dependencies: (char *[]) {
-        NULL
-    },
-    ctr: &ctr,
-    fdctr: &fdctr,
-    dtr: &dtr,
-    serialize: &serialize,
-    destroy: &component_destroy
+const struct map_linker map_linker = {
+    base: {
+        name: "map_linker",
+        size: sizeof(struct map_linker),
+        dependencies: (char *[]) {
+            NULL
+        },
+        ctr: &ctr,
+        fdctr: &fdctr,
+        dtr: &dtr,
+        serialize: &serialize,
+        destroy: &component_destroy
+    }
 };
