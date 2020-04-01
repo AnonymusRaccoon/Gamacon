@@ -87,7 +87,7 @@ void sfmlrend_ctr(void *rend, va_list list)
     sfml_setup_options(this, engine);
 }
 
-void sfmlrend_dtr(void *system)
+void sfmlrend_dtr(void *system, gc_engine *engine)
 {
     struct sfml_renderer_system *renderer = (struct sfml_renderer_system *)\
 system;

@@ -45,7 +45,7 @@ gc_entity *parent)
     setup_position(entity, scene, n);
     entity->add_component(entity, new_component(&tooltip_component,
         GETCMP(parent, transform_component), xml_getfloatprop(n, "padding_x"),
-        xml_getfloatprop(n, "padding_y")));
+        xml_getfloatprop(n, "padding_y"), xml_getbool(n, "centered", true)));
     if (xml_hasproperty(n, "tag"))
         entity->add_component(entity, new_component(&tag_component,
             xml_getproperty(n, "tag")));

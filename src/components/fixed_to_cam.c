@@ -9,7 +9,6 @@
 #include "component.h"
 #include "components/fixed_to_cam_component.h"
 #include "utility.h"
-#include <stdlib.h>
 #include <components/renderer.h>
 
 static void ctr(void *component, va_list args)
@@ -17,6 +16,7 @@ static void ctr(void *component, va_list args)
     gc_entity *entity = va_arg(args, gc_entity *);
     struct renderer *rend;
     struct fixed_to_cam *cmp = (struct fixed_to_cam *)component;
+    bool centered;
 
     if (!entity)
         return;
@@ -28,11 +28,13 @@ static void ctr(void *component, va_list args)
     cmp->size_y = va_arg(args, int);
     cmp->per_w = va_arg(args, int);
     cmp->per_h = va_arg(args, int);
+    centered = va_arg(args, int);
     if (!rend)
         my_printf("Missing a renderer on an entity fixed to the cam.\n");
-    else {
+    else if (centered) {
         rend->render_mode_x = RENDER_MODE_CENTERED;
-        rend->render_mode_y = RENDER_MODE_CENTERED;
+        if (rend->type != GC_TXTREND)
+            rend->render_mode_y = RENDER_MODE_CENTERED;
     }
 }
 

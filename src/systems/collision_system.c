@@ -48,7 +48,7 @@ static void ctr(void *system, va_list args)
     (void)args;
 }
 
-static void dtr(void *system)
+static void dtr(void *system, gc_engine *engine)
 {
     gc_collision_system *mov = (gc_collision_system *)system;
 

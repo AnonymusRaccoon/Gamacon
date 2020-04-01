@@ -21,5 +21,7 @@ struct gc_event_listener
 void engine_trigger_event(gc_engine *engine, const char *name, ...);
 bool engine_add_event_listener(gc_engine *engine, const char *name, \
 void (*func)(gc_engine *, va_list));
+bool engine_remove_event_listener(gc_engine *engine, const char *name, \
+void (*func)(gc_engine *, va_list));
 
 #endif //MY3D_EVENT_MANAGER_H

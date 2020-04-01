@@ -35,7 +35,7 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
     entity->add_component(entity, new_component(&fixed_to_cam,
         entity, (gc_vector2){xml_getintprop(n, "x"), xml_getintprop(n, "y")},
         xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
-        0, 0, false, false));
+        0, 0, false, false, xml_getbool(n, "centered", true)));
     if (xml_hasproperty(n, "tag"))
         entity->add_component(entity, new_component(&tag_component,
             xml_getproperty(n, "tag")));
@@ -57,7 +57,8 @@ gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
         entity, (gc_vector2){xml_getintprop(n, "x"), xml_getintprop(n, "y") },
         xml_propcontains(n, "x", "%"), xml_propcontains(n, "y", "%"),
         xml_getintprop(n, "width"), xml_getintprop(n, "height"),
-        xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%")));
+        xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%"),
+        xml_getbool(n, "centered", true)));
     if (xml_hasproperty(n, "tag"))
         entity->add_component(entity, new_component(&tag_component,
             xml_getproperty(n, "tag")));

@@ -52,7 +52,7 @@ void engine_destroy(gc_engine *engine)
     }
     for (gc_list *system = engine->systems; system; system = next) {
         next = system->next;
-        ((gc_system *)system->data)->destroy(system->data);
+        ((gc_system *)system->data)->destroy(system->data, engine);
         free(system);
     }
     for (gc_list *cmp = engine->components; cmp; cmp = next) {

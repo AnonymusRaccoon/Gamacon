@@ -14,8 +14,8 @@ typedef struct gc_engine gc_engine;
 typedef bool (*callback_t)(gc_engine *engine, gc_entity *entity, \
 gc_vector2 pos, enum gc_mousekeys key);
 
-#ifndef ENGINE
-#define ENGINE
+#ifndef ENGINE_H
+#define ENGINE_H
 
 #include "xml.h"
 #include "scene.h"
@@ -66,6 +66,8 @@ struct gc_engine
     void (*trigger_event)(gc_engine *this, const char *name, ...);
     bool (*add_event_listener)(gc_engine *this, const char *name, \
 void (*func)(gc_engine *, va_list));
+    bool (*remove_event_listener)(gc_engine *this, const char *name, \
+void (*func)(gc_engine *, va_list));
 };
 
 gc_engine *engine_create(void);
@@ -100,5 +102,4 @@ int engine_use_sfml(gc_engine *engine, const char *title, int framerate);
 gc_vector2 engine_get_cursor_pos(gc_engine *engine);
 
 #define GETSYS(engine, x) ((struct x *)engine->get_system(engine, #x))
-
 #endif

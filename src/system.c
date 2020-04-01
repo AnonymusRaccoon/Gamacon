@@ -51,11 +51,11 @@ void *new_system(const void *system, ...)
     return (new_sys);
 }
 
-void system_destroy(void *system)
+void system_destroy(void *system, gc_engine *engine)
 {
     gc_system *sys = (gc_system *)system;
 
     if (sys->dtr)
-        sys->dtr(system);
+        sys->dtr(system, engine);
     free(system);
 }

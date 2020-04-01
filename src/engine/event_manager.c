@@ -26,6 +26,22 @@ void (*func)(gc_engine *, va_list))
     return (true);
 }
 
+bool engine_remove_event_listener(gc_engine *engine, const char *n, \
+void (*func)(gc_engine *, va_list))
+{
+    gc_list *tmp = engine->event_listeners;
+
+    for (; tmp; tmp = tmp->next) {
+        if (((struct gc_event_listener *)tmp->data)->func != func)
+            continue;
+        if (n && my_strcmp(((struct gc_event_listener *)tmp->data)->name, n))
+            continue;
+        LISTREM(engine->event_listeners, tmp);
+        return (true);
+    }
+    return (false);
+}
+
 void engine_trigger_event(gc_engine *engine, const char *name, ...)
 {
     gc_list *tmp = engine->event_listeners;
@@ -46,5 +62,6 @@ void engine_setup_event(gc_engine *engine)
     engine->on_resize = &engine_on_resize;
     engine->event_listeners = NULL;
     engine->add_event_listener = &engine_add_event_listener;
+    engine->remove_event_listener = &engine_remove_event_listener;
     engine->trigger_event = &engine_trigger_event;
 }

@@ -32,7 +32,7 @@ gc_entity *entity, float dtime)
     (void)dtime;
 }
 
-void parallax_destroy(void *system)
+void parallax_destroy(void *system, gc_engine *engine)
 {
     (void)system;
 }

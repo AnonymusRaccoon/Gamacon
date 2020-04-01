@@ -43,7 +43,8 @@ gc_text *text)
     entity->add_component(entity, new_component(&fixed_to_cam,
         entity, (gc_vector2){xml_getintprop(n, "x"),xml_getintprop(n, "y")},
         true, true, s.x, s.y,
-        xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%")));
+        xml_propcontains(n, "width", "%"), xml_propcontains(n, "height", "%"),
+        true));
     return (entity);
 }
 

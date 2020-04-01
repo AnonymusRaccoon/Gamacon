@@ -19,12 +19,12 @@ struct gc_system
     const char *component_name;
     size_t size;
     void (*ctr)(void *system, va_list list);
-    void (*dtr)(void *system);
+    void (*dtr)(void *system, gc_engine *engine);
     bool (*check_dependencies)(const gc_system *, const gc_entity *);
     void (*update_entity)(gc_engine *, void *system, gc_entity *, float dtime);
-    void (*destroy)(void *system);
+    void (*destroy)(void *system, gc_engine *engine);
 };
 
 bool system_check_dependencies(const gc_system *sys, const gc_entity *entity);
 void *new_system(const void *system, ...);
-void system_destroy(void *system);
+void system_destroy(void *system, gc_engine *engine);
