@@ -12,9 +12,6 @@
 #include <stdbool.h>
 #include "entity.h"
 
-enum tile_type {
-    TILE_TYPE_NONE
-};
 
 struct tile
 {
@@ -23,7 +20,7 @@ struct tile
     char data;
     struct gc_entity *entity;
     bool solid;
-    enum tile_type type;
+    char *type;
 };
 
 #endif //MY_RPG_TILE_H
