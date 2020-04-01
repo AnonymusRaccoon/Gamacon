@@ -33,7 +33,7 @@ void *my_realloc(void *oldptr, size_t oldsize, size_t newsize);
 #define NCLAMP(x, y) (((x) < (y)) ? ((x) = (y)) : (x))
 #define ABSCLAMP(x, y) (((x) > 0) ? CLAMP((x), (y)) : NCLAMP((x), -(y)))
 
-#define GETSIGN(x) (((x) < 0) ? (-1) : (1))
+#define SIGN(x) (((x) < 0) ? (-1) : ((x == 0 ? 0 : 1)))
 #define SET_SIGN(x, s) (x = (x) * (s) > 0 ? (x) : ((x) * (-1)))
 
 #define ABS(x) ((x) > 0 ? (x) : -(x))
