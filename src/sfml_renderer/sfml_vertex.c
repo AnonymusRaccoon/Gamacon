@@ -60,13 +60,12 @@ gc_vector2 offset, struct tile *tile, float dt)
     if (tile->entity) {
         map_linker_update_entity(engine, tile->entity, tile, offset);
         renderer = GETCMP(tile->entity, renderer);
-        if (!renderer || !this->system.check_dependencies(this, tile->entity))
+        if (!this->system.check_dependencies(&this->system, tile->entity))
             return;
         renderer->is_visible = true;
         this->system.update_entity(engine, this, tile->entity, dt);
         renderer->is_visible = false;
     }
-//    printf("Drawing at %d, %d\n", tile->corners[0]->x, tile->corners[0]->y);
 }
 
 void sfmlrenderer_manage_hovered_tile(struct sfml_renderer_system *this, \
@@ -101,5 +100,4 @@ struct vertex_component *info, float dt)
         sfmlrenderer_manage_hovered_tile(this, &info->map[i] == tl || info->map[i].entity);
         sfmlrenderer_draw_tile(engine, pos, &info->map[i], dt);
     }
-//    printf("-----------------------------------------------------------\n");
 }

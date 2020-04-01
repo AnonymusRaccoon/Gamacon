@@ -75,6 +75,7 @@ bool init_data(struct tile *tile, gc_vector2i c, node *n, gc_scene *scene)
     tmp = xml_gettmpstring(n, "texture", NULL);
     tile->texture = scene->get_data(scene, "sprite", tmp);
     tile->solid = xml_getbool(n, "solid", false);
+    tile->type = TILE_TYPE_NONE;
     return (true);
 }
 

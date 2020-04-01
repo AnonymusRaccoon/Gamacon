@@ -8,6 +8,7 @@
 #pragma once
 
 #include "component.h"
+#include "tile.h"
 #include <stdbool.h>
 
 #define ROTATION_INFO 3
@@ -17,15 +18,6 @@ struct vertex
     int x;
     int y;
     int z;
-};
-
-struct tile
-{
-    struct vertex *corners[4];
-    void *texture;
-    char data;
-    struct gc_entity *entity;
-    bool solid;
 };
 
 struct vertex_component

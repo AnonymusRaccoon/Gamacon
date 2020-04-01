@@ -18,7 +18,7 @@ static void ctr(void *component, va_list args)
     struct renderer *rend;
     struct fixed_to_cam *cmp = (struct fixed_to_cam *)component;
 
-    if (!rend)
+    if (!entity)
         return;
     rend = GETCMP(entity, renderer);
     cmp->pos = va_arg(args, gc_vector2);
