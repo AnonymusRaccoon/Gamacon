@@ -14,14 +14,16 @@
 int prefab_load(gc_engine *engine, const char *path)
 {
     node *n;
+    int prefab_id;
 
     if (!engine || !engine->scene)
         return (-1);
     n = xml_parse(path);
-    if (!n || prefab_loadentities(n, engine, engine->scene) < 0)
+    prefab_id = prefab_loadentities(n, engine, engine->scene);
+    if (!n || prefab_id < 0)
         return (-1);
     xml_destroy(n);
-    return (0);
+    return (prefab_id);
 }
 
 int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene)
@@ -46,5 +48,5 @@ int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene)
     prefab_id++;
     if (engine->on_resize && engine->get_screen_size && engine->scene)
         engine->on_resize(engine, engine->get_screen_size(engine));
-    return (0);
+    return (prefab_id - 1);
 }
