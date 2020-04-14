@@ -76,6 +76,7 @@ bool init_data(struct tile *tile, gc_vector2i c, node *n, gc_scene *scene)
     tile->texture = scene->get_data(scene, "sprite", tmp);
     tile->solid = xml_getbool(n, "solid", false);
     tile->type = xml_getproperty(n, "type");
+    tile->data = xml_getintprop(n, "rotation");
     return (true);
 }
 
