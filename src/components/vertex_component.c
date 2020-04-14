@@ -56,22 +56,26 @@ static char *serialize(void *component)
     return (NULL);
 }
 
-bool vertex_serialize(struct vertex_component *this, const char *file)
+bool vertex_serialize(struct vertex_component *ve, gc_scene *scene, \
+const char *file)
 {
     int fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 
     if (fd < 0)
         return (false);
     dprintf(fd, "<gc_map >\n\t<vertex_data>\n");
-    for (int x = 0; this->vertices[x]; x++) {
+    for (int x = 0; ve->vertices[x]; x++) {
         dprintf(fd, "\t\t<line>\n");
-        for (int y = 0; this->vertices[x][y].z != INT32_MIN; y++)
-            dprintf(fd, "\t\t\t<row height=\"%d\" />\n", this->vertices[x][y].z);
+        for (int y = 0; ve->vertices[x][y].z != INT32_MIN; y++)
+            dprintf(fd, "\t\t\t<row height=\"%d\" />\n", ve->vertices[x][y].z);
         dprintf(fd, "\t\t</line>\n");
     }
     dprintf(fd, "\t</vertex_data>\n\t<tiles_data>\n");
-    for (int i = 0; this->map[i].corners[0]; i++)
-        dprintf(fd, "\t\t<tile x=\"%d\" y=\"%d\" texture=\"%s\" %s/>\n", this->map[i].corners[0]->x, this->map[i].corners[0]->y, NULL, "");
+    for (int i = 0; ve->map[i].corners[0]; i++)
+        dprintf(fd, "\t\t<tile x=\"%d\" y=\"%d\" texture=\"%s\" %s/>\n", \
+ve->map[i].corners[0]->x, ve->map[i].corners[0]->y, \
+scene->get_data_ptr(scene, ve->map[i].texture)->name, \
+ve->map[i].solid ? "solid=\"true\"" : "");
     dprintf(fd, "\t</tiles_data>\n</gc_map>\n");
     return (true);
 }

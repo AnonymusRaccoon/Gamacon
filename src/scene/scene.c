@@ -36,6 +36,15 @@ void *scene_get_data(gc_scene *scene, const char *type, const char *name)
     return (NULL);
 }
 
+gc_data *scene_get_data_ptr(gc_scene *this, void *data)
+{
+    for (gc_list *list = this->data; list; list = list->next) {
+        if (((gc_data *)list->data)->custom == data)
+            return (list->data);
+    }
+    return (NULL);
+}
+
 gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
 {
     gc_scene *scene = malloc(sizeof(gc_scene));
@@ -51,6 +60,7 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     scene->get_entity_by_cmp = &get_entity_by_cmp;
     scene->destroy = &scene_destroy;
     scene->get_data = &scene_get_data;
+    scene->get_data_ptr = &scene_get_data_ptr;
     scene->get_callback = &scene_get_callback;
     scene->load_entity = &scene_load_entity;
     scene->callbacks = engine->callbacks;
@@ -58,20 +68,6 @@ gc_scene *scene_create(gc_engine *engine, const char *xmlpath)
     prefab_loadentities(n, engine, scene);
     xml_destroy(n);
     return (scene);
-}
-
-int change_scene(gc_engine *engine, gc_scene *scene)
-{
-    void *music = scene->get_data(scene, "music", NULL);
-
-    engine->stop_music(engine);
-    if (engine->scene)
-        engine->scene->destroy(engine->scene);
-    engine->scene = scene;
-    if (music)
-        engine->play_music(music);
-    engine->on_resize(engine, engine->get_screen_size(engine));
-    return (0);
 }
 
 callback_t scene_get_callback(gc_scene *this, char *name)

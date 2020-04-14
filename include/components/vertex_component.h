@@ -28,6 +28,7 @@ struct vertex_component
 };
 
 extern const struct vertex_component vertex_component;
-bool vertex_serialize(struct vertex_component *this, const char *file);
+bool vertex_serialize(struct vertex_component *ve, gc_scene *scene, \
+const char *file);
 
 sfVector2f sfvector2f(gc_vector2 vector);

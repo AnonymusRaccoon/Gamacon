@@ -13,11 +13,13 @@ typedef struct gc_scene gc_scene;
 #include "list.h"
 #include "tupple.h"
 #include <stdbool.h>
+#include "data.h"
 
 struct gc_scene
 {
     gc_list *data;
     void *(*get_data)(gc_scene *scene, const char *type, const char *name);
+    gc_data *(*get_data_ptr)(gc_scene *scene, void *data);
 
     void (*destroy)(gc_scene *scene);
 

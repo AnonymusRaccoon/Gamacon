@@ -65,3 +65,17 @@ void engine_setup_event(gc_engine *engine)
     engine->remove_event_listener = &engine_remove_event_listener;
     engine->trigger_event = &engine_trigger_event;
 }
+
+int change_scene(gc_engine *engine, gc_scene *scene)
+{
+    void *music = scene->get_data(scene, "music", NULL);
+
+    engine->stop_music(engine);
+    if (engine->scene)
+        engine->scene->destroy(engine->scene);
+    engine->scene = scene;
+    if (music)
+        engine->play_music(music);
+    engine->on_resize(engine, engine->get_screen_size(engine));
+    return (0);
+}
