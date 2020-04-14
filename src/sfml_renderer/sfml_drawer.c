@@ -12,6 +12,7 @@
 #include "systems/sfml_renderer_system.h"
 #include "my.h"
 #include <SFML/Graphics.h>
+#include <utility.h>
 
 void sfmlrenderer_setorigin(struct sfml_renderer_system *renderer, \
 gc_entity *entity, gc_sprite *sprite, struct transform_component *tra)
@@ -100,14 +101,15 @@ gc_text *txt, float dt)
     struct transform_component *tra = GETCMP(entity, transform_component);
     sfFloatRect bounds;
     float size = 1;
+    gc_vector2 screen_size = engine->get_screen_size(engine);
 
     if (txt->resize)
-        size = 800 / engine->get_screen_size(engine).x;
+        size = MIN(800 / screen_size.x, 600 / screen_size.y);
     sfText_setString(this->text, txt->text);
     if (!txt->font)
         my_printf("%s has a font not loaded. Rendering impossible.", txt->font);
     sfText_setFont(this->text, txt->font);
-    sfText_setCharacterSize(this->text, txt->size / size);
+    sfText_setCharacterSize(this->text, txt->size * size);
     bounds = sfText_getLocalBounds(this->text);
     tra->size.x = bounds.width;
     tra->size.y = bounds.height;
