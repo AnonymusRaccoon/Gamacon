@@ -57,6 +57,7 @@ struct gc_engine
 
     gc_list *callbacks;
     void (*add_callback)(gc_engine *this, char *name, callback_t callback);
+    callback_t (*get_callback)(gc_engine *this, const char *name);
 
     void (*on_resize)(gc_engine *this, gc_vector2 size);
     gc_vector2 (*get_screen_size)(gc_engine *this);
@@ -96,6 +97,7 @@ void engine_init_dataloaders(gc_engine *this);
 void engine_add_dataloader(gc_engine *engine, char *type, gc_loader loader);
 gc_dataloader *engine_get_dataloader(gc_engine *this, const char *type);
 void engine_add_callback(gc_engine *engine, char *name, callback_t func);
+callback_t engine_get_callback(gc_engine *this, const char *name);
 
 int engine_use_sfml(gc_engine *engine, const char *title, int framerate);
 

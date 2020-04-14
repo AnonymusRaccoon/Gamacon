@@ -11,6 +11,10 @@
 #include "isometry.h"
 #include "utility.h"
 #include <stddef.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdint.h>
 
 static void ctr(void *component, va_list args)
 {
@@ -50,6 +54,26 @@ static char *serialize(void *component)
 {
     (void)component;
     return (NULL);
+}
+
+bool vertex_serialize(struct vertex_component *this, const char *file)
+{
+    int fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+    if (fd < 0)
+        return (false);
+    dprintf(fd, "<gc_map >\n\t<vertex_data>\n");
+    for (int x = 0; this->vertices[x]; x++) {
+        dprintf(fd, "\t\t<line>\n");
+        for (int y = 0; this->vertices[x][y].z != INT32_MIN; y++)
+            dprintf(fd, "\t\t\t<row height=\"%d\" />\n", this->vertices[x][y].z);
+        dprintf(fd, "\t\t</line>\n");
+    }
+    dprintf(fd, "\t</vertex_data>\n\t<tiles_data>\n");
+    for (int i = 0; this->map[i].corners[0]; i++)
+        dprintf(fd, "\t\t<tile x=\"%d\" y=\"%d\" texture=\"%s\" %s/>\n", this->map[i].corners[0]->x, this->map[i].corners[0]->y, NULL, "");
+    dprintf(fd, "\t</tiles_data>\n</gc_map>\n");
+    return (true);
 }
 
 const struct vertex_component vertex_component = {

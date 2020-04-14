@@ -41,8 +41,10 @@ void engine_init_dataloaders(gc_engine *this)
     this->dataloaders = NULL;
     this->add_dataloader = &engine_add_dataloader;
     this->get_dataloader = &engine_get_dataloader;
-    this->add_callback = &engine_add_callback;
     this->add_dataloader(this, "tiles", &tile_texture_array_loader);
+
+    this->add_callback = &engine_add_callback;
+    this->get_callback = &engine_get_callback;
     ui_setup(this);
 }
 
@@ -59,4 +61,12 @@ void engine_add_callback(gc_engine *this, char *name, callback_t func)
     LISTADD(this->callbacks, callback);
     if (this->scene)
         this->scene->callbacks = this->callbacks;
+}
+
+callback_t engine_get_callback(gc_engine *this, const char *name)
+{
+    for (gc_list *list = this->callbacks; list; list = list->next)
+        if (!my_strcmp(((gc_data *)list->data)->name, name))
+            return (((gc_data *)list->data)->custom);
+    return (NULL);
 }

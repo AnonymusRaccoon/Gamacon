@@ -5,6 +5,8 @@
 ** map_managment
 */
 
+#pragma once
+
 #include "engine.h"
 #include <stdbool.h>
 #include "components/vertex_component.h"
