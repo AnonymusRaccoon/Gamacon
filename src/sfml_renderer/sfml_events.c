@@ -69,6 +69,7 @@ void sfml_resize(gc_engine *engine, gc_vector2 size)
         size.y
     });
     entities_update_to_cam_size(engine->scene, size);
+    entities_update_to_cam(engine->scene, rend);
 }
 
 gc_vector2 sfml_get_screen_size(gc_engine *engine)
