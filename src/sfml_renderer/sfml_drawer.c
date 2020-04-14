@@ -81,7 +81,7 @@ void sfmlrenderer_settextpos(sfText *text, gc_entity *entity, sfFloatRect bounds
     struct renderer *rend = GETCMP(entity, renderer);
     struct transform_component *tra = GETCMP(entity, transform_component);
     int ori_x = 0;
-    int ori_y = bounds.height;
+    int ori_y = rend->render_mode_y == RENDER_MODE_REVERSED ? 0 : bounds.height;
 
     if (rend->render_mode_x == RENDER_MODE_CENTERED)
         ori_x = bounds.width / 2;
@@ -104,7 +104,7 @@ gc_text *txt, float dt)
     gc_vector2 screen_size = engine->get_screen_size(engine);
 
     if (txt->resize)
-        size = MIN(800 / screen_size.x, 600 / screen_size.y);
+        size = 1 / MAX(800 / screen_size.x, 600 / screen_size.y);
     sfText_setString(this->text, txt->text);
     if (!txt->font)
         my_printf("%s has a font not loaded. Rendering impossible.", txt->font);

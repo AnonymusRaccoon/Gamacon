@@ -60,6 +60,7 @@ bool vertex_serialize(struct vertex_component *ve, gc_scene *scene, \
 const char *file)
 {
     int fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    gc_data *texture;
 
     if (fd < 0)
         return (false);
@@ -71,13 +72,14 @@ const char *file)
         dprintf(fd, "\t\t</line>\n");
     }
     dprintf(fd, "\t</vertex_data>\n\t<tiles_data>\n");
-    for (int i = 0; ve->map[i].corners[0]; i++)
+    for (int i = 0; ve->map[i].corners[0]; i++) {
+        texture = scene->get_data_ptr(scene, ve->map[i].texture);
         dprintf(fd, "\t\t<tile x=\"%d\" y=\"%d\" texture=\"%s\" %s/>\n", \
 ve->map[i].corners[0]->x, ve->map[i].corners[0]->y, \
-scene->get_data_ptr(scene, ve->map[i].texture)->name, \
-ve->map[i].solid ? "solid=\"true\"" : "");
+texture ? texture->name : "", ve->map[i].solid ? "solid=\"true\"" : "");
+    }
     dprintf(fd, "\t</tiles_data>\n</gc_map>\n");
-    return (true);
+    return (!close(fd));
 }
 
 const struct vertex_component vertex_component = {

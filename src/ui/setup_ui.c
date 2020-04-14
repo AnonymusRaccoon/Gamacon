@@ -29,8 +29,7 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
         (gc_vector2){0, 0}, (gc_vector2){0, 0}));
     entity->add_component(entity, new_component(&renderer_component,
         GC_TXTREND, xml_getproperty(n, "text"),
-        scene->get_data(scene, "font", NULL),
-        xml_getintprop(n, "size"),
+        scene->get_data(scene, "font", NULL), xml_getintprop(n, "size"),
         xml_gettempprop(n, "color"), xml_getbool(n, "resize", true)));
     entity->add_component(entity, new_component(&fixed_to_cam,
         entity, (gc_vector2){xml_getintprop(n, "x"), xml_getintprop(n, "y")},
@@ -39,6 +38,8 @@ gc_entity *new_text(gc_engine *engine, gc_scene *scene, node *n)
     if (xml_hasproperty(n, "tag"))
         entity->add_component(entity, new_component(&tag_component,
             xml_getproperty(n, "tag")));
+    if (xml_hasproperty(n, "y_top") && GETCMP(entity, renderer))
+        GETCMP(entity, renderer)->render_mode_y = RENDER_MODE_REVERSED;
     return (entity);
 }
 
