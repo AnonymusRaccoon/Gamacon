@@ -74,9 +74,9 @@ const char *file)
     dprintf(fd, "\t</vertex_data>\n\t<tiles_data>\n");
     for (int i = 0; ve->map[i].corners[0]; i++) {
         texture = scene->get_data_ptr(scene, ve->map[i].texture);
-        dprintf(fd, "\t\t<tile x=\"%d\" y=\"%d\" texture=\"%s\" %s/>\n", \
+        dprintf(fd, "\t\t<tile x=\"%d\" y=\"%d\" texture=\"%s\" rotation=\"%d\" %s/>\n", \
 ve->map[i].corners[0]->x, ve->map[i].corners[0]->y, \
-texture ? texture->name : "", ve->map[i].solid ? "solid=\"true\"" : "");
+texture ? texture->name : "", ve->map[i].data, ve->map[i].solid ? "solid=\"true\"" : "");
     }
     dprintf(fd, "\t</tiles_data>\n</gc_map>\n");
     return (!close(fd));
