@@ -7,7 +7,7 @@
 
 #include "sprite.h"
 #include "my.h"
-#include "renderer.h"
+#include "components/renderer.h"
 
 void rend_set_anim(struct renderer *rend, const char *name)
 {

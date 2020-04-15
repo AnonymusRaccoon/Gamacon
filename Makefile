@@ -28,6 +28,7 @@ SRC = src/engine/engine.c \
 	src/components/map_linker.c \
 	src/components/renderers/sprite_renderer.c \
 	src/components/renderers/anim_renderer.c \
+	src/components/renderers/anim_utils.c \
 	src/components/renderers/text_renderer.c \
 	src/components/renderers/map_renderer.c \
 	src/scene/scene.c \
