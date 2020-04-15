@@ -43,7 +43,7 @@ gc_data *sfml_sprite_loader(gc_engine *engine, gc_scene *scene, node *n)
     data->custom = sfTexture_createFromFile(data->name, NULL);
     if (!data->custom)
         return (NULL);
-    sfTexture_setRepeated(data->custom, sfTrue);
+    sfTexture_setRepeated(data->custom, xml_hasproperty(n, "repeated"));
     data->destroy = &sfml_texture_destroy;
     if (xml_hasproperty(n, "name"))
         data->name = xml_getproperty(n, "name");
