@@ -20,6 +20,10 @@ static void ctr(void *component, va_list args)
 
     if (!scene)
         return;
+    if (onclick == NULL) {
+        cmp->onclick = NULL;
+        return;
+    }
     callback = scene->get_callback(scene, onclick);
     if (!callback)
         my_printf("No callback found with the name: %s\n", onclick);
@@ -35,7 +39,7 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     if (!scene)
         return;
     callback = scene->get_callback(scene, onclick);
-    if (!callback)
+    if (!callback && !xml_hasproperty(n, "nullable"))
         my_printf("No callback found with the name: %s\n", onclick);
     cmp->onclick = callback;
 }
