@@ -44,7 +44,6 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     struct renderer *rend = GETCMP(entity, renderer);
     char *tmp;
 
-    n = xml_getnode(n, "Position");
     cmp->pos.x = xml_getintprop(n, "x");
     cmp->pos.y = xml_getintprop(n, "y");
     tmp = xml_gettempprop(n, "x");
@@ -52,7 +51,11 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     tmp = xml_gettempprop(n, "y");
     cmp->per_y = tmp && my_strchr(tmp, '%');
     cmp->size_x = xml_getintprop(n, "width");
+    tmp = xml_gettempprop(n, "width");
+    cmp->per_w = tmp && my_strchr(tmp, '%');
     cmp->size_y = xml_getintprop(n, "height");
+    tmp = xml_gettempprop(n, "height");
+    cmp->per_h = tmp && my_strchr(tmp, '%');
     if (!rend)
         my_printf("Missing a renderer on an entity fixed to the cam.\n");
     else {
