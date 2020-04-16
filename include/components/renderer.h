@@ -44,6 +44,7 @@ void rend_set_anim(struct renderer *rend, const char *name);
 
 void text_ctr(struct renderer *cmp, va_list args);
 void text_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
+void text_safe_destroy(struct renderer *rend);
 
 void map_ctr(struct renderer *cmp, va_list args);
 void map_fdctr(gc_scene *scene, struct renderer *cmp, gc_entity *entity);

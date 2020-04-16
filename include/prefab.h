@@ -14,3 +14,4 @@ int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene);
 gc_entity *deserialize_entity(gc_engine *engine, gc_scene *scene, node *n);
 gc_component *deserialize_component(gc_engine *engine, gc_entity *entity, \
 gc_scene *scene, node *n);
+void prefab_destroy(gc_scene *scene, int prefab_id);

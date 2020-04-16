@@ -20,6 +20,11 @@ void destroy_text_renderer(struct renderer *cmp)
     free(cmp->data);
 }
 
+void text_safe_destroy(struct renderer *rend)
+{
+    free(rend->data);
+}
+
 int color_from_text(char *txt)
 {
     if (txt == NULL)

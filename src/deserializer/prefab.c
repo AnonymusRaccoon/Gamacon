@@ -50,3 +50,11 @@ int prefab_loadentities(node *n, gc_engine *engine, gc_scene *scene)
         engine->on_resize(engine, engine->get_screen_size(engine));
     return (prefab_id - 1);
 }
+
+void prefab_destroy(gc_scene *scene, int prefab_id)
+{
+    for (gc_list *li = scene->entities; li; li = li->next) {
+        if (((gc_entity *)li->data)->prefab_id == prefab_id)
+            ((gc_entity *)li->data)->destroy(li->data, scene);
+    }
+}
