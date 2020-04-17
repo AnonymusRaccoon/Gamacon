@@ -29,7 +29,7 @@ pos.x, pos.y);
     rend = GETCMP(entity, renderer);
     if (rend) {
         rend->is_visible = false;
-        rend->render_mode_x = RENDER_MODE_CENTERED;
+        rend->render_mode_x = RENDER_MODE_REVERSED;
         rend->render_mode_y = RENDER_MODE_REVERSED;
     }
     return (tile);
@@ -61,11 +61,14 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
     int x = xml_getintprop(n, "x");
     int y = xml_getintprop(n, "y");
     bool solid = xml_getbool(n, "solid", true);
+    struct renderer *renderer = GETCMP(entity, renderer);
 
     if (!maps)
         return;
     vert = GETCMP(maps->data, vertex_component);
     cmp->tile = init(entity, vert, (gc_vector2i){x, y}, solid);
+    if (renderer && xml_hasproperty(n, "centered"))
+        renderer->render_mode_x = RENDER_MODE_CENTERED;
 }
 
 static void dtr(void *component)
