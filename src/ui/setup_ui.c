@@ -63,6 +63,8 @@ gc_entity *new_sprite(gc_engine *engine, gc_scene *scene, node *n)
     if (xml_hasproperty(n, "tag"))
         entity->add_component(entity, new_component(&tag_component,
             xml_getproperty(n, "tag")));
+    if (xml_hasproperty(n, "reverse_y") && GETCMP(entity, renderer))
+        GETCMP(entity, renderer)->render_mode_y = RENDER_MODE_REVERSED;
     return (entity);
 }
 
