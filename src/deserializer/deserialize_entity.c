@@ -21,7 +21,7 @@ gc_scene *scene, node *n)
         my_printf("Couldn't find a component with the name: %s\n", n->name);
         return (NULL);
     }
-    cmp = new_component(model, 0, 0, 0, 0, 0, 0, 0);
+    cmp = new_component(model, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     if (cmp->fdctr)
         cmp->fdctr(entity, scene, cmp, n);
     return (cmp);
