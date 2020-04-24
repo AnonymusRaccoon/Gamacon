@@ -18,9 +18,10 @@ int prefab_load(gc_engine *engine, const char *path)
 
     if (!engine || !engine->scene)
         return (-1);
-    n = xml_parse(path);
+    if (!(n = xml_parse(path)))
+        return (-1);
     prefab_id = prefab_loadentities(n, engine, engine->scene);
-    if (!n || prefab_id < 0)
+    if (prefab_id < 0)
         return (-1);
     xml_destroy(n);
     return (prefab_id);
