@@ -70,7 +70,7 @@ gc_animholder *holder, float dtime)
     if (curr && holder->timesince_up > 1 / curr->frame_rate) {
         rec->left += rec->width;
         holder->timesince_up = 0;
-        if (rec->left > curr->rect.left + rec->width * (curr->frame_count - 1))
+        if (rec->left >= curr->rect.left + rec->width * (curr->frame_count - 1))
             rec->left = curr->rect.left;
     }
     sfmlrenderer_draw_texture(engine, entity, holder->sprite, dtime);
