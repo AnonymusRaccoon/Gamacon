@@ -13,7 +13,8 @@
 typedef enum gc_keybindings
 {
     ESCAPE = sfKeyEscape,
-    SPACE = sfKeySpace
+    SPACE = sfKeySpace,
+    KEY_E = sfKeyE
 } gc_keybindings;
 
 typedef enum gc_mousekeys
