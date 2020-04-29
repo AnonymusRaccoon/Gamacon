@@ -47,6 +47,7 @@ static void ctr(void *component, va_list args)
     bool solid = va_arg(args, int);
 
     cmp->tile = NULL;
+    cmp->offset = (gc_vector2i){0, 0};
     if (!scene || !(maps = scene->get_entity_by_cmp(scene, "vertex_component")))
         return;
     vert = GETCMP(maps->data, vertex_component);
@@ -67,8 +68,9 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
         return;
     vert = GETCMP(maps->data, vertex_component);
     cmp->tile = init(entity, vert, (gc_vector2i){x, y}, solid);
-    if (renderer && xml_hasproperty(n, "centered"))
+    if (renderer && xml_hasproperty(n, "centered")) {
         renderer->render_mode_x = RENDER_MODE_CENTERED;
+    }
 }
 
 static void dtr(void *component)

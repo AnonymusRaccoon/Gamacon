@@ -15,6 +15,7 @@ struct map_linker
 {
     gc_component base;
     struct tile *tile;
+    gc_vector2i offset;
 };
 
 const struct map_linker map_linker;
