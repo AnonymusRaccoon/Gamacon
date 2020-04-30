@@ -10,6 +10,7 @@
 #include <math.h>
 #include "components/vertex_component.h"
 #include "stdint.h"
+#include "systems/sfml_renderer_system.h"
 
 gc_vector2 gc_vector2_from_coords(float x, float y, float z)
 {
