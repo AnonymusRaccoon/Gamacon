@@ -85,19 +85,23 @@ struct vertex_component *info, float dt)
 {
     struct sfml_renderer_system *this = GETSYS(engine, sfml_renderer_system);
     struct transform_component *tra = GETCMP(entity, transform_component);
-    sfVector2i v = sfMouse_getPosition((const sfWindow *) this->window);
-    sfVector2f w = sfRenderWindow_mapPixelToCoords(this->window, v, this->view);
-    gc_vector2 pos = tra->position;
-    int i;
     struct tile *tl;
+    int width = 0;
+    int length = 0;
+    int end_diagonal = 0;
 
-    w.y *= -1;
     if (!info || !info->map)
         return;
-    tl = get_tile_from_pos(info, gc_vector2_add(pos, *(gc_vector2 *)&w));
-    for (i = 0; info->map[i].corners[0]; i++);
-    for (i--; i >= 0; i--) {
-        sfmlrenderer_manage_hovered_tile(this, &info->map[i] == tl);
-        sfmlrenderer_draw_tile(engine, pos, &info->map[i], dt);
-    }
+    tl = get_selected_tile(this, info, tra->position);
+	for (width = 0; info->vertices[0][width].z != INT32_MIN; width++);
+	for (length = 0; info->map[length].corners[0]; length++);
+	width--;
+	end_diagonal = length + width - 1;
+	for (int i = length - 1; i >= 0; i -= (i > length - width) ? 1 : width) {
+		end_diagonal -= (end_diagonal <= width) ? 1 : width;
+		for (int j = i; j >= end_diagonal; j -= width - 1) {
+			sfmlrenderer_manage_hovered_tile(this, &info->map[j] == tl);
+			sfmlrenderer_draw_tile(engine, tra->position, &info->map[j], dt);
+		}
+	}
 }

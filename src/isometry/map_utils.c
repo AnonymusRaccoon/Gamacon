@@ -10,6 +10,7 @@
 #include <math.h>
 #include "components/vertex_component.h"
 #include "stdint.h"
+#include "systems/sfml_renderer_system.h"
 
 gc_vector2 gc_vector2_from_coords(float x, float y, float z)
 {
@@ -64,4 +65,14 @@ sel->corners[i]->y, sel->corners[i]->z);
         }
     }
     return (i_stock);
+}
+
+struct tile*get_selected_tile(struct sfml_renderer_system *this, \
+struct vertex_component *info, gc_vector2 pos)
+{
+	sfVector2i v = sfMouse_getPosition((const sfWindow *) this->window);
+	sfVector2f w = sfRenderWindow_mapPixelToCoords(this->window, v, this->view);
+
+	w.y *= -1;
+	return (get_tile_from_pos(info, gc_vector2_add(pos, *(gc_vector2 *)&w)));
 }
