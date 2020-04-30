@@ -80,8 +80,6 @@ bool hovered)
         sfVertexArray_getVertex(this->vertices, j)->color = colors[sel];
 }
 
-
-
 void sfmlrenderer_draw_tilemap(gc_engine *engine, gc_entity *entity, \
 struct vertex_component *info, float dt)
 {
