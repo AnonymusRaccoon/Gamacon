@@ -41,7 +41,8 @@ void anim_ctr(struct renderer *cmp, va_list args)
     }
 }
 
-void animation_fdctr(gc_anim *anim, gc_sprite *sprite, node *n)
+void animation_fdctr(gc_anim *anim, gc_sprite *sprite, node *n, \
+gc_animholder *hold)
 {
     node *rect = xml_getnode(n, "Rect");
     int tmp;
@@ -61,6 +62,8 @@ void animation_fdctr(gc_anim *anim, gc_sprite *sprite, node *n)
         anim->rect.top = tmp;
     if ((tmp = xml_getintprop(rect, "left")) != 0)
         anim->rect.left = tmp;
+    if (xml_hasproperty(n, "default"))
+        hold->current = anim;
 }
 
 void animation_setnone(gc_anim *anim, gc_sprite *sprite)
@@ -90,8 +93,7 @@ void anim_fdctr(gc_scene *scene, struct renderer *this, node *n)
     for (n = n->child; n; n = n->next) {
         if (my_strcmp(n->name, "animation"))
             continue;
-        animation_fdctr(&hold->anims[i], hold->sprite, n);
+        animation_fdctr(&hold->anims[i], hold->sprite, n, hold);
         i++;
     }
-    rend_set_anim(this, "none");
 }
