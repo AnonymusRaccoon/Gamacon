@@ -39,7 +39,7 @@ void sprite_ctr(struct renderer *cmp, va_list args);
 void sprite_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
 
 void anim_ctr(struct renderer *cmp, va_list args);
-void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n);
+void anim_fdctr(gc_scene *scene, struct renderer *this, node *n);
 void rend_set_anim(struct renderer *rend, const char *name);
 
 void text_ctr(struct renderer *cmp, va_list args);

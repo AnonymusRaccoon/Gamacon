@@ -71,7 +71,7 @@ void animation_setnone(gc_anim *anim, gc_sprite *sprite)
     anim->rect = sprite->rect;
 }
 
-void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
+void anim_fdctr(gc_scene *scene, struct renderer *this, node *n)
 {
     gc_animholder *hold = malloc(sizeof(gc_animholder));
     int animcount = xml_getchildcount_filtered(n, "animation") + 1;
@@ -79,13 +79,13 @@ void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
 
     if (!hold || !(hold->anims = malloc(sizeof(gc_anim) * animcount)))
         return;
-    sprite_fdctr(scene, cmp, n);
-    hold->sprite = (gc_sprite *)cmp->data;
+    sprite_fdctr(scene, this, n);
+    hold->sprite = (gc_sprite *)this->data;
     hold->current = NULL;
     hold->animcount = animcount;
     hold->timesince_up = 0;
-    cmp->data = hold;
-    cmp->destroy = &destroy_anim_renderer;
+    this->data = hold;
+    this->destroy = &destroy_anim_renderer;
     animation_setnone(&hold->anims[0], hold->sprite);
     for (n = n->child; n; n = n->next) {
         if (my_strcmp(n->name, "animation"))
@@ -93,4 +93,5 @@ void anim_fdctr(gc_scene *scene, struct renderer *cmp, node *n)
         animation_fdctr(&hold->anims[i], hold->sprite, n);
         i++;
     }
+    rend_set_anim(this, "none");
 }
