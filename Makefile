@@ -32,6 +32,7 @@ SRC = src/engine/engine.c \
 	src/components/renderers/text_renderer.c \
 	src/components/renderers/map_renderer.c \
 	src/scene/scene.c \
+	src/scene/scene_constructor.c \
 	src/scene/scene_loader.c \
 	src/scene/scene_destroy.c \
 	src/utility/arraylen.c \
