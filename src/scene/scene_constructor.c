@@ -46,6 +46,5 @@ gc_scene *scene_parse_xml(gc_scene *scene, gc_engine *engine, const char *xml)
 gc_scene *scene_create(gc_engine *engine, const char *xml)
 {
     gc_scene *scene = scene_new(engine);
-    scene_parse_xml(scene, engine, xml);
-    return (scene);
+    return (scene_parse_xml(scene, engine, xml));
 }
