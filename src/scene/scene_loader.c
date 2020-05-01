@@ -20,7 +20,6 @@ void scene_load_data(gc_engine *engine, gc_scene *scene, node *n)
     gc_dataloader *loader;
     gc_data *data;
 
-    scene->data = NULL;
     if (!(n = xml_getnode(n, "data")))
         return;
     for (n = n->child; n; n = n->next) {
