@@ -10,18 +10,18 @@
 #include "my.h"
 #include <stdlib.h>
 
-const gc_entity entity_prefab;
+extern const gc_entity entity_prefab;
+int entity_next_id = 0;
 
 gc_entity *entity_create(void)
 {
-    static unsigned int next_id = 0;
     gc_entity *entity = malloc(sizeof(gc_entity));
 
     if (!entity)
         return (NULL);
     *entity = entity_prefab;
-    entity->id = next_id;
-    next_id++;
+    entity->id = entity_next_id;
+    entity_next_id++;
     return (entity);
 }
 
