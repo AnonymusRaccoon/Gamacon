@@ -29,6 +29,7 @@ gc_scene *scene_new(gc_engine *engine)
     scene->load_entity = &scene_load_entity;
     scene->callbacks = engine->callbacks;
     scene->data = NULL;
+    return (scene);
 }
 
 gc_scene *scene_parse_xml(gc_scene *scene, gc_engine *engine, const char *xml)
