@@ -36,7 +36,7 @@ struct gc_engine
     void (*handle_events)(gc_engine *engine);
     int (*game_loop)(gc_engine *engine, float dtime);
     void (*draw)(gc_engine *engine);
-    int (*change_scene)(gc_engine *engine, gc_scene *scene);
+    int (*change_scene)(gc_engine *engine, gc_scene *scene, bool free_old);
     void (*destroy)(gc_engine *engine);
 
     gc_list *systems;
@@ -82,7 +82,7 @@ void engine_stop_music(gc_engine *engine);
 void engine_on_resize(gc_engine *engine, gc_vector2 size);
 gc_vector2 engine_get_screen_size(gc_engine *this);
 
-int change_scene(gc_engine *engine, gc_scene *scene);
+int change_scene(gc_engine *engine, gc_scene *scene, bool free_old_scene);
 
 void engine_add_builtin_systems(gc_engine *engine);
 void *engine_get_system(gc_engine *engine, const char *name);
