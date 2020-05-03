@@ -20,9 +20,9 @@ void update_system(gc_engine *engine, gc_system *sys, float dtime)
         return;
     entities = scene->get_entity_by_cmp(scene, sys->component_name);
     for (gc_list *entity = entities; entity; entity = entity->next) {
-        if (sys->check_dependencies(sys, entity->data))
+        if (sys->check_dependencies(sys, entity->data) && sys->update_entity)
             sys->update_entity(engine, sys, entity->data, dtime);
-        else
+        else if (sys->update_entity)
             my_printf("Entity %d does not have all the required components \
 for the system %s\n", ((gc_entity *)entity->data)->id, sys->name);
     }
