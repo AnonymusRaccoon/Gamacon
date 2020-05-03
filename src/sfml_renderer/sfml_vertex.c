@@ -59,6 +59,7 @@ gc_vector2 offset, struct tile *tile, float dt)
     this->states->texture = NULL;
     if (tile->entity) {
         map_linker_update_entity(engine, tile->entity, tile, offset);
+        engine->trigger_event(engine, "linked_entity_draw", tile->entity, dt);
         renderer = GETCMP(tile->entity, renderer);
         if (!this->system.check_dependencies(&this->system, tile->entity))
             return;
