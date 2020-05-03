@@ -76,7 +76,7 @@ gc_animholder *holder, float dtime)
     sfmlrenderer_draw_texture(engine, entity, holder->sprite, dtime);
 }
 
-void sfmlrenderer_settextpos(sfText *text, gc_entity *entity, sfFloatRect bounds)
+void sfmlrenderer_settxtpos(sfText *txt, gc_entity *entity, sfFloatRect bounds)
 {
     struct renderer *rend = GETCMP(entity, renderer);
     struct transform_component *tra = GETCMP(entity, transform_component);
@@ -87,11 +87,11 @@ void sfmlrenderer_settextpos(sfText *text, gc_entity *entity, sfFloatRect bounds
         ori_x = bounds.width / 2;
     if (rend->render_mode_y == RENDER_MODE_CENTERED)
         ori_y = bounds.height / 2;
-    sfText_setPosition(text, (sfVector2f) {
+    sfText_setPosition(txt, (sfVector2f) {
         tra->position.x,
         -tra->position.y
     });
-    sfText_setOrigin(text, (sfVector2f){ori_x, ori_y});
+    sfText_setOrigin(txt, (sfVector2f){ori_x, ori_y});
 }
 
 void sfmlrenderer_draw_txt(gc_engine *engine, gc_entity *entity, \
@@ -114,6 +114,6 @@ gc_text *txt, float dt)
     tra->size.x = bounds.width;
     tra->size.y = bounds.height;
     sfText_setColor(this->text, *(sfColor*)&txt->color);
-    sfmlrenderer_settextpos(this->text, entity, bounds);
+    sfmlrenderer_settxtpos(this->text, entity, bounds);
     sfRenderWindow_drawText(this->window, this->text, NULL);
 }

@@ -16,11 +16,9 @@ static void ctr(void *component, va_list args)
     gc_entity *entity = va_arg(args, gc_entity *);
     struct renderer *rend;
     struct fixed_to_cam *cmp = (struct fixed_to_cam *)component;
-    bool centered;
 
     if (!entity)
         return;
-    rend = GETCMP(entity, renderer);
     cmp->pos = va_arg(args, gc_vector2);
     cmp->per_x = va_arg(args, int);
     cmp->per_y = va_arg(args, int);
@@ -28,10 +26,9 @@ static void ctr(void *component, va_list args)
     cmp->size_y = va_arg(args, int);
     cmp->per_w = va_arg(args, int);
     cmp->per_h = va_arg(args, int);
-    centered = va_arg(args, int);
-    if (!rend)
+    if (!(rend = GETCMP(entity, renderer)))
         my_printf("Missing a renderer on an entity fixed to the cam.\n");
-    else if (centered) {
+    else if (va_arg(args, int)) {
         rend->render_mode_x = RENDER_MODE_CENTERED;
         if (rend->type != GC_TXTREND)
             rend->render_mode_y = RENDER_MODE_CENTERED;
@@ -42,20 +39,15 @@ static void fdctr(gc_entity *entity, gc_scene *scene, void *component, node *n)
 {
     struct fixed_to_cam *cmp = (struct fixed_to_cam *)component;
     struct renderer *rend = GETCMP(entity, renderer);
-    char *tmp;
 
     cmp->pos.x = xml_getintprop(n, "x");
     cmp->pos.y = xml_getintprop(n, "y");
-    tmp = xml_gettempprop(n, "x");
-    cmp->per_x = tmp && my_strchr(tmp, '%');
-    tmp = xml_gettempprop(n, "y");
-    cmp->per_y = tmp && my_strchr(tmp, '%');
+    cmp->per_x = xml_propcontains(n, "x", "%");
+    cmp->per_y = xml_propcontains(n, "y", "%");
     cmp->size_x = xml_getintprop(n, "width");
-    tmp = xml_gettempprop(n, "width");
-    cmp->per_w = tmp && my_strchr(tmp, '%');
+    cmp->per_w = xml_propcontains(n, "width", "%");
     cmp->size_y = xml_getintprop(n, "height");
-    tmp = xml_gettempprop(n, "height");
-    cmp->per_h = tmp && my_strchr(tmp, '%');
+    cmp->per_h = xml_propcontains(n, "height", "%");
     if (!rend)
         my_printf("Missing a renderer on an entity fixed to the cam.\n");
     else {

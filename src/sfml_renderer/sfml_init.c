@@ -29,7 +29,8 @@ sfVertexArray *sfml_init_verticies(void)
     sfVertex v[4] = {
         {.position = {0, 0}, .texCoords = {0, 0}, .color = sfWhite},
         {.position = {0, 0}, .texCoords = {TEXTURE_WIDTH, 0}, .color = sfWhite},
-        {.position = {0, 0}, .texCoords = {0, TEXTURE_HEIGHT}, .color = sfWhite},
+        {.position = {0, 0}, .texCoords = {0, \
+TEXTURE_HEIGHT}, .color = sfWhite},
         {.position = {0, 0}, .texCoords = {TEXTURE_WIDTH, \
 TEXTURE_HEIGHT}, .color = sfWhite}
     };

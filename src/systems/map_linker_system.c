@@ -11,7 +11,8 @@
 #include "components/transform_component.h"
 
 void map_linker_update_entity(gc_engine *engine, gc_entity *entity, \
-struct tile *tile, gc_vector2 map_offset) {
+struct tile *tile, gc_vector2 map_offset)
+{
     struct map_linker *link = GETCMP(entity, map_linker);
     struct transform_component *tra = GETCMP(entity, transform_component);
     struct vertex *c = tile->corners[0];
