@@ -70,9 +70,10 @@ sel->corners[i]->y, sel->corners[i]->z);
 struct tile*get_selected_tile(struct sfml_renderer_system *this, \
 struct vertex_component *info, gc_vector2 pos)
 {
-	sfVector2i v = sfMouse_getPosition((const sfWindow *) this->window);
-	sfVector2f w = sfRenderWindow_mapPixelToCoords(this->window, v, this->view);
+    sfVector2i v = sfMouse_getPosition((const sfWindow *) this->window);
+    sfVector2f w = sfRenderWindow_mapPixelToCoords(this->window, \
+v, this->view);
 
-	w.y *= -1;
-	return (get_tile_from_pos(info, gc_vector2_add(pos, *(gc_vector2 *)&w)));
+    w.y *= -1;
+    return (get_tile_from_pos(info, gc_vector2_add(pos, *(gc_vector2 *)&w)));
 }

@@ -19,6 +19,9 @@ Gamacon also has a UI handler to ease development of graphical interfaces. For e
 
 To look at a read usage of prefabs or scene, take a look at [ForecastingVillage](https://github.com/AnonymusRaccoon/ForecastingVillage) which is the more complete project you can find created with this library.
 
+## Build
+To build the library, simple run ``make``.
+
 ## Dependencies
 
 Gamacon needs four others libraries:

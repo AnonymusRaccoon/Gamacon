@@ -94,15 +94,15 @@ struct vertex_component *info, float dt)
     if (!info || !info->map)
         return;
     tl = get_selected_tile(this, info, tra->position);
-	for (width = 0; info->vertices[0][width].z != INT32_MIN; width++);
-	for (length = 0; info->map[length].corners[0]; length++);
-	width--;
-	end_diagonal = length + width - 1;
-	for (int i = length - 1; i >= 0; i -= (i > length - width) ? 1 : width) {
-		end_diagonal -= (end_diagonal <= width) ? 1 : width;
-		for (int j = i; j >= end_diagonal; j -= width - 1) {
-			sfmlrenderer_manage_hovered_tile(this, &info->map[j] == tl);
-			sfmlrenderer_draw_tile(engine, tra->position, &info->map[j], dt);
-		}
-	}
+    for (width = 0; info->vertices[0][width].z != INT32_MIN; width++);
+    for (length = 0; info->map[length].corners[0]; length++);
+    width--;
+    end_diagonal = length + width - 1;
+    for (int i = length - 1; i >= 0; i -= (i > length - width) ? 1 : width) {
+        end_diagonal -= (end_diagonal <= width) ? 1 : width;
+        for (int j = i; j >= end_diagonal; j -= width - 1) {
+            sfmlrenderer_manage_hovered_tile(this, &info->map[j] == tl);
+            sfmlrenderer_draw_tile(engine, tra->position, &info->map[j], dt);
+        }
+    }
 }
