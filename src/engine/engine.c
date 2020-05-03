@@ -20,6 +20,8 @@ void update_system(gc_engine *engine, gc_system *sys, float dtime)
         return;
     entities = scene->get_entity_by_cmp(scene, sys->component_name);
     for (gc_list *entity = entities; entity; entity = entity->next) {
+        if (scene != engine->scene)
+            return;
         if (sys->check_dependencies(sys, entity->data) && sys->update_entity)
             sys->update_entity(engine, sys, entity->data, dtime);
         else if (sys->update_entity)
@@ -30,11 +32,16 @@ for the system %s\n", ((gc_entity *)entity->data)->id, sys->name);
 
 int game_loop(gc_engine *engine, float dtime)
 {
+    gc_scene *scene = engine->scene;
+
     if (!engine->has_focus(engine))
         return (0);
     engine->handle_events(engine);
-    for (gc_list *sys = engine->systems; sys; sys = sys->next)
+    for (gc_list *sys = engine->systems; sys; sys = sys->next) {
+        if (engine->scene != scene)
+            return (0);
         update_system(engine, sys->data, dtime);
+    }
     engine->draw(engine);
     return (0);
 }
