@@ -76,25 +76,11 @@ SRC = src/engine/engine.c \
 
 OBJ = $(SRC:%.c=%.o)
 
-GCDA = *.gcda
-
-GCNO = *.gcno
-
-TESTS = tests/deserializations.c \
-	tests/game_loop.c
-
 INCLUDE = -I ./include
 
 CFLAGS = $(INCLUDE) -Wall -Wshadow -Wextra -Wno-unused-parameter
 
-LDFLAGS = -L ../my -L ../xmlparser -L ../quadtree\
--lxmlparser -lquadtree -lmy -lcsfml-system -lcsfml-graphics -lcsfml-window -lm
-
-COVERAGE = --coverage -lcriterion
-
 NAME = libgamacon.a
-
-UT = ./ut
 
 CC = gcc
 
@@ -105,18 +91,11 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(AR) $(NAME) $(OBJ)
 
-tests_run:
-	$(CC) -o $(UT) $(SRC) $(TESTS) $(COVERAGE) $(CFLAGS) $(LDFLAGS)
-	$(UT)
-
 clean:
 	$(RM) $(OBJ)
-	$(RM) $(GCDA)
-	$(RM) $(GCNO)
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(UT)
 
 re: fclean all
 
